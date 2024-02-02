@@ -1,4 +1,4 @@
-package com.uni.mental;
+package com.uni.mental.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
