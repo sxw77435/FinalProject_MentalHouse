@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>회원 가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 40%;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: white;
+            margin-top: 50px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px; /* 添加间距，可以根据需要调整值 */
+        }
+
+        input[type="email"],
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid black; /* 增加边框宽度为2px */
+            border-radius: 20px; /* 添加圆角边框样式 */
+        }
+        #password{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid black;
+            border-radius: 20px;
+        }
+        #confirmPassword{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 2px solid black;
+            border-radius: 20px;
+        }
+
+        input[type="text"]{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 2px solid black; /* 增加边框宽度为2px */
+            border-radius: 20px;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #e59037;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            border-radius: 5px;
+            transition: width 0.4s ease-in-out;
+            display: none;
+        }
+        .steps-container {
+             display: flex;
+             justify-content: space-between;
+             list-style-type: none;
+             padding: 0;
+             margin: 0 auto;
+             width: 45%;
+             position: relative; /* 添加相对定位 */
+         }
+
+        .step {
+            width: 20%;
+            position: relative;
+            text-align: center;
+            flex: 1; /* 使每个步骤平均分配宽度 */
+        }
+
+        .step::after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: #b9adad;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            z-index: -1;
+        }
+
+
+        /* 去除最后一个步骤后面的线条 */
+        .step:last-child::after {
+            content: none;
+        }
+
+        .step-icon {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            background: white;
+            color: black;
+            font-weight: bold;
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        .step.active .step-icon {
+            border-color: #e59037;
+            color: white;
+            background: #e59037;
+        }
+        .top{
+            height: 110px;
+            background-image: url('/image/img1.png');
+            margin-bottom: 50px;
+        }
+        .text{
+            font-size: 30px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        #postcode{
+            border-radius: 20px;
+            height: 30px;
+        }
+        #address1{
+            border-radius: 20px;
+            height: 30px;
+            width: 64%;
+            margin-right: 10px;
+        }
+        #address2{
+            border-radius: 20px;
+            height: 30px;
+            width: 29%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="top">
+    <div class="text">회원정보</div>
+</div>
+<div class="progress-container">
+    <div class="progress-bar" id="myBar">0%</div>
+</div>
+
+<div class="steps-container">
+    <div class="step" id="step1">
+        <span class="step-icon">약관동의</span>
+    </div>
+    <div class="step active" id="step2">
+        <span class="step-icon">회원정보</span>
+    </div>
+    <div class="step" id="step3">
+        <span class="step-icon">가입성공</span>
+    </div>
+    <div class="step" id="step4">
+        <span class="step-icon">로그인</span>
+    </div>
+</div>
+<div class="container">
+    <h2>회원 가입</h2>
+    <form id="enrollForm" action="/login/enroll" method="post">
+        <div class="form-group">
+            <label for="id">아이디*(5글자 이상)</label>
+            <input type="text" id="id" name="id" required>
+        </div>
+        <div id="checkResult" style="font-size: 13px; margin-bottom: 20px;"></div>
+
+        <div class="form-group">
+            <label for="nickname">닉네임*(5글자 이상)</label>
+            <input type="text" id="nickname" name="nick" required>
+        </div>
+        <div id="checkResultNickname" style="font-size: 13px;margin-bottom: 20px;"></div>
+
+        <div class="form-group">
+            <label for="password">비밀번호*</label>
+            <input type="password" id="password" name="pwd" required>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">비밀번호 확인*</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+        <div id="checkResult1" style="font-size: 13px; margin-bottom: 20px"></div>
+        <script>
+            // 비번 일치하는지 확인
+            function confirmPassword() {
+                const password = $("#password").val();
+                const confirmPassword = $("#confirmPassword").val();
+
+                if (password === confirmPassword) {
+                    $("#checkResult1").css("color", "green").text("비밀번호 일치합니다!");
+                } else {
+                    $("#checkResult1").css("color", "red").text("비밀번호 불일치합니다.");
+                }
+            }
+
+            // 비번 확인 함수
+            $("#confirmPassword").keyup(confirmPassword);
+        </script>
+        <div class="form-group">
+            <label for="birth">출생년월*</label>
+            <ul id="birth"></ul>
+            <div style="display: flex; align-items: center;">
+                <select id="yearSelect" name="birthYear" style="width: 30%; margin-right: 10px; height: 35px; border-radius: 20px;border: 2px solid black;text-align: center"></select>
+                <input id="birthMonth" name="birthMonth" placeholder="BIRTH MONTH" style="flex: 1; margin-right: 10px; height: 30px;border-radius: 20px;text-align: center">
+                <input id="birthDate" name="birthDate" placeholder="BIRTH DATE" style="flex: 1; height: 30px;border-radius: 20px;text-align: center">
+            </div>
+        </div>
+
+        <script>
+            var currentYear = new Date().getFullYear();
+            var selectElement = document.getElementById("yearSelect");
+
+            for (var year = 1950; year <= currentYear; year++) {
+                var option = document.createElement("option");
+                option.value = year;
+                option.text = year;
+                selectElement.appendChild(option);
+            }
+        </script>
+        <div class="form-group">
+            <label for="email" style="margin-top: 30px">이메일*</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="address">주소*</label>
+            <ul id="address"></ul>
+            <input id="postcode" name="post" readonly>
+            <button type="button" onclick="openDaumPostcode()" id="postbn" class="custom-button">우편번호 찾기</button>
+        </div>
+        <input id="address1" name="address1" placeholder=" &nbsp;&nbsp;&nbsp;YOUR ADDRESS " readonly>
+        <input id="address2" name="address2" placeholder=" &nbsp;&nbsp;&nbsp;DETAIL ADDRESS" style="text-align: center;">
+
+        <!--daum pstcode api 사용하기        -->
+        <script>
+            function openDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        document.getElementById("postcode").value = data.zonecode;
+                        document.getElementById("address1").value = data.address;
+                        document.getElementById("address2").focus();
+                    }
+                }).open();
+            }
+        </script>
+
+        <div class="form-group">
+            <label for="mentalStatus" style="font-size: 16px; margin-top: 30px;">멘탈 상태:</label>
+            <select id="mentalStatus" name="mental" style="border-radius: 20px; height: 35px; border: 1px solid black; width: 100%;">
+                <option value="">상태 선택하세요</option>
+                <option value="우을증">우을증 </option>
+                <option value="강박증">강박증</option>
+                <option value="조울증">조울증</option>
+                <option value="알코중독증">알코중독증</option>
+                <option value="PTSD">PTSD</option>
+                <option value="기타">기타</option>
+            </select>
+        </div>
+        <div id="explanation" style="display: none;">
+            <p id="explanationText"></p>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+            <button type="button" id="cancelBtn" onclick="cancelEnrollment()" style="background-color: #bbb; width: 45%;">가입취소</button>
+            <div style="width: 10px;"></div>
+            <button type="submit" id="enrollBtn" style="background-color: #e59037; width: 45%">가입하기</button>
+        </div>
+
+    </form>
+    <script>
+        // 질환선택한후에 해당 설명 나타남
+        document.getElementById('mentalStatus').addEventListener('change', function() {
+            const selectedOption = this.value;
+
+            const explanationText = document.getElementById('explanationText');
+            let explanation = '';
+
+            switch (selectedOption) {
+                case '우을증':
+                    explanation = '감정의 침울과 삶에 대한 흥미 상실과 함께 나타나는 정신 질환입니다';
+                    break;
+                case '강박증':
+                    explanation = '불안장애의 한 형태로, 반복되는 생각과 행동을 경험할 수 있습니다.';
+                    break;
+                case '조울증':
+                    explanation = '심각한 감정 장애로, 감정 변동과 사회적 어려움을 동반할 수 있습니다.';
+                    break;
+                case '알코중독증':
+                    explanation = '알코올 중독의 질병으로, 신체적 및 정신적 문제를 유발할 수 있습니다.';
+                    break;
+                case 'PTSD':
+                    explanation = '외상 후 스트레스 장애로, 외상 사건을 경험한 사람들에게 나타나는 악몽과 기억을 동반합니다';
+                    break;
+                case '기타':
+                    explanation = '기타 정신 질환 또는 증상을 가리키며, 간단한 판단을 돕기 위한 옵션입니다.';
+                    break;
+                default:
+                    explanation = '';
+                    break;
+            }
+
+            explanationText.textContent = explanation;
+            if (explanation) {
+                document.getElementById('explanation').style.display = 'block';
+            } else {
+                document.getElementById('explanation').style.display = 'none';
+            }
+        });
+    </script>
+    <script>
+        function cancelEnrollment() {
+            window.location.href = "/main";
+        }
+    </script>
+
+    <script>
+        function idCheckValidate(num){
+
+            if(num == 0){ // 아직 중복체크를 하지 않는 경우 (아이디 적어도 5글자 이상은 되어야만 본격적으로 중복체크할 꺼임)
+                $("#checkResult").hide();
+                $("#enrollBtn").attr("disabled", true);
+
+            }else if(num == 1){ // 중복된 아이디가 존재할 경우
+                $("#checkResult").css("color", "red").text("중복된 아이디가 존재합니다. 사용이 불가능합니다.");
+                $("#checkResult").show();
+                $("#enrollBtn").attr("disabled", true);
+
+            }else if(num == 2){ // 중복된 아이디가 존재하지 않을 경우 ->사용 가능
+                $("#checkResult").css("color", "green").text("사용 가능한 아이디입니다. ");
+                $("#checkResult").show();
+                $("#enrollBtn").removeAttr("disabled");
+
+            }
+
+        }
+        $(function(){
+
+            let $idInput = $("#enrollForm input[name=id]"); // 아이디 입력하는 input 요소
+
+            $idInput.keyup(function(){
+
+                // 아이디는 최소 5글자 ~
+                if($idInput.val().length >= 5){ // 5글자 이상되었을 때 본격적으로 중복체크
+
+                    $.ajax({
+                        url:"/login/idCheck",  //idCheck는 mapper에서 정확하게 고침!!
+                        data:{id:$idInput.val()},
+                        type:"post",
+                        success:function(result){
+                            if(result > 0){ //   중복된 아이디 존재
+                                idCheckValidate(1);
+                            }else{
+                                idCheckValidate(2);
+                            }
+                        },error:function(){
+                            console.log("아이디 중복체크용 ajax 통신 실패");
+                        }
+                    });
+
+                }else{
+                    idCheckValidate(0);
+                }
+
+            });
+        });
+
+    </script>
+    <script>
+        function nicknameCheckValidate(num){
+
+            if(num == 0){ // 아직 중복 체크를 수행하지 않음 (닉네임은 적어도 5자 이상이어야 중복 체크를 본격적으로 수행함)
+                $("#checkResultNickname").hide();
+                $("#enrollBtn").attr("disabled", true);
+            } else if(num == 1){ // 중복 닉네임이 존재
+                $("#checkResultNickname").css("color", "red").text("중복된 닉네임입니다. 사용할 수 없습니다.");
+                $("#checkResultNickname").show();
+                $("#enrollBtn").attr("disabled", true);
+            } else if(num == 2){ // 중복 닉네임이 존재하지 않음 -> 사용 가능
+                $("#checkResultNickname").css("color", "green").text("사용 가능한 닉네임입니다.");
+                $("#checkResultNickname").show();
+                $("#enrollBtn").removeAttr("disabled");
+            }
+        }
+
+        $(function(){
+            let $nicknameInput = $("#enrollForm input[name=nick]"); // 닉네임을 입력하는 input 요소
+
+            $nicknameInput.keyup(function(){
+
+                // 닉네임은 적어도 5자 이상이어야 중복 체크를 본격적으로 수행함
+                if($nicknameInput.val().length >= 5){ // 닉네임 길이가 5자 이상인 경우 중복 체크를 수행함
+
+                    $.ajax({
+                        url:"/login/nicknameCheck", // 닉네임 중복 체크를 처리하는 백엔드 URL을 확인하세요.
+                        data:{nick:$nicknameInput.val()},
+                        type:"post",
+                        success:function(result){
+                            if(result > 0){ // 중복 닉네임이 존재
+                                nicknameCheckValidate(1);
+                            }else{
+                                nicknameCheckValidate(2);
+                            }
+                        },
+                        error:function(){
+                            console.log("닉네임 중복 체크용 Ajax 통신 실패");
+                        }
+                    });
+
+                }else{
+                    nicknameCheckValidate(0);
+                }
+            });
+        });
+    </script>
+    <script>
+        // JavaScript代码用于更新进度条和箭头状态
+
+        let currentStep = 2; // 当前步骤
+
+        // 立即激活第二步
+        function updateProgressBar() {
+            const progressBar = document.getElementById('myBar');
+            const stepElement = document.getElementById(`step${currentStep}`);
+            progressBar.style.width = `${(currentStep - 1) * 33.33}%`;
+
+            // 删除所有其他步骤的active类
+            const allSteps = document.querySelectorAll('.step');
+            allSteps.forEach(step => {
+                step.classList.remove('active');
+            });
+
+            stepElement.classList.add('completed', 'active');
+            currentStep++;
+        }
+
+        // 立即调用以激活第一步
+        updateProgressBar();
+    </script>
+</div>
+</body>
+</html>

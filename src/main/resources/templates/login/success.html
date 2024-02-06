@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+
+
+    <meta charset="UTF-8">
+    <title>회원 가입 성공</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #e59037;
+            text-align: center;
+        }
+
+        p {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .img2 {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: 80px;
+            width: 80px;
+        }
+
+        .login-button {
+            display: block;
+            width: 100px;
+            margin: 50px auto;
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid #ccc;
+        }
+
+        .login-button:hover {
+            background-color: #e59037;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            border-radius: 5px;
+            transition: width 0.4s ease-in-out;
+            display: none;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            width: 45%;
+            position: relative; /* 添加相对定位 */
+        }
+
+        .step {
+            width: 20%;
+            position: relative;
+            text-align: center;
+            flex: 1; /* 使每个步骤平均分配宽度 */
+        }
+
+        .step::after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: #b9adad;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            z-index: -1;
+        }
+
+
+        /* 去除最后一个步骤后面的线条 */
+        .step:last-child::after {
+            content: none;
+        }
+
+        .step-icon {
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            background: white;
+            color: black;
+            font-weight: bold;
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        .step.active .step-icon {
+            border-color: #e59037;
+            color: white;
+            background: #e59037;
+        }
+        .top{
+            height: 110px;
+            background-image: url('/image/img1.png');
+            margin-bottom: 50px;
+        }
+        .text{
+            font-size: 30px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .center{
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+<div class="top">
+    <div class="text">가입완료</div>
+</div>
+<div class="progress-container">
+    <div class="progress-bar" id="myBar">0%</div>
+</div>
+
+<div class="steps-container">
+    <div class="step" id="step1">
+        <span class="step-icon">약관동의</span>
+    </div>
+    <div class="step" id="step2">
+        <span class="step-icon">회원정보</span>
+    </div>
+    <div class="step  active" id="step3">
+        <span class="step-icon">가입성공</span>
+    </div>
+    <div class="step" id="step4">
+        <span class="step-icon">로그인</span>
+    </div>
+</div>
+<div class="container">
+    <h1>회원 가입 성공</h1>
+    <div class="img2">
+        <img src="/image/logo.png" >
+    </div>
+    <div class="center">
+    <p>정신건강 페이지에 오신 것을 환영합니다. 우리의 커뮤니티에 참여하고, 정신건강에 관한 정보와 지원을 얻기 위해 가입해 주셔서 감사합니다.</p>
+    </div>
+    <a href="loginpage" class="login-button">로그인</a>
+</div>
+<script>
+
+    let currentStep = 3;
+
+    function updateProgressBar() {
+        const progressBar = document.getElementById('myBar');
+        const stepElement = document.getElementById(`step${currentStep}`);
+        progressBar.style.width = `${(currentStep - 1) * 33.33}%`;
+
+        // 删除所有其他步骤的active类
+        const allSteps = document.querySelectorAll('.step');
+        allSteps.forEach(step => {
+            step.classList.remove('active');
+        });
+
+        stepElement.classList.add('completed', 'active');
+        currentStep++;
+    }
+
+    // 立即调用以激活第一步
+    updateProgressBar();
+</script>
+</body>
+</html>
