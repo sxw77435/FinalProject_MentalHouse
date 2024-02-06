@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uni.mental.member.model.dao.MemberDao">
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+        <collection property = "memberRoleList" resultMap="memberRoleResultMap"/>
+
+    </resultMap>
+    <resultMap id="memberRoleResultMap" type="com.uni.mental.member.model.dto.MemberRoleDTO">
+        <id column="REF_MEMBER_NO" property="memberNo" />
+        <id column="REF_AUTHORITY_NO" property="authorityNo" /><!-- ID 임 -->
+
+        <association property = "authority" resultMap="authorityResultMap"/>
+
+    </resultMap>
+
+    <resultMap id="authorityResultMap" type="com.uni.mental.member.model.dto.AuthorityMemberDTO">
+        <id column="REF_AUTHORITY_NO2" property="no" />
+        <result column="AUTHORITY_NAME" property="name" />
+        <result column="AUTHORITY_DESC" property="desc" />
+    </resultMap>
+
+    <select id="findMemberById" resultMap="loginMemberResultMap" >
+        SELECT
+             A.MEMBER_NO
+             , A.MEMBER_ID
+             , A.MEMBER_PWD
+             , A.MEMBER_BIR
+             ,A.MEMBER_EMAIL
+             ,A.MEMBER_ADD
+             ,A.MEMBER_MENTAL
+             ,A.MEMBER_NICK
+             ,B.MEMBER_NO REF_MEMBER_NO
+             ,B.AUTHORITY_NO REF_AUTHORITY_NO
+             ,C.AUTHORITY_NO REF_AUTHORITY_NO2
+             , C.AUTHORITY_NAME
+             , C.AUTHORITY_DESC
+        FROM TBL_MEMBER A
+                 LEFT JOIN TBL_MEMBER_ROLE B ON(A.MEMBER_NO = B.MEMBER_NO)
+                 LEFT JOIN TBL_AUTHORITY C  ON(B.AUTHORITY_NO = C.AUTHORITY_NO)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <insert id="enrollMember" parameterType="com.uni.mental.member.model.dto.MemberDto">
+        INSERT INTO TBL_MEMBER
+        (MEMBER_ID, MEMBER_PWD, MEMBER_BIR, MEMBER_EMAIL, MEMBER_ADD, MEMBER_MENTAL, MEMBER_NICK)
+        VALUES
+            (#{id}, #{pwd}, #{bir}, #{email}, #{add}, #{mental}, #{nick})
+    </insert>
+    <select id="idCheck" resultType="int" parameterType="java.lang.String">
+        SELECT COUNT(*) FROM TBL_MEMBER WHERE MEMBER_ID = #{id}
+    </select>
+
+    <select id="nicknameCheck" resultType="int" parameterType="java.lang.String">
+        SELECT COUNT(*) FROM TBL_MEMBER WHERE MEMBER_NICK = #{nick}
+    </select>
+
+
+
+</mapper>

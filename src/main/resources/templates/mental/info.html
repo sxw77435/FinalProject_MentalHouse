@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mentalInfo</title>
+</head>
+<style>
+    .container {
+        width: 90%;
+        margin: 0 auto;
+    }
+    .title {
+        text-align: center;
+        font-size: 35px;
+        font-weight: bold;
+    }
+    .image-container {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* 使用space-between来使照片分散排列 */
+        align-items: flex-start;
+        font-size: 17px;
+        font-weight: bold;
+    }
+    .item {
+        text-align: center;
+        width: 32%; /* 保持三列，并减去两边的边距 */
+        margin: 15px 0;
+        box-sizing: border-box; /* 确保边距不会增加元素的宽度 */
+    }
+    .item:first-child {
+        margin-left: 0; /* 第一个照片左边距设为0 */
+    }
+
+    .item:last-child {
+        margin-right: 0; /* 最后一个照片右边距设为0 */
+    }
+    .img {
+        width: 100%;
+        margin: 0 auto;
+        height: 250px;
+    }
+    .mentalname {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .page {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 17px;
+        font-weight: bold;
+        margin-right: 331px;
+    }
+
+    .text {
+        display: flex;
+        align-items: center;
+    }
+
+    #text1::after {
+        content: '|';
+        margin: 0 10px;
+        color: #333;
+    }
+
+    .sum,
+    .pagenow {
+        font-weight: bold;
+        margin: 0 5px;
+    }
+
+    .search-container {
+        margin-top: 70px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        border: none;
+    }
+    .search-select {
+        padding: 5px;
+        width: 13%;
+        height: 50px;
+        margin-right: 5px;
+        background-color: #f8f8f8;
+        border: none;
+    }
+    .search-input {
+        padding: 5px;
+        width: 26%;
+        height: 40px;
+        background-color: #f8f8f8;
+        border: none;
+    }
+    .search-button {
+        padding: 5px 20px;
+        background-color: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        height: 50px;
+        width: 10%;
+        font-size: 15px;
+    }
+</style>
+<body>
+<div class="container" >
+    <div class="title">질병별 정보</div>
+    <div class="content">
+
+        <div class="search-container">
+            <div class="page">
+                <div class="text" id="text1">전체 <div class="sum" style="color: #ce135b;; font-weight: bold">50</div>건 </div>
+                <div class="text" id="text2">현재 페이지 <div class="pagenow" style="color: #ce135b;; font-weight: bold">1</div>/9 </div>
+            </div>
+            <select class="search-select" style="font-size: 15px">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
+            <input type="text" class="search-input" placeholder="검색어 입력하세요" style="font-size: 15px">
+            <button class="search-button">검색</button>
+        </div>
+        <div class="image-container" th:each="mental : ${mentalList}">
+            <div class="item" data-mentalinfono="${mental.mentalinfono}">
+                <h2 th:text="${mental.mentalinfono}" class="mentalinfo-no" style="display: none;"></h2>
+                <img th:src="@{/image/{imageFileName}(imageFileName=${mental.attachoriname})}" class="img">
+                <h2 th:text="${mental.mentalname}" class="mentalname"></h2>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

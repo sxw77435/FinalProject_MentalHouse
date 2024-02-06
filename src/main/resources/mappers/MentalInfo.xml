@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uni.mental.mentalInfo.model.dao.MentalDao"><!-- 메퍼위치하고  동일하게 네임스페이스 작성-->
+
+    <resultMap type="com.uni.mental.mentalInfo.model.dto.MentalDto" id="mentalResultMap">
+        <id property="mentalinfono" column="REF_MENTALINFO_NO"/>
+        <result property="mentalname" column="MENTAL_NAME"/>
+        <result property="mentalcontent" column="MENTAL_CONTENT"/>
+        <result property="mentalcause" column="MENTAL_CAUSE"/>
+        <result property="mentalcase" column="MENTAL_CASE"/>
+        <result property="mentalsymptom" column="MENTAL_SYMPTOM"/>
+        <result property="mentaldrug" column="MENTAL_DRUG"/>
+        <result property="mentaltreat" column="MENTAL_TREAT"/>
+    </resultMap>
+
+    <resultMap id="attachResultMap" type="com.uni.mental.mentalInfo.model.dto.AttachDto">
+        <id column="ATTACH_NO" property="attachno" />
+        <result column="CATE_NAME" property="catename" />
+        <result column="ATTACH_ORINAME" property="attachoriname" />
+        <result column="ATTACH_NEWNAME" property="attachnewname" />
+        <result column="ATTACH_BNO" property="attachbno" />
+    </resultMap>
+
+
+    <select id="findAllMental" resultMap="mentalResultMap"><!-- 메소드명하고 동일하게-->
+        SELECT
+            A.MENTALINFO_NO
+             ,A.MENTAL_NAME
+             ,A.MENTAL_CONTENT
+             ,A.MENTAL_CAUSE
+             ,A.MENTAL_CASE
+             ,A.MENTAL_SYMPTOM
+             ,A.MENTAL_DRUG
+             ,A.MENTAL_TREAT
+        FROM TBL_MENTALINFO A
+        JOIN TBL_ATTACH B ON (A.MENTALINFO_NO = B.ATTACH_NO)
+    </select>
+    <select id="getAttachOrinameByAttachNo" resultType="string">
+        SELECT ATTACH_ORINAME
+        FROM TBL_ATTACH
+        WHERE ATTACH_NO = #{attachNo}
+    </select>
+    <select id="findMentalByCode" resultMap="mentalResultMap"><!-- 메소드명하고 동일하게-->
+        SELECT
+            MENTALINFO_NO
+             ,MENTAL_NAME
+             ,MENTAL_CONTENT
+             ,MENTAL_CAUSE
+             ,MENTAL_CASE
+             ,MENTAL_SYMPTOM
+             ,MENTAL_DRUG
+             ,MENTAL_TREAT
+        FROM TBL_MENTALINFO
+        WHERE MENTALINFO_NO = #{mentalinfono}
+    </select>
+
+    <update id="updateMental" parameterType="com.uni.mental.mentalInfo.model.dto.MentalDto">
+        UPDATE TBL_MENTALINFO
+        SET MENTAL_NAME=#{mentalname},MENTAL_CONTENT=#{mentalcontent},MENTAL_CAUSE=#{mentalcause},MENTAL_CASE=#{mentalcase},MENTAL_SYMPTOM=#{mentalsymptom},MENTAL_DRUG=#{mentaldrug}
+          ,MENTAL_TREAT=#{mentaltreat}
+        WHERE MENTALINFO_NO = #{mentalinfono}
+
+    </update>
+
+    <delete id="deleteMental" parameterType="com.uni.mental.mentalInfo.model.dto.MentalDto">
+        DELETE FROM TBL_MENTALINFO
+        WHERE MENTALINFO_NO = #{mentalinfono}
+    </delete>
+
+
+
+    <insert id ="insertMental" parameterType="com.uni.mental.mentalInfo.model.dto.MentalDto">
+        INSERT
+        INTO TBL_MENTALINFO
+        (
+        MENTAL_NAME
+        ,MENTAL_CONTENT
+        ,MENTAL_CAUSE
+        ,MENTAL_CASE
+        ,MENTAL_SYMPTOM
+        ,MENTAL_DRUG
+        ,MENTAL_TREAT
+      )
+        VALUES
+            (
+             #{mentalname}
+            , #{mentalcontent}
+            , #{mentalcause}
+            , #{mentalcase}
+            , #{mentalsymptom}
+            , #{mentaldrug}
+            , #{mentaltreat}
+            )
+    </insert>
+    <insert id="insertAttach" parameterType="com.uni.mental.mentalInfo.model.dto.AttachDto">
+        INSERT INTO TBL_ATTACH
+        (
+            ATTACH_NO,
+            CATE_NAME,
+            ATTACH_ORINAME,
+            ATTACH_BNO,
+            ATTACH_NEWNAME
+        )
+        VALUES
+            (
+                #{attachno},
+                #{catename},
+                #{attachoriname},
+                #{attachbno},
+                #{attachnewname}
+            )
+    </insert>
+
+
+
+
+
+</mapper>
