@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>checkDetail</title>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
+    <link rel="stylesheet" href="/css/checkup.css">
+</head>
+<body>
+<div th:replace="common/header :: header"></div>
+<div id="wrap">
+    <h2 th:text="${mental_name} + ' 자가검진'"></h2>
+    <div class="text_box">
+        <h3 th:text="${mental_name + '(2차검진)'}"></h3>
+    </div>
+    <table>
+        <thead>
+        <th>번호</th>
+        <th>질문</th>
+        <th>예</th>
+        <th>아니오</th>
+        </thead>
+        <tbody>
+        <tr th:each="question : ${questions}">
+            <td></td>
+            <td th:text="${question.question}"></td>
+            <td><input type="radio" th:name="'yes_' + ${question.no}" value="yes"></td>
+            <td><input type="radio" th:name="'no_' + ${question.no}" value="no"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="common/footer :: footer"></div>
+</body>
+</html>
