@@ -1,12 +1,27 @@
 @charset "UTF-8";
 
+@media screen and (max-width: 768px) {
+    .section1 .s_wrap {
+        flex-direction: column;
+    }
+    .content1_1, .content1_2 {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+
 /* header */
 
 #header_login{
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 36px;
     border-bottom: 1px solid #e8e8e8;
+    background-color: #fff;
+    z-index: 100;
 }
 
 #header_login .loginbox{
@@ -25,17 +40,17 @@
 }
 
 #header{
+    display: flex;
     position: fixed;
     top: 36px;
     left: 50%;
     transform: translate(-50%, 0);
-    display: flex;
     width: 100%;
-    height: 140px;
-    padding: 50px;
+    padding: 50px 200px;
     background-color: #fff;
     z-index: 100;
 }
+
 
 #header h1{
     font-size: 22px;
@@ -43,9 +58,10 @@
     margin-left: 6px;
 }
 
-#header a{
+#header ul>li a {
     padding: 10px;
     font-size: 18px;
+    word-wrap: break-word;
 }
 
 #header ul>li a:hover{
@@ -66,23 +82,46 @@ ul {
 }
 
 /* 드롭다운 */
+.dropdown {
+    display: none;
+    position: absolute;
+    /* top: 110px;
+    left: 0; */
+    width: 100%;
+    /* height: 200px; */
+    padding-top: 16px;
+    min-height: 180px;
+    background-color: #fff;
+}
 
+.dropdown a{
+    display: block;
+}
 
+#header ul:hover .dropdown {
+    display: block; /* 호버 시 드롭다운 메뉴 표시 */
+}
 
+#header:has(ul:hover) {
+    height: 261px;
+}
 
+.logo{
 
+}
 
 
 
 /* wrap */
 
 #wrap{
-    margin-top: 140px;
+    padding-top: 180px;
 }
 
 .s_wrap{
     display: flex;
-    width: 90%;
+    justify-content: space-between;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -91,30 +130,49 @@ ul {
     flex-direction: row;
     width: 100%;
     padding: 100px 0;
-    background-color: #e3f5fd;
+    background: url('/img/main_sec01_bg.png') no-repeat right bottom / auto;
 }
 
 .section1 .content1_1{
-    flex: 0 0 60%; /* Assign 60% width */
-    display: flex;
-    align-items: stretch;
     float: left;
-    width: 60%;
+    width: 40%;
 }
 
 .con1_1{
-    position: relative;
-    top: 0;
-    left: 0;
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 16px;
 }
 
-.con1_1 img{
+.mask{
     width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.img-wrap{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex; /* Flexbox 사용 */
+    flex-direction: row; /* 요소들을 가로로 정렬 */
+    align-items: center; /* 세로축 가운데 정렬 */
+    justify-content: flex-start; /* 가로축 시작점 정렬 */
+}
+
+.img-wrap img{
+    float: left;
+    width: 100%;
+    /* height: 100%; */
     border-radius: 20px;
 }
 
@@ -160,11 +218,9 @@ ul {
 
 
 .section1 .content1_2{
-    flex: 0 0 40%; /* Assign 40% width */
+    width: 50%;
     display: flex;
-    align-items: stretch;
     float: left;
-    width: 40%;
 }
 
 .con1_2{
@@ -182,7 +238,7 @@ ul {
 }
 
 .w50{    
-    width: 50%;
+    width: 33%;
     float: left;
     background-color: #fff;
     margin: 0 4px;
@@ -210,6 +266,7 @@ ul {
 
 .section2{
     width: 100%;
+    background: url('/img/main_sec02_bg.png') no-repeat left bottom / auto;
 }
 
 .section2 .content2{
@@ -266,16 +323,24 @@ ul {
 .flex_box{
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between; 
 }
 
 .section2 .content2 .con2{
     width: 38%;
+}
+
+.section2 .content2 .con2 a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 8vw; /* 뷰포트 너비의 10% */
+    height: 8vw; /* 너비와 높이를 같게 하여 정사각형 유지 */
+    text-align: center; /* 텍스트 중앙 정렬 */
     padding: 12px 0;
-    margin: 20px;
+    margin: 40px;
     border: 1px solid #ccc;
     border-radius: 14px;
-    text-align: center;
     font-weight: bold;
     transition: all ease .3s;
 }
@@ -305,11 +370,14 @@ ul {
 .s_wrap2{
     width: 90%;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 20px 40px;
     border-top: 1px solid #222;
     border-bottom: 1px solid #222;
 }
 
+.s_wrap2 li{
+    float: left;
+}
 
 .pink_con{
     display: flex;
@@ -356,6 +424,10 @@ ul {
     display: block;
     float: left;
     margin-right: 20px;
+}
+
+.s3_list li{
+    width: 100%;
 }
 
 .footer{
