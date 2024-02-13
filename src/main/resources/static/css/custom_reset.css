@@ -60,9 +60,6 @@ ol, ul {
     margin: 0 auto;
     overflow: hidden;
 }
-li{
-    float: left;
-}
 blockquote, q {
     quotes: none;
 }
