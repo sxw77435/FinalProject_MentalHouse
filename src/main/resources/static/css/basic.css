@@ -9,7 +9,11 @@
         margin-left: 0;
     }
 }
-
+@media (max-width: 1430px) {
+    .slidebtn {
+        bottom: 42px !important;
+    }
+}
 
 /* header */
 

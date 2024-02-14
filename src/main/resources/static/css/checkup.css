@@ -29,6 +29,10 @@ h2{
     display: inline-block; /* 블록 요소를 인라인처럼 배치 */
 }
 
+.checkup_box img{
+    width: 100%;
+}
+
 /* 4n번째 요소의 마진 오른쪽을 제거하여 행의 끝에 맞춤 */
 .checkout_container li:nth-child(4n) {
     margin-right: 0;
@@ -56,7 +60,7 @@ h2{
 
 .checkup-background{
     background: url("/img/bg_checkup.png") no-repeat;
-    width: 37%;
+    width: 700px;
     height: 100%;
     margin: 0 auto;
     padding: 20px;
