@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>menalinsert</title>
@@ -85,54 +86,58 @@
 
 <body>
 <!--name은 mapper작성후 다시 확인-->
-<div class="container">
+<form action="/mental/update" method="post" th:align="center" enctype="multipart/form-data" >
+    <input type="hidden" name="mentalinfono" th:value="${mentalDto.mentalinfono}" />
+
+
+    <div class="container">
     <div class="title">UPDATE</div>
     <div class="insertcontain">
         <label class="img-area" id="ImgArea">
             <ul class="word" style="margin-right: 30px;">사진</ul>
-            <img id="Img" width="300" height="200" onclick="openFileUpload()" >
+            <img id="Img" width="300" height="200" onclick="openFileUpload()" th:src="@{/image/{imageFileName}(imageFileName=${mentalDto.attachnewname})}">
         </label>
         <div class="thumbnail-file-area">
-            <input type="file" id="thumbnailImg" name="image" onchange="loadImg(this,1)">
+            <input type="file" id="thumbnailImg" name="imageFile" onchange="loadImg(this,1)">
         </div>
         <label class ="mentalname">
             <ul class="name">정신 이름*</ul>
-            <input type="text" id="name" class="form-control" name="mentalname" placeholder="&nbsp;&nbsp;&nbsp;질병 이름 입력하세요" style="font-size: 15px;height: 33px;" required>
+            <input type="text" id="name" class="form-control" name="mentalname" placeholder="&nbsp;&nbsp;&nbsp;질병 이름 입력하세요" th:value="${mentalDto.mentalname}" style="font-size: 15px;height: 33px;" required>
         </label>
         <label class ="mentalcontent">
             <ul class="name">정신 개요*</ul>
             <div class="textarea-container">
-                <textarea id="content" class="form-control" name="mentalcontent" placeholder="&nbsp;&nbsp;&nbsp;질병 정의 입력하세요" style="font-size: 15px;height: 250px;" required></textarea>
+                <textarea id="content" class="form-control" name="mentalcontent" placeholder="&nbsp;&nbsp;&nbsp;질병 정의 입력하세요" th:text="${mentalDto.mentalcontent}" style="font-size: 15px;height: 250px;" required></textarea>
             </div>
         </label>
         <label class ="mentalcause">
             <ul class="name">정신 원인*</ul>
             <div class="textarea-container">
-                <textarea id="cause" class="form-control" name="mentalcause" placeholder="&nbsp;&nbsp;&nbsp;질병 원인 입력하세요" style="font-size: 15px;height: 250px;" required></textarea>
+                <textarea id="cause" class="form-control" name="mentalcause" placeholder="&nbsp;&nbsp;&nbsp;질병 원인 입력하세요" th:text="${mentalDto.mentalcause}" style="font-size: 15px;height: 250px;" required></textarea>
             </div>
         </label>
         <label class ="mentalcase">
             <ul class="name">정신 사례*</ul>
             <div class="textarea-container">
-                <textarea id="case" class="form-control" name="mentalcase" placeholder="&nbsp;&nbsp;&nbsp;질병 케이스 입력하세요" style="font-size: 15px;height: 250px;" required></textarea>
+                <textarea id="case" class="form-control" name="mentalcase" placeholder="&nbsp;&nbsp;&nbsp;질병 케이스 입력하세요" th:text="${mentalDto.mentalcase}"  style="font-size: 15px;height: 250px;" required></textarea>
             </div>
         </label>
         <label class ="mentalsymptom">
             <ul class="name">정신 증상*</ul>
             <div class="textarea-container">
-                <textarea id="symptom" class="form-control" name="mentalsymptom" placeholder="&nbsp;&nbsp;&nbsp;질병 증상 입력하세요" style="font-size: 15px;height: 250px;" required></textarea>
+                <textarea id="symptom" class="form-control" name="mentalsymptom" placeholder="&nbsp;&nbsp;&nbsp;질병 증상 입력하세요" th:text="${mentalDto.mentalsymptom}" style="font-size: 15px;height: 250px;" required></textarea>
             </div>
         </label>
         <label class ="mentaldrug">
             <ul class="name">약몰 치료*</ul>
             <div class="textarea-container">
-                <textarea id="drug" class="form-control" name="mentaldrug" placeholder="&nbsp;&nbsp;&nbsp;약몰 치료 입력하세요" style="font-size: 15px;height: 250px;" required></textarea>
+                <textarea id="drug" class="form-control" name="mentaldrug" placeholder="&nbsp;&nbsp;&nbsp;약몰 치료 입력하세요" th:text="${mentalDto.mentaldrug}" style="font-size: 15px;height: 250px;" required></textarea>
             </div>
         </label>
         <label class ="mentaltreat">
             <ul class="name">정신 치료*</ul>
             <div class="textarea-container">
-                <textarea id="treat" class="form-control" name="mentaltreat" placeholder="&nbsp;&nbsp;&nbsp;정신 치료 입력하세요" style="font-size: 15px;height: 250px;" required></textarea>
+                <textarea id="treat" class="form-control" name="mentaltreat" placeholder="&nbsp;&nbsp;&nbsp;정신 치료 입력하세요" th:text="${mentalDto.mentaltreat}" style="font-size: 15px;height: 250px;" required></textarea>
             </div>
         </label>
         <div class="button-container">
@@ -141,6 +146,7 @@
         </div>
     </div>
 </div>
+</form>
 
 <script>
     function openFileUpload() {
@@ -155,6 +161,7 @@
             reader.readAsDataURL(value.files[0]);
         }
     }
+
 </script>
 </body>
 </html>

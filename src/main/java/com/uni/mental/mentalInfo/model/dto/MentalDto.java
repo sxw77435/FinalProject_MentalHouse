@@ -10,8 +10,9 @@ public class MentalDto {
     private String mentalsymptom;
     private String mentaldrug;
     private String mentaltreat;
+    private  String attachnewname;
     private int attachno;
-    private  String attachoriname;
+
 
     public int getMentalinfono() {
         return mentalinfono;
@@ -77,20 +78,20 @@ public class MentalDto {
         this.mentaltreat = mentaltreat;
     }
 
+
+    public String getAttachnewname() {
+        return attachnewname;
+    }
+
+    public void setAttachnewname(String attachnewname) {
+        this.attachnewname = attachnewname;
+    }
     public int getAttachno() {
         return attachno;
     }
 
     public void setAttachno(int attachno) {
         this.attachno = attachno;
-    }
-
-    public String getAttachoriname() {
-        return attachoriname;
-    }
-
-    public void setAttachoriname(String attachoriname) {
-        this.attachoriname = attachoriname;
     }
 
     @Override
@@ -105,7 +106,7 @@ public class MentalDto {
                 ", mentaldrug='" + mentaldrug + '\'' +
                 ", mentaltreat='" + mentaltreat + '\'' +
                 ", attachno=" + attachno +
-                ", attachoriname='" + attachoriname + '\'' +
+                ", attachnewname='" + attachnewname + '\'' +
                 '}';
     }
 }

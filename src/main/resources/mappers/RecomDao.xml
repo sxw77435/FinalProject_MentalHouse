@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uni.mental.regionComunity.model.dao.RecomDao"><!-- 메퍼위치하고  동일하게 네임스페이스 작성-->
+
+    <resultMap type="com.uni.mental.regionComunity.model.dto.RecomDto" id="recomResultMap">
+        <id property="recomno" column="RECOM_NO"/>
+        <result property="cateno" column="REF_CATE_NO"/>
+        <result property="recomtitle" column="RECOM_TITLE"/>
+        <result property="membernick" column="REF_MEMBER_NICK"/>
+        <result property="recomdate" column="RECOM_DATE"/>
+        <result property="recomviews" column="RECOM_VIEWS"/>
+        <result property="recomcontent" column="RECOM_CONTENT"/>
+    </resultMap>
+
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+    </resultMap>
+
+    <resultMap id="cateResultMap" type="com.uni.mental.regionComunity.model.dto.CateDto">
+        <id column="CATE_NO" property="cateno" />
+        <result column="CATE_NAME" property="catename" />
+        <result column="CATE_NAME2" property="catename2" />
+    </resultMap>
+
+    <insert id ="insertRecom" parameterType="com.uni.mental.regionComunity.model.dto.RecomDto" useGeneratedKeys="true" keyProperty="recomno">
+        INSERT INTO TBL_RECOM
+        (
+          RECOM_NO
+        ,REF_CATE_NO
+        ,RECOM_TITLE
+        ,RECOM_DATE
+        ,RECOM_CONTENT
+        )
+        VALUES
+            (#{recomno}
+            ,#{cateno}
+            , #{recomtitle}
+            , #{recomdate}
+            , #{recomcontent}
+            )
+    </insert>
+
+
+
+
+</mapper>

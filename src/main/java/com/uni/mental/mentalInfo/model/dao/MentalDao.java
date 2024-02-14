@@ -11,9 +11,21 @@ public interface MentalDao {
 
     int insertMental(MentalDto mentalDto);
 
-    List<MentalDto> findAllMental();
-
     int insertAttach(AttachDto attachDto);
 
-    String getAttachOrinameByAttachNo(int attachNo);
+    List<MentalDto> findAllMental();
+
+
+    MentalDto findMentalByCode(int mentalinfono);
+
+    int updateAttach(AttachDto attachDto);
+
+    int updateMental(MentalDto mentalDto);
+
+    void deleteMental(int mentalinfono);
+
+    void deleteAttach(int mentalinfono);
+
+    List<MentalDto> searchMentalByKeyword(String keyword);
 }
+
