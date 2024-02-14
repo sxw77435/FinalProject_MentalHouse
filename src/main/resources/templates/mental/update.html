@@ -2,10 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>menalinsert</title>
 </head>
 <style>
+    .container{
+        margin-top: 250px;
+    }
     .form-control {
         width: 60%;
         height: auto;
@@ -85,6 +90,7 @@
 
 
 <body>
+<div th:replace="common/header :: header"></div>
 <!--name은 mapper작성후 다시 확인-->
 <form action="/mental/update" method="post" th:align="center" enctype="multipart/form-data" >
     <input type="hidden" name="mentalinfono" th:value="${mentalDto.mentalinfono}" />

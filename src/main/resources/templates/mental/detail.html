@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,6 +24,7 @@
         display: flex; /* 添加Flexbox布局 */
         justify-content: center; /* 水平居中 */
         align-items: center; /* 垂直居中 */
+        margin-top: 250px;
     }
     .container1::before{
         content: '';
@@ -156,7 +159,7 @@
 
 </style>
 <body>
-
+<div th:replace="common/header :: header"></div>
 <div class="container2" th:each="mental : ${mentalDto}" data-nationno="${mental.mentalinfono}">
     <p th:text="${mental.mentalinfono}" class="mental-no" style="display: none"></p>
     <div class="container1">
