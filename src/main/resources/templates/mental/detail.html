@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <title>mentaldetail</title>
 </head>
 <style>
+    html{
+        height: 1000px;
+    }
     .container1 {
         position: relative;
-        width: 85%;
+        width: 98%;
         margin: 0 auto;
         border: 5px solid #f5f3f3;
         height: 130px;
@@ -69,13 +77,18 @@
         box-shadow: 3px 3px 20px rgb(14 55 153 / 35%);
     }
     .content {
-        display: none; /* 默认隐藏内容 */
+        display: none;
         text-align: left;
         padding: 20px;
         margin: 0 auto;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 3.0s ease; /* 添加过渡效果 */
     }
+
     .content.active {
-        display: block; /* 显示活动内容 */
+        display: block;
+        max-height: 1000px; /* 这里的值可以根据实际情况调整 */
     }
     .expand-container {
         position: relative;
@@ -91,6 +104,9 @@
         width: 20px;
         height: 20px;
         transition: transform 0.3s ease;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
     }
 
     .fold {
@@ -107,15 +123,16 @@
     }
 
     .fold::before {
-        content: "\25BC"; /* Downward arrow */
+        content: "+";
         position: absolute;
         right: 40px;
-        font-size: 24px;
+        font-size: 30px;
         transition: transform 0.3s ease;
+        transform-origin: center; /* 设置变换原点为中心 */
     }
 
     .fold.up::before {
-        content: "\25B2"; /* Upward arrow */
+        content: "-"; /* Minus sign */
     }
 
     .text {
@@ -136,12 +153,16 @@
         border: 5px solid #f0f0f0;
     }
 
+
 </style>
 <body>
-<div class="container1">
-    <div class="title">1형 양극성장애</div>
-</div>
-<div class="container2">
+
+<div class="container2" th:each="mental : ${mentalDto}" data-nationno="${mental.mentalinfono}">
+    <p th:text="${mental.mentalinfono}" class="mental-no" style="display: none"></p>
+    <div class="container1">
+        <div class="title" th:text="${mental.mentalname}"></div>
+    </div>
+
     <div class="button-container">
         <button class="button active" onclick="changeTab(this, 'overview')">개요</button>
         <button class="button" onclick="changeTab(this, 'diagnosis')">진단</button>
@@ -154,14 +175,15 @@
             </div>
             <div class="content" id="content1">
                 <div class="img">
-                    <img src="/image/test1.webp">
+                    <img th:src="@{'/image/' + ${mental.attachnewname}}" alt="질환사진" class="image">
                 </div>
+                <div th:text="${mental.mentalcontent}"></div>
             </div>
             <div class="fold" onclick="toggleFold(this)">
                 <h3 class="text">원인</h3>
             </div>
             <div class="content" id="content2">
-                <p>1형 양극성장애的原因内容...</p>
+                <div th:text="${mental.mentalcause}"></div>
             </div>
         </div>
     </div>
@@ -171,15 +193,13 @@
                 <h3 class="text">사례</h3>
             </div>
             <div class="content" id="content3">
-                <div class="img">
-                    <img src="/image/test1.webp">
-                </div>
+                <div th:text="${mental.mentalcase}"></div>
             </div>
             <div class="fold" onclick="toggleFold(this)">
                 <h3 class="text">증상</h3>
             </div>
             <div class="content" id="content4">
-                <p>1형 양극성장애的原因内容...</p>
+                <div th:text="${mental.mentalsymptom}"></div>
             </div>
         </div>
     </div>
@@ -189,60 +209,103 @@
                 <h3 class="text">약물치료</h3>
             </div>
             <div class="content" id="content5">
-                <div class="img">
-                    <img src="/image/test1.webp">
-                </div>
+                <div th:text="${mental.mentaldrug}"></div>
             </div>
             <div class="fold" onclick="toggleFold(this)">
                 <h3 class="text">정신치료</h3>
             </div>
             <div class="content" id="content6">
-                <p>1형 양극성장애的原因内容...</p>
+                <div th:text="${mental.mentaltreat}"></div>
             </div>
         </div>
 
     </div>
+
     <div class="expand-container" onclick="toggleExpand(this)">
         <div class="expand-icon"></div>
     </div>
-    <script>
-        window.onload = function() {
-            // 获取"정의"部分的折叠按钮
-            var definitionFold = document.querySelector('.fold:first-child');
+    <div class="buttons" >
+        <button type="button" onclick="updateMental()">Update</button>
+        <button type="button" onclick="deleteMental()">Delete</button>
+    </div>
+</div>
 
-            // 模拟点击折叠按钮
-            toggleFold(definitionFold);
-        }
-        function changeTab(button, tabName) {
-            var buttons = document.querySelectorAll('.button');
-            buttons.forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            button.classList.add('active');
+<script>
+    window.onload = function() {
+        // 获取"정의"部分的折叠按钮
+        var definitionFold = document.querySelector('.fold:first-child');
 
-            var contents = document.querySelectorAll('.content');
-            contents.forEach(function(content) {
-                content.classList.remove('active');
-            });
+        // 模拟点击折叠按钮
+        toggleFold(definitionFold);
+    }
+    function changeTab(button, tabName) {
+        var buttons = document.querySelectorAll('.button');
+        buttons.forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
 
-            var contentToShow = document.getElementById(tabName + 'Content');
-            contentToShow.classList.add('active');
-            var definitionFold = contentToShow.querySelector('.fold'); // 获取当前选项卡的折叠按钮
-            toggleFold(definitionFold); // 打开当前选项卡的折叠内容
-        }
+        var contents = document.querySelectorAll('.content');
+        contents.forEach(function(content) {
+            content.classList.remove('active');
+        });
 
-        function toggleFold(fold) {
+        var contentToShow = document.getElementById(tabName + 'Content');
+        contentToShow.classList.add('active');
+        var definitionFold = contentToShow.querySelector('.fold'); // 获取当前选项卡的折叠按钮
+        toggleFold(definitionFold); // 打开当前选项卡的折叠内容
+    }
+
+    function toggleFold(fold) {
+        if (fold && fold.nextElementSibling) {
             var content = fold.nextElementSibling;
             content.classList.toggle('active');
             fold.classList.toggle('up', content.classList.contains('active'));
+        } else {
+            console.error('Invalid fold element or next sibling.');
         }
+    }
 
-        function toggleExpand(container) {
-            var expandIcon = container.querySelector('.expand-icon');
-            var foldable = container.previousElementSibling;
-            foldable.classList.toggle('expanded');
-            expandIcon.style.transform = foldable.classList.contains('expanded') ? 'translateY(-50%) rotate(180deg)' : 'translateY(-50%)';
-        }
-    </script>
+    function toggleExpand(container) {
+        var expandIcon = container.querySelector('.expand-icon');
+        var foldable = container.previousElementSibling;
+        foldable.classList.toggle('expanded');
+        expandIcon.style.transform = foldable.classList.contains('expanded') ? 'translateY(-50%) rotate(180deg)' : 'translateY(-50%)';
+    }
+</script>
+<script>
+    function updateMental() {
+        var mentalinfonoElement = document.querySelector('.mental-no');
+        var mentalinfono = mentalinfonoElement.textContent;
+
+        var updateUrl = `/mental/update/${mentalinfono}`; // 更新的URL
+
+        // 跳转到更新页面
+        window.location.href = updateUrl;
+    }
+
+    // JavaScript function to handle delete action
+    function deleteMental() {
+        // 获取国家编号
+        var mentalinfonoElement = document.querySelector('.mental-no');
+        var mentalinfono = mentalinfonoElement.textContent;
+
+        // 发送DELETE请求
+        fetch(`/mental/delete/${mentalinfono}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    window.location.href = '/mental/info';
+                } else {
+                    // 处理删除失败的情况
+                    console.error('Failed to delete the mental');
+                }
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+            });
+    }
+</script>
 </body>
 </html>
