@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uni.mental.mentalComunity.model.dao.MenComDAO">
+    <resultMap id="mentalResultMap" type="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+        <id column="men_no" property="no"/>
+        <result column="member_nick" property="nickName"/>
+        <result column="men_title" property="title"/>
+        <result column="men_content" property="content"/>
+        <result column="men_date" property="date" jdbcType="DATE"/>
+        <result column="cate_no" property="cate"/>
+        <result column="men_views" property="views"/>
+    </resultMap>
+
+
+
+
+<select id="selectOne" parameterType="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+    select
+    *
+    from tbl_mental
+    where men_no = #{no}
+</select>
+
+    <insert id="registMenCom" parameterType="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+        insert into tbl_mental(member_nick,men_title, men_content, men_date, cate_no, men_views)
+        values (#{nickName},#{title}, #{content}, NOW(), #{cate}, DEFAULT)
+    </insert>
+
+<select id="findAllView" parameterType="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+    select
+        *
+    from tbl_mental
+
+</select>
+
+    <select id="findAllViewCount" parameterType="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+        select
+            count(*)
+        from tbl_mental
+    </select>
+
+    <update id="updateMencom" parameterType="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+        update TBL_mental
+        set
+            men_title=#{title}, men_content=#{content}
+        where men_no = #{no}
+    </update>
+
+    <delete id="deleteMencom" parameterType="com.uni.mental.mentalComunity.model.dto.MenComDTO">
+
+        delete
+        from tbl_mental
+        where men_no = #{no}
+
+    </delete>
+
+
+
+</mapper>

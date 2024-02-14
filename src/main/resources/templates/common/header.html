@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>header</title>
+</head>
+<body>
+<div th:fragment="header">
+    <div id="header_login">
+        <ul class="loginbox">
+            <li style="margin: 0;"><a href="/login/loginpage">로그인</a></li>
+            <li style="margin: 0; border-left: 1px solid #aaa;"><a href="/login/enroll">회원가입</a></li>
+        </ul>
+    </div>
+    <div id="header">
+        <div class="logo">
+            <a href="/" style="display: flex; justify-content: center; align-items: center; white-space: nowrap;">
+                <div style="float: left">
+                    <img src="/img/logo.png" class="logo" alt="">
+                </div>
+                <h1>정신건강정보포털</h1>
+            </a>
+        </div>
+        <ul>
+            <li style="padding: 10px; margin: 0 6px;">
+                <a href="/checkup/checkup">자가검진</a>
+                <ul class="dropdown">
+                    <li><a href="/checkup/checkup">자가검진</a></li>
+                </ul>
+            </li>
+            <li style="padding: 10px; margin: 0 6px;">
+                <a href="">정신건강정보</a>
+                <ul class="dropdown">
+                    <li><a href="">정신건강정보</a></li>
+                </ul>
+            </li>
+            <li style="padding: 10px; margin: 0 6px;">
+                <a href="">정신건강통계</a>
+                <ul class="dropdown">
+                    <li><a href="">지역별 통계</a></li>
+                    <li><a href="">질환별 통계</a></li>
+                    <li><a href="">연령별 통계</a></li>
+                </ul>
+            </li>
+            <li style="padding: 10px; margin: 0 6px;">
+                <a href="">공지사항</a>
+                <ul class="dropdown">
+                    <li><a href="">공지사항</a></li>
+                    <li><a href="">QnA</a></li>
+                </ul>
+            </li>
+            <li style="padding: 10px; margin: 0 6px;">
+                <a href="">도움이 되는 정보</a>
+                <ul class="dropdown">
+                    <li><a href="">뉴스</a></li>
+                    <li><a href="">동영상</a></li>
+                    <li><a href="">근처 병원찾기</a></li>
+                </ul>
+            </li>
+            <li style="padding: 10px; margin: 0 6px;">
+                <a href="">커뮤니티</a>
+                <ul class="dropdown">
+                    <li><a href="">지역별 커뮤니티</a></li>
+                    <li><a href="">질환별 커뮤니티</a></li>
+                    <li><a href="">연령별 커뮤니티</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

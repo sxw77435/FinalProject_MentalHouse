@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>자가검진 결과</title>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
+    <link rel="stylesheet" href="/css/checkup.css">
+</head>
+<body>
+<div th:replace="common/header :: header"></div>
+<div id="wrap">
+    <h2>자가검진 결과</h2>
+    <div class="text_box">
+        <h3 th:text="${result}"></h3>
+    </div>
+</div>
+<div th:replace="common/footer :: footer"></div>
+</body>
+</html>
