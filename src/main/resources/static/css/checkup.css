@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+h2{
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+}
+
+.text_box{
+    width: 100%;
+    height: 300px;
+    border: 2px solid #0d3699;
+    font-weight: bold;
+    text-align: center;
+    font-size: 24px;
+}
+
+.checkup_container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* 모든 요소를 왼쪽으로 정렬 */
+}
+
+.checkup_box {
+    width: calc(25% - 20px); /* 전체 너비의 25%에서 마진 값을 빼줍니다 */
+    margin: 0 10px 20px 0; /* 오른쪽과 아래에 마진 추가 */
+    display: inline-block; /* 블록 요소를 인라인처럼 배치 */
+}
+
+/* 4n번째 요소의 마진 오른쪽을 제거하여 행의 끝에 맞춤 */
+.checkout_container li:nth-child(4n) {
+    margin-right: 0;
+}
+
+.p1{
+    width: 80%;
+    margin: 40px auto;
+}
+
+
+.black-background {
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    /* 부트스트랩 1~4까지 사용하고있음 */
+
+    /* 모달창 만들어놓고 숨기기 */
+    display: none;
+    /* visibility: hidden; */
+    /* 사용할 수 있지만 ui자국이 남음 */
+}
+
+.checkup-background{
+    background: url("/img/bg_checkup.png") no-repeat;
+    width: 37%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.checkup-background h2{
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+/* 테이블 스타일링 */
+.checkup-background table {
+    width: 96%; /* 테이블 너비를 부모 컨테이너에 맞춤 */
+    border-collapse: collapse; /* 셀 사이의 간격 제거 */
+    margin: 0 auto; /* 상하 여백 추가 */
+}
+
+.checkup-background th,
+.checkup-background td {
+    border: 1px solid #ddd; /* 테두리 스타일 */
+    text-align: left; /* 텍스트 정렬 */
+    padding: 8px; /* 내부 여백 */
+}
+/* '질문' 열을 제외한 모든 셀에 대해 스타일 적용 */
+.checkup-background th:not(:nth-child(2)),
+.checkup-background td:not(:nth-child(2)) {
+    width: 60px; /* 너비 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.checkup-background th {
+    background-color: #f2f2f2; /* 헤더 배경색 */
+    color: #333; /* 헤더 텍스트 색상 */
+}
+
+/* 결과 확인 버튼 스타일링 */
+#resultBtn {
+    width: 97%;
+    background-color: #4CAF50; /* 버튼 배경색 */
+    color: white; /* 버튼 텍스트 색상 */
+    padding: 10px 20px; /* 버튼 내부 여백 */
+    margin-top: 10px; /* 상단 여백 추가 */
+    margin-left: 8px;
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    display: inline-block; /* 인라인 블록으로 표시 */
+}
+
+#resultBtn:hover {
+    background-color: #45a049; /* 호버 상태의 배경색 */
+}

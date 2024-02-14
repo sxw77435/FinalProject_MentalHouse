@@ -1,12 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>main</title>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
 </head>
 <body>
-<h1>메인 페이지</h1>
+<div th:replace="common/header :: header"></div>
+<div id="wrap">
+    <div class="section1">
+        <div class="s_wrap clearfix">
+            <div class="content1_1">
+                <div class="con1_1">
+                    <div class="mask">
+                        <div class="img-wrap">
+                            <img src="img/getImage.jpg">
+                            <img src="img/getImage2.jpg">
+                            <img src="img/getImage3.jpg">
+                        </div>
+                        <div class="slidebtn">
+                            <span style="margin-right: 10px;">팝업존</span>
 
+                            <span class="numspan">01</span>
+                            <span style="margin: 0 4px;">-</span>
+                            <span style="margin-right: 6px;">03</span>
+                            <div class="popup-buttons">
+                                <button>◀</button>
+                                <div class="stop-btn">
+                                    <button>||</button>
+                                </div>
+                                <button class="nxt-btn">▶</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content1_2">
+                <div class="con1_2">
+                    <div class="w50">
+                        <a href="#">
+                            <div class="w50_p">
+                                <p>정신건강</p>
+                                <p>정보</p>
+                            </div>
+                            <img src="img/con2_1.png">
+                        </a>
+                    </div>
+                    <div class="w50">
+                        <a href="">
+                            <div class="w50p">
+                                <div class="w50_p">
+                                    <p>질환별</p>
+                                    <p>자가검진</p>
+                                </div>
+                                <img src="img/con2_2.png">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="w50">
+                        <a href="">
+                            <div class="w50p">
+                                <div class="w50_p">
+                                    <p>질환별</p>
+                                    <p>자가검진</p>
+                                </div>
+                                <img src="img/con2_2.png">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section2 clearfix flex_box">
+        <div class="s_wrap">
+            <div class="content2 box1">
+                <div class="h2_box">
+                    <h2 class="hb">실생활 정신건강</h2><h2> 정보</h2><br>
+                </div>
+                <p class="pb">실생활에 필요한 정신건강에 관련된 정보</p><p>를</p><br>
+                <p>분야별로 빠르게 찾아보세요.</p>
+            </div>
+            <div class="content2 box2">
+                <ul class="flex_box clearfix">
+                    <li class="con2">
+                        <a href="">
+                            <img src="img/card1.png">
+                            <p>카드뉴스</p>
+                        </a>
+                    </li>
+                    <li class="con2">
+                        <a href="">
+                            <img src="img/card2.png">
+                            <p>동영상</p>
+                        </a>
+                    </li>
+                    <li class="con2">
+                        <a href="">
+                            <img src="img/card3.png">
+                            <p>통계</p>
+                        </a>
+                    </li>
+                    <li class="con2">
+                        <a href="">
+                            <img src="img/card4.png">
+                            <p>도움이 되는 정보</p> 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section3 clearfix">
+        <div class="s3_wrap">
+            <div class="s_wrap">
+                <h2>커뮤니티</h2><h2 style="color: #f25f82;">&nbsp새소식</h2>
+            </div>
+            <div class="s_wrap2">
+                <div class="pink_con">
+                    <div class="com_box">
+                        <p>2024</p>
+                        <p class="s3_p">02.05</p>
+                    </div>
+                    <div class="n_circle">
+                        N
+                    </div>
+                    <p class="s3_p">2024 재난심리지원 국제세미나</p>
+                </div>
+                <div class="clearfix flex">
+                    <ul class="s3_list">
+                        <li>국립정신건강센터 '마음이음 힐링콘서트'</li>
+                        <li>정신건강의날 기념</li>
+                        <li>정신겅강의날 기념2</li>
+                        <li>2024 정신건강의날 기념 심포지엄</li>
+                    </ul>
+                    <ul class="s3_list">
+                        <li>2024.02.05</li>
+                        <li>2024.02.05</li>
+                        <li>2024.02.05</li>
+                        <li>2024.02.05</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/footer :: footer"></div>
+<script src="js/jquery-1.12.4.js"></script>
+    <script>
+        $(document).ready(function() {
+            var currentSlide = 1;
+            var totalSlides = $('.img-wrap img').length;
 
+            var autoSlide;
+            var isPlaying = true;
+
+            var startSlider = function() {
+                autoSlide = setInterval(function() {
+                    moveSlide('next');
+                }, 2000);
+            };
+
+            var stopSlider = function() {
+                clearInterval(autoSlide);
+            };
+
+            var updateCounter = function() {
+                $('.slidebtn .numspan').first().text('0' + currentSlide);
+            };
+
+            var moveSlide = function(direction) {
+                // 이미지 한 장의 너비를 계산합니다.
+                var imageWidth = $('.img-wrap img').first().width();
+                
+                if (direction === 'next') {
+                    // 이미지를 왼쪽으로 이동시킵니다.
+                    $('.img-wrap').animate({ 'left': -imageWidth }, 500, function() {
+                        // 이동이 완료된 후 첫 번째 이미지를 마지막으로 이동시킵니다.
+                        $('.img-wrap img').first().appendTo('.img-wrap');
+                        // left 속성을 초기화합니다.
+                        $('.img-wrap').css('left', 0);
+
+                        currentSlide = currentSlide < totalSlides ? currentSlide + 1 : 1;
+                        updateCounter();
+                    });
+                } else if (direction === 'prev') {
+                    // 이미지를 오른쪽으로 이동시킵니다.
+                    $('.img-wrap img').last().prependTo('.img-wrap');
+                    $('.img-wrap').css('left', -imageWidth);
+                    $('.img-wrap').animate({ 'left': 0 }, 500, function() {
+                        currentSlide = currentSlide > 1 ? currentSlide - 1 : totalSlides;
+                        updateCounter();
+                    });
+                }
+            };
+
+            startSlider(); // 슬라이더 시작
+
+            $('.stop-btn button').click(function() {
+                if (isPlaying) {
+                    stopSlider(); // 슬라이드 중지
+                    $(this).text('▶'); // 버튼 텍스트 변경
+                } else {
+                    startSlider(); // 슬라이드 시작
+                    $(this).text('||'); // 버튼 텍스트 변경
+                }
+                isPlaying = !isPlaying; // 재생 상태 토글
+            });
+
+            $('.nxt-btn').click(function() {
+                stopSlider(); // 자동 슬라이드 중지
+                moveSlide('next'); // 수동으로 다음 슬라이드 이동
+                if (isPlaying) { // 자동 슬라이드가 재생 중이었다면
+                    startSlider(); // 자동 슬라이드 재시작
+                }
+            });
+
+            $('.slidebtn button').first().click(function() {
+                stopSlider(); // 자동 슬라이드 중지
+                moveSlide('prev'); // 수동으로 이전 슬라이드 이동
+                if (isPlaying) { // 자동 슬라이드가 재생 중이었다면
+                    startSlider(); // 자동 슬라이드 재시작
+                }
+            });
+        });
+    </script>
 </body>
 </html>
