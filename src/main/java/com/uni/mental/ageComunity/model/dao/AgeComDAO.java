@@ -7,11 +7,10 @@ import java.util.List;
 
 @Mapper
 public interface AgeComDAO {
-    int registAgeCom(AgeComDTO ageCom);
-    AgeComDTO selectOne(int no);
 
     List<AgeComDTO> findAllView();
-
+    AgeComDTO selectOne(int no);
+    int registAgeCom(AgeComDTO ageCom);
     int updateAgeCom(AgeComDTO ageCom);
 
     int deleteAgeCom(int no);

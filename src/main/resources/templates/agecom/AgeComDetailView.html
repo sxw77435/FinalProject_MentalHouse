@@ -89,13 +89,13 @@
 <header class="header">
     <ul class="menu">
         <li>
-            <a onclick="location.href='mentalList'">홈</a>
+            <a onclick="location.href='AgeComList'">홈</a>
         </li>
         <li>
             <a onclick="location.href='mentalList'">지역별</a>
         </li>
         <li>
-            <a onclick="location.href='mentalList'">연령별</a>
+            <a onclick="location.href='AgeComList'">연령별</a>
         </li>
         <li>
             <a onclick="location.href='mentalList'">질환별</a>
@@ -105,22 +105,22 @@
 <div class="card">
 
         <div class="title">
-            <h3 th:text="${mental.title}"></h3>
+            <h3 th:text="${ageComDTO.ageComTitle}"></h3>
             <dl>
-                <dd th:text="${mental.nickName}"></dd>
-                <dd th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH-mm-ss')}"></dd>
+                <dd th:text="${ageComDTO.memberNick}"></dd>
+                <dd th:text="${#dates.format(ageComDTO.ageComDate, 'yyyy-MM-dd HH-mm-ss')}"></dd>
 
-                <dd th:text="${mental.views}"></dd>
+                <dd th:text="${ageComDTO.ageComViews}"></dd>
             </dl>
             <br>
             <hr class="line">
-            <a th:text="${mental.content}"></a>
+            <a th:text="${ageComDTO.ageComDetail}"></a>
         </div>
     </div>
 <div class="but">
-    <a th:href="@{mentalUpdateForm(no=${mental.no})}">수정하기</a>
-    <form action="/delete" method="post">
-        <input type="hidden" name="no" th:value="${mental.no}">
+    <a th:href="@{AgeComUpdateForm(no=${ageComDTO.ageComNo})}">수정하기</a>
+    <form action="/agecom/delete" method="post">
+        <input type="hidden" name="no" th:value="${ageComDTO.ageComNo}">
         <button type="submit">게시글 삭제</button>
     </form>
 </div>
