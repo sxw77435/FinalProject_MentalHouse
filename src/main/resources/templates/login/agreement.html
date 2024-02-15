@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>약관동의</title>
     <style>
@@ -17,9 +19,9 @@
         .terms-box {
             border: 1px solid #ccc;
             padding: 20px;
-            margin-bottom: 70px;
+            margin-bottom: 40px;
             background-color: white;
-            height: 200px; /* 调整这个值来增加框的高度 */
+            height: 150px; /* 调整这个值来增加框的高度 */
             margin-top: 10px;
         }
         .terms-container {
@@ -67,6 +69,7 @@
             margin: 0 auto;
             width: 45%;
             position: relative; /* 添加相对定位 */
+            margin-top: 250px;
         }
 
         .step {
@@ -131,22 +134,12 @@
             color: white;
             transform: scale(1.05);
         }
-        .top{
-            height: 110px;
-            background-image: url('/image/img1.png');
-            margin-bottom: 50px;
-        }
-        .text{
-            font-size: 30px;
-            font-weight: bold;
-            margin-left: 20px;
-        }
+
     </style>
 </head>
 <body>
-<div class="top">
-    <div class="text">약관동의</div>
-</div>
+<div th:replace="common/header :: header"></div>
+
 <div class="progress-container">
     <div class="progress-bar" id="myBar">0%</div>
 </div>
@@ -177,7 +170,7 @@
             <input type="checkbox" class="checkbox" id="community-terms" required>
             <label for="community-terms" class="agree-title">커뮤니티 이용 약관 (필수)</label>
             <div class="terms-box">
-                <div class="terms-text" style="overflow-y: scroll; max-height: 200px;">
+                <div class="terms-text" style="overflow-y: scroll; max-height: 120px;">
                     <h3>1. 약관의 수락</h3>
                     <p>1.1 이 커뮤니티를 이용하는 모든 사용자는 본 약관의 조건을 숙지하고 준수할 것을 동의합니다.</p>
                     <p>1.2 본 약관은 언제든지 수정될 수 있으며, 사용자는 변경 사항을 검토하고 수락해야 합니다. 변경 사항은 커뮤니티 내에 공지될 것입니다.</p>
@@ -214,7 +207,7 @@
             <input type="checkbox" class="checkbox" id="info-sharing" required>
             <label for="info-sharing" class="agree-title">정보 공유 약관 (필수)</label>
         <div class="terms-box">
-            <div class="terms-text" style="overflow-y: scroll; max-height: 200px;">
+            <div class="terms-text" style="overflow-y: scroll; max-height: 120px;">
                 <h3>정보 공유에 대한 약관</h3>
                 <p>이 정보 공유 약관은 커뮤니티 이용자 간의 정보 공유에 관한 규칙을 규정합니다.</p>
 
@@ -238,7 +231,7 @@
             <input type="checkbox" class="checkbox" id="personal-info-collection" required>
             <label for="personal-info-collection" class="agree-title">개인 정보 수집 및 이용 동의 (필수)</label>
         <div class="terms-box">
-            <div class="terms-text" style="overflow-y: scroll; max-height: 200px;">
+            <div class="terms-text" style="overflow-y: scroll; max-height: 120px;">
                 <h3>개인 정보 수집 및 이용 동의</h3>
                 <p>이 개인 정보 수집 및 이용 약관은 사용자의 개인 정보를 수집하고 이용하는 방법과 목적을 설명합니다.</p>
 
@@ -285,7 +278,7 @@
             <input type="checkbox" class="checkbox" id="third-party-info" required>
             <label for="third-party-info" class="agree-title">개인 정보 제3자에 제공 동의 (필수)</label>
         <div class="terms-box">
-            <div class="terms-text" style="overflow-y: scroll; max-height: 200px;">
+            <div class="terms-text" style="overflow-y: scroll; max-height: 120px;">
                 <h3>개인 정보 제3자에 정보 제공 동의</h3>
                 <p>이 동의 약관은 사용자의 개인 정보를 제3자에게 제공하는 방법과 목적을 설명합니다.</p>
 

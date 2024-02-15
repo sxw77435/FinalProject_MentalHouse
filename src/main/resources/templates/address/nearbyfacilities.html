@@ -3,6 +3,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=aga2qlwh79&submodules=geocoder"></script>
 <head>
+
     <meta charset="UTF-8">
     <title>Find Nearby Facilities</title>
 </head>
@@ -59,6 +60,7 @@
         width: 95%;
         margin: 0 auto;
         height: 100%;
+        margin-top: 250px;
     }
     button {
         background-color: #0e3799;
@@ -68,13 +70,13 @@
         cursor: pointer;
         color: #fff;
     }
-
 </style>
 <body>
+<div class="container">
 <div class="title">
     <h2>내위치 근처 병원찾기</h2>
 </div>
-<div class="container">
+
 <div id="hospitalList" style="float: left; width: 30%; margin-top: 20px;">
     <h3>전체 정신건강 의료 기관</h3>
     <div class="hospital" style="height: 580px; overflow-y: auto;" >

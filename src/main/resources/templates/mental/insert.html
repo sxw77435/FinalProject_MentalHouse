@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>menalinsert</title>
 </head>
 <style>
+    .container{
+        margin-top: 250px;
+    }
     .form-control {
         width: 60%;
         height: auto;
@@ -84,13 +89,13 @@
 
 
 <body>
-<!--name은 mapper작성후 다시 확인-->
+<div th:replace="common/header :: header"></div>
 <form action="/mental/insert" method="post" th:align="center" enctype="multipart/form-data">
 <div class="container">
     <div class="title">INSERT</div>
     <div class="insertcontain">
         <label class="img-area" id="ImgArea">
-            <ul class="word" style="margin-right: 20px;">사진 삽입*</ul>
+            <ul class="word">사진 삽입*</ul>
             <img id="Img" width="300" height="200" onclick="openFileUpload()" >
         </label>
         <div class="thumbnail-file-area">
