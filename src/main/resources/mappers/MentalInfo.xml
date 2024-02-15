@@ -6,7 +6,7 @@
 <mapper namespace="com.uni.mental.mentalInfo.model.dao.MentalDao"><!-- 메퍼위치하고  동일하게 네임스페이스 작성-->
 
     <resultMap type="com.uni.mental.mentalInfo.model.dto.MentalDto" id="mentalResultMap">
-        <id property="mentalinfono" column="REF_MENTALINFO_NO"/>
+        <id property="mentalinfono" column="MENTALINFO_NO"/>
         <result property="mentalname" column="MENTAL_NAME"/>
         <result property="mentalcontent" column="MENTAL_CONTENT"/>
         <result property="mentalcause" column="MENTAL_CAUSE"/>
@@ -14,18 +14,20 @@
         <result property="mentalsymptom" column="MENTAL_SYMPTOM"/>
         <result property="mentaldrug" column="MENTAL_DRUG"/>
         <result property="mentaltreat" column="MENTAL_TREAT"/>
+        <result property="attachno" column="ATTACH_NO"/>
+        <result property="attachnewname" column="ATTACH_NEWNAME"/> <!-- 添加这个映射 -->
+
     </resultMap>
 
     <resultMap id="attachResultMap" type="com.uni.mental.mentalInfo.model.dto.AttachDto">
         <id column="ATTACH_NO" property="attachno" />
-        <result column="CATE_NAME" property="catename" />
         <result column="ATTACH_ORINAME" property="attachoriname" />
         <result column="ATTACH_NEWNAME" property="attachnewname" />
-        <result column="ATTACH_BNO" property="attachbno" />
+        <result column="MENTALINFO_NO" property="mentalinfono" />
     </resultMap>
 
 
-    <select id="findAllMental" resultMap="mentalResultMap"><!-- 메소드명하고 동일하게-->
+    <select id="findAllMental" resultMap="mentalResultMap">
         SELECT
             A.MENTALINFO_NO
              ,A.MENTAL_NAME
@@ -35,48 +37,62 @@
              ,A.MENTAL_SYMPTOM
              ,A.MENTAL_DRUG
              ,A.MENTAL_TREAT
+             ,B.ATTACH_NO
+             ,B.ATTACH_NEWNAME
         FROM TBL_MENTALINFO A
-        JOIN TBL_ATTACH B ON (A.MENTALINFO_NO = B.ATTACH_NO)
+        LEFT JOIN TBL_ATTACH B ON (A.MENTALINFO_NO = B.ATTACH_NO)
     </select>
-    <select id="getAttachOrinameByAttachNo" resultType="string">
-        SELECT ATTACH_ORINAME
-        FROM TBL_ATTACH
-        WHERE ATTACH_NO = #{attachNo}
-    </select>
+
     <select id="findMentalByCode" resultMap="mentalResultMap"><!-- 메소드명하고 동일하게-->
         SELECT
-            MENTALINFO_NO
-             ,MENTAL_NAME
-             ,MENTAL_CONTENT
-             ,MENTAL_CAUSE
-             ,MENTAL_CASE
-             ,MENTAL_SYMPTOM
-             ,MENTAL_DRUG
-             ,MENTAL_TREAT
-        FROM TBL_MENTALINFO
+                A.MENTALINFO_NO
+                ,A.MENTAL_NAME
+                ,A.MENTAL_CONTENT
+                ,A.MENTAL_CAUSE
+                ,A.MENTAL_CASE
+                ,A.MENTAL_SYMPTOM
+                ,A.MENTAL_DRUG
+                ,A.MENTAL_TREAT
+                ,B.ATTACH_NO
+                ,B.ATTACH_NEWNAME
+        FROM TBL_MENTALINFO A
+        LEFT JOIN TBL_ATTACH B ON (A.MENTALINFO_NO = B.ATTACH_NO)
         WHERE MENTALINFO_NO = #{mentalinfono}
     </select>
 
     <update id="updateMental" parameterType="com.uni.mental.mentalInfo.model.dto.MentalDto">
         UPDATE TBL_MENTALINFO
-        SET MENTAL_NAME=#{mentalname},MENTAL_CONTENT=#{mentalcontent},MENTAL_CAUSE=#{mentalcause},MENTAL_CASE=#{mentalcase},MENTAL_SYMPTOM=#{mentalsymptom},MENTAL_DRUG=#{mentaldrug}
-          ,MENTAL_TREAT=#{mentaltreat}
+        SET MENTAL_NAME=#{mentalname}, MENTAL_CONTENT=#{mentalcontent}, MENTAL_CAUSE=#{mentalcause},
+            MENTAL_CASE=#{mentalcase}, MENTAL_SYMPTOM=#{mentalsymptom}, MENTAL_DRUG=#{mentaldrug},
+            MENTAL_TREAT=#{mentaltreat}
         WHERE MENTALINFO_NO = #{mentalinfono}
+    </update>
 
+    <update id="updateAttach" parameterType="com.uni.mental.mentalInfo.model.dto.AttachDto">
+        UPDATE TBL_ATTACH
+        SET ATTACH_NEWNAME=#{attachnewname},ATTACH_ORINAME=#{attachoriname}
+        WHERE ATTACH_NO = #{attachno}
     </update>
 
     <delete id="deleteMental" parameterType="com.uni.mental.mentalInfo.model.dto.MentalDto">
+        <!-- 首先删除TBL_MENTALINFO表中的记录 -->
         DELETE FROM TBL_MENTALINFO
-        WHERE MENTALINFO_NO = #{mentalinfono}
+        WHERE MENTALINFO_NO = #{mentalinfono};
     </delete>
 
+    <delete id="deleteAttach" parameterType="com.uni.mental.mentalInfo.model.dto.AttachDto">
+        <!-- 然后删除TBL_ATTACH表中与给定MENTALINFO_NO相关联的记录 -->
+        DELETE FROM TBL_ATTACH
+        WHERE ATTACH_NO = #{mentalinfono};
+    </delete>
 
 
     <insert id ="insertMental" parameterType="com.uni.mental.mentalInfo.model.dto.MentalDto">
         INSERT
         INTO TBL_MENTALINFO
         (
-        MENTAL_NAME
+         MENTALINFO_NO
+        ,MENTAL_NAME
         ,MENTAL_CONTENT
         ,MENTAL_CAUSE
         ,MENTAL_CASE
@@ -85,8 +101,8 @@
         ,MENTAL_TREAT
       )
         VALUES
-            (
-             #{mentalname}
+            (#{mentalinfono}
+            ,#{mentalname}
             , #{mentalcontent}
             , #{mentalcause}
             , #{mentalcase}
@@ -95,24 +111,39 @@
             , #{mentaltreat}
             )
     </insert>
-    <insert id="insertAttach" parameterType="com.uni.mental.mentalInfo.model.dto.AttachDto">
+    <insert id="insertAttach" parameterType="com.uni.mental.mentalInfo.model.dto.AttachDto" useGeneratedKeys="true" keyProperty="attachno">
         INSERT INTO TBL_ATTACH
         (
             ATTACH_NO,
-            CATE_NAME,
             ATTACH_ORINAME,
-            ATTACH_BNO,
             ATTACH_NEWNAME
         )
         VALUES
             (
                 #{attachno},
-                #{catename},
                 #{attachoriname},
-                #{attachbno},
                 #{attachnewname}
             )
     </insert>
+
+    <select id="searchMentalByKeyword" resultMap="mentalResultMap">
+        SELECT
+            A.MENTALINFO_NO
+             ,A.MENTAL_NAME
+             ,A.MENTAL_CONTENT
+             ,A.MENTAL_CAUSE
+             ,A.MENTAL_CASE
+             ,A.MENTAL_SYMPTOM
+             ,A.MENTAL_DRUG
+             ,A.MENTAL_TREAT
+             ,B.ATTACH_NO
+             ,B.ATTACH_NEWNAME
+        FROM TBL_MENTALINFO A
+        LEFT JOIN TBL_ATTACH B ON (A.MENTALINFO_NO = B.ATTACH_NO)
+        WHERE MENTAL_NAME LIKE #{keyword}
+    </select>
+
+
 
 
 

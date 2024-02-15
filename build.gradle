@@ -37,8 +37,17 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java:8.0.28'
+    implementation 'org.json:json:20210307'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+
+}
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+

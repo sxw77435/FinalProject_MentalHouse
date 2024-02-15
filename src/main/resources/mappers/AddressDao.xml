@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uni.mental.mentalAddress.model.dao.AddressDao">
+
+    <resultMap id="AddressResultMap" type="com.uni.mental.mentalAddress.model.dto.AddressDto">
+        <id column="FACILITY_NO" property="facilityno" />
+        <result column="FACILITY_NAME" property="facilityname" />
+        <result column="FACILITY_ADDRESS" property="facilityaddress" />
+        <result column="FACILITY_LATITUDE" property="facilitylatitude" />
+        <result column="FACILITY_LONGITUDE" property="facilitylongitude" />
+
+    </resultMap>
+
+    <select id="getAllFacilities" resultMap="AddressResultMap">
+        SELECT
+            FACILITY_NO,
+            FACILITY_NAME,
+            FACILITY_ADDRESS,
+            FACILITY_LATITUDE,
+            FACILITY_LONGITUDE
+        FROM TBL_FACILITY
+    </select>
+
+
+
+</mapper>

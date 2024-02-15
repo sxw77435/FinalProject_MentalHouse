@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+    <style>
+        *{
+            padding:0;margin:0
+        }
+        li{
+            list-style:none
+        }
+        a {
+            text-decoration:none;
+            font-size:14px;
+        }
+
+        .menu {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 200px;
+        }
+
+        .menu > li {
+            width: 25%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            background-color: lightgray;
+        }
+
+        .menu a {
+            color: black;
+        }
+        .card{
+            width:70%;
+            display : inline-block;
+            margin: 20px;
+            margin-left: 15%;
+            height: 500px;
+        }
+        .create label{
+            display: inline-block;
+
+        }
+        .create button{
+            width: 100px;
+            border-left: none;
+            border-bottom: none;
+            border-right: none;
+            border-top: none;
+            float: right;
+            margin: 20px;
+        }
+        .create #title{
+
+            width: 500px;
+            height: 32px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+        .create textarea{
+            width: 500px;
+            height: 200px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+
+
+    </style>
+</head>
+
+<body>
+<header class="header">
+    <ul class="menu">
+        <li>
+            <a onclick="location.href='mentalList'">홈</a>
+        </li>
+        <li>
+            <a onclick="location.href='mentalList'">지역별</a>
+        </li>
+        <li>
+            <a onclick="location.href='mentalList'">연령별</a>
+        </li>
+        <li>
+            <a onclick="location.href='mentalList'">질환별</a>
+        </li>
+    </ul>
+</header>
+<div class="card">
+    <h2>게시글 작성하기</h2>
+    <br>
+    <hr>
+    <br>
+    <div class="create">
+        <form action="/recom/recomenroll" method="post" id="enrollForm" th:align="center" enctype="multipart/form-data">
+            <label>
+                <input id = "title" type="text" name="recomtitle" placeholder="제목을 입력하세요">
+            </label>
+            <br>
+            <br>
+
+
+            <label>
+                <textarea cols="100" rows="15" id="content" name="recomcontent" style="display: inline-block; resize : none;" placeholder="내용을 1000자 내로 입력해주세요"maxlength="1000"></textarea>
+            </label>
+            <br><br>
+            <label>카테고리 :
+                <select id="cate" name="cateno">
+                    <option value="10">서울</option>
+                    <option value="11">경기</option>
+                    <option value="12">부산</option>
+                    <option value="13">대구</option>
+                    <option value="14">인천</option>
+                    <option value="15">기타 지역</option>
+                </select>
+            </label>
+            <br><br>
+            <label>이미지 첨부 :
+                <input  type="file" name="attachnewname">
+            </label>
+
+            <br>
+            <button type="button" onclick="location.href='mentalList'">취소하기</button>
+            <button type="submit" >작성하기</button>
+
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>
