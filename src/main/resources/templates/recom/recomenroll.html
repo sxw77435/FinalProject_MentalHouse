@@ -2,6 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>Insert title here</title>
 
@@ -79,7 +81,7 @@
 
     </style>
 </head>
-
+<div th:replace="common/header :: header"></div>
 <body>
 <header class="header">
     <ul class="menu">
@@ -117,21 +119,21 @@
             <br><br>
             <label>카테고리 :
                 <select id="cate" name="cateno">
-                    <option value="10">서울</option>
-                    <option value="11">경기</option>
-                    <option value="12">부산</option>
-                    <option value="13">대구</option>
-                    <option value="14">인천</option>
-                    <option value="15">기타 지역</option>
+                    <option value="1">서울</option>
+                    <option value="2">경기</option>
+                    <option value="3">부산</option>
+                    <option value="4">대구</option>
+                    <option value="5">인천</option>
+                    <option value="6">기타 지역</option>
                 </select>
             </label>
             <br><br>
             <label>이미지 첨부 :
-                <input  type="file" name="attachnewname">
+                <input  type="file" name="recomimage">
             </label>
 
             <br>
-            <button type="button" onclick="location.href='mentalList'">취소하기</button>
+            <button type="button" onclick="location.href='recomlist'">취소하기</button>
             <button type="submit" >작성하기</button>
 
         </form>

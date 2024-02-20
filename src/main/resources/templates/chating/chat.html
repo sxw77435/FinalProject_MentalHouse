@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Chat Page</title>
+    <style>
+        /* 추가된 CSS 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #chatMessages {
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            height: 800px;
+        }
+        #chatMessages p {
+            margin: 5px 0;
+            word-wrap: break-word;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 5px;
+        }
+        .message-wrapper {
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .message {
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .message-content {
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            clear: both;
+        }
+
+        .my-message .message-content {
+            float: right;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .other-message .message-content {
+            float: left;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <input id="memberId" type="hidden" th:value="${memberId}">
+    <input id="toUserId" type="hidden" th:attr="value=${receiverId}">
+    <div class="message-wrapper" id="chatMessages">
+        <!-- 使用Thymeleaf的th:each指令来遍历消息列表 -->
+        <div th:each="message : ${messages}">
+            <!-- 根据消息的发送者来确定消息和发送者的对齐方式 -->
+            <div th:class="${message.senderId == memberId} ? 'message my-message' : 'message other-message'">
+                <div class="message-sender" th:style="${message.senderId == memberId} ? 'text-align: right;' : 'text-align: left;'">
+                    <span th:text="${message.senderId}"></span>
+                </div>
+                <div class="message-content" th:style="${message.senderId == memberId} ? 'text-align: right;' : 'text-align: left;'">
+                    <span th:text="${message.message}"></span>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="line">--------------------------------------- 새 채팅 ---------------------------------------</div>
+    </div>
+
+    <input id="contentText" name="contentText" type="text" placeholder="메시지를 입력하세요">
+    <button type="button" onclick="sendMessage()">➤</button>
+</div>
+
+
+
+<script type="text/javascript">
+    var socket;
+    if (typeof (WebSocket) == "undefined") {
+        console.log("您的浏览器不支持 WebSocket");
+    } else {
+        console.log("您的浏览器支持 WebSocket");
+        // 实现化 WebSocket 对象，指定要连接的服务器地址与端口  建立连接
+        var memberId = document.getElementById("memberId").value;
+        console.log("memberId-->" + memberId);
+        var reqUrl = "ws://localhost:8888/websocket/" + memberId;
+        socket = new WebSocket(reqUrl);
+        // 打开事件
+        socket.onopen = function () {
+            console.log("Socket 已打开");
+        };
+        // 获得消息事件
+        socket.onmessage = function (msg) {
+            console.log("onmessage--" + msg.data);
+            displayMessage(msg.data, false);        };
+        // 关闭事件
+        socket.onclose = function () {
+            console.log("Socket 已关闭");
+        };
+        // 发生了错误事件
+        socket.onerror = function () {
+            alert("Socket 发生了错误");
+            // 此时可以尝试刷新页面
+        }
+    }
+
+    function sendMessage() {
+        if (typeof (WebSocket) == "undefined") {
+            console.log("您的浏览器不支持 WebSocket");
+        } else {
+            var toUserId = document.getElementById('toUserId').value;
+            var contentText = document.getElementById('contentText').value;
+
+            // 构建正确格式的 JSON 消息
+            var msg = JSON.stringify({
+                senderId: memberId,
+                receiverId: toUserId,
+                message: contentText
+            });
+
+            console.log(msg);
+            socket.send(msg);
+
+            displayMessage(contentText, true); // 自己的消息显示在右侧
+
+            document.getElementById('contentText').value = "";
+        }
+    }
+
+    function displayMessage(message, isMyMessage) {
+        var chatMessages = document.getElementById("chatMessages");
+        var messageClass = isMyMessage ? 'my-message' : 'other-message';
+        var senderId = isMyMessage ? document.getElementById("memberId").value : document.getElementById("toUserId").value;
+        var messageWrapper = document.createElement('div');
+        messageWrapper.classList.add('message', messageClass);
+
+        // 根据消息的发送者设置对齐方式
+        var messageAlign = isMyMessage ? 'right' : 'left';
+
+        // 调整 HTML 结构，确保 ID 和消息在一起，并根据消息的发送者对齐
+        messageWrapper.innerHTML = '<div class="message-sender" style="text-align: ' + messageAlign + ';">' + senderId + '</div><div class="message-content" style="clear: both; text-align: ' + messageAlign + ';">' + message + '</div>';
+        chatMessages.appendChild(messageWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+
+    // function getCurrentTime() {
+    //     var now = new Date();
+    //     var hours = now.getHours();
+    //     var minutes = now.getMinutes();
+    //     var seconds = now.getSeconds();
+    //     // Add leading zeros if required
+    //     hours = (hours < 10 ? "0" : "") + hours;
+    //     minutes = (minutes < 10 ? "0" : "") + minutes;
+    //     seconds = (seconds < 10 ? "0" : "") + seconds;
+    //     // Return formatted string
+    //     return hours + ":" + minutes + ":" + seconds;
+    // }
+    $(document).ready(function() {
+        // 解析URL参数
+        var params = new URLSearchParams(window.location.search);
+        var userId = params.get('userId');
+        console.log(userId);
+
+        // 将对方的用户ID填入到输入框中
+        $('#toUserId').val(userId);
+
+        $('#contentText').keypress(function(event) {
+            // 如果按下的是 Enter 键
+            if (event.keyCode === 13) {
+                // 阻止默认的 Enter 键行为
+                event.preventDefault();
+                // 调用 sendMessage 函数
+                sendMessage();
+            }
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

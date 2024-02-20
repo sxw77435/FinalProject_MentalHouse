@@ -2,6 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>Insert title here</title>
 
@@ -87,6 +89,7 @@
 </head>
 
 <body>
+<div th:replace="common/header :: header"></div>
 <header class="header">
     <ul class="menu">
         <li>
@@ -103,28 +106,33 @@
         </li>
     </ul>
 </header>
-<div class="card">
 
-        <div class="title">
-            <h3 th:text="${mental.title}"></h3>
-            <dl>
-                <dd th:text="${mental.nickName}"></dd>
-                <dd th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH-mm-ss')}"></dd>
-
-                <dd th:text="${mental.views}"></dd>
-            </dl>
-            <br>
-            <hr class="line">
-            <a th:text="${mental.content}"></a>
+<div class="detail" th:each="recomDto : ${recomDto}" >
+    <div class="detail1" data-nationno="${recomDto.recomno}">
+        <div class="card">
+            <h2 th:text="${recomDto.recomno}"></h2>
+            <div class="title">
+                <h3 th:text="${recomDto.recomtitle}"></h3>
+                <dl>
+                    <dd th:text="${recomDto.membernick}"></dd>
+                    <dd th:text="${#dates.format(recomDto.recomdate, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+                    <dd th:text="${recomDto.recomviews}" style="display:none;"></dd>
+                </dl>
+                <br>
+                <hr class="line">
+                <a th:text="${recomDto.recomcontent}"></a>
+                <img th:src="@{/image/{imageFileName}(imageFileName=${recomDto.recomimage})}" alt="첨부파일" class="recomimage" style="max-width: 200px;">
+            </div>
+        </div>
+        <div class="but">
+            <a th:href="@{/recom/recomupdate/{recomno}(recomno=${recomDto.recomno})}">수정하기</a>
+            <form th:action="@{/recom/recomdelete/{recomno}(recomno=${recomDto.recomno})}" method="post">
+                <button type="submit">게시물 삭제하기</button>
+            </form>
         </div>
     </div>
-<div class="but">
-    <a th:href="@{mentalUpdateForm(no=${mental.no})}">수정하기</a>
-    <form action="/delete" method="post">
-        <input type="hidden" name="no" th:value="${mental.no}">
-        <button type="submit">게시글 삭제</button>
-    </form>
 </div>
+
 <div class="reply">
     <a>댓글쓰기</a>
     <br>

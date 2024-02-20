@@ -7,11 +7,13 @@ public class RecomDto {
     private int recomno;
     private int cateno;
     private String recomtitle;
+    private String memberid;
+
     private String membernick;
     private Date recomdate;
     private int recomviews;
-    private String recomecontent;
-
+    private String recomcontent;
+    private String recomimage;
 
     public int getRecomno() {
         return recomno;
@@ -35,6 +37,14 @@ public class RecomDto {
 
     public void setRecomtitle(String recomtitle) {
         this.recomtitle = recomtitle;
+    }
+
+    public String getMemberid() {
+        return memberid;
+    }
+
+    public void setMemberid(String memberid) {
+        this.memberid = memberid;
     }
 
     public String getMembernick() {
@@ -61,14 +71,21 @@ public class RecomDto {
         this.recomviews = recomviews;
     }
 
-    public String getRecomecontent() {
-        return recomecontent;
+    public String getRecomcontent() {
+        return recomcontent;
     }
 
-    public void setRecomecontent(String recomecontent) {
-        this.recomecontent = recomecontent;
+    public void setRecomcontent(String recomcontent) {
+        this.recomcontent = recomcontent;
     }
 
+    public String getRecomimage() {
+        return recomimage;
+    }
+
+    public void setRecomimage(String recomimage) {
+        this.recomimage = recomimage;
+    }
 
     @Override
     public String toString() {
@@ -76,11 +93,12 @@ public class RecomDto {
                 "recomno=" + recomno +
                 ", cateno=" + cateno +
                 ", recomtitle='" + recomtitle + '\'' +
+                ", memberid='" + memberid + '\'' +
                 ", membernick='" + membernick + '\'' +
                 ", recomdate=" + recomdate +
                 ", recomviews=" + recomviews +
-                ", recomecontent='" + recomecontent + '\'' +
-
+                ", recomcontent='" + recomcontent + '\'' +
+                ", recomimage='" + recomimage + '\'' +
                 '}';
     }
 }

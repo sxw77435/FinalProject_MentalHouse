@@ -7,12 +7,15 @@
 
     <resultMap type="com.uni.mental.regionComunity.model.dto.RecomDto" id="recomResultMap">
         <id property="recomno" column="RECOM_NO"/>
-        <result property="cateno" column="REF_CATE_NO"/>
+        <result property="cateno" column="CATE_NO"/>
         <result property="recomtitle" column="RECOM_TITLE"/>
-        <result property="membernick" column="REF_MEMBER_NICK"/>
+        <result property="memberid" column="MEMBER_ID"/>
+        <result property="membernick" column="MEMBER_NICK"/>
         <result property="recomdate" column="RECOM_DATE"/>
         <result property="recomviews" column="RECOM_VIEWS"/>
         <result property="recomcontent" column="RECOM_CONTENT"/>
+        <result property="recomimage" column="RECOM_IMAGE"/>
+
     </resultMap>
 
 
@@ -37,20 +40,82 @@
         INSERT INTO TBL_RECOM
         (
           RECOM_NO
-        ,REF_CATE_NO
+        ,CATE_NO
         ,RECOM_TITLE
+        ,MEMBER_ID
         ,RECOM_DATE
+        ,RECOM_VIEWS
         ,RECOM_CONTENT
+        ,RECOM_IMAGE
         )
         VALUES
             (#{recomno}
             ,#{cateno}
-            , #{recomtitle}
-            , #{recomdate}
+            ,#{recomtitle}
+            ,#{memberid}
+            ,NOW()
+            , #{recomviews}
             , #{recomcontent}
+            ,#{recomimage}
             )
     </insert>
 
+    <select id="findAllRecom" resultMap="recomResultMap"><!-- 메소드명하고 동일하게-->
+        SELECT
+            *
+        FROM TBL_RECOM A
+        LEFT JOIN TBL_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+    </select>
+
+    <select id="findRecomByCode" resultMap="recomResultMap"><!-- 메소드명하고 동일하게-->
+        SELECT
+            A.RECOM_NO
+             ,A.CATE_NO
+             ,A.RECOM_TITLE
+             ,A.RECOM_DATE
+             ,A.RECOM_VIEWS
+             ,A.RECOM_CONTENT
+             ,A.RECOM_IMAGE
+             ,B.MEMBER_ID
+             ,B.MEMBER_NICK
+        FROM TBL_RECOM A
+        LEFT JOIN TBL_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+        WHERE RECOM_NO = #{recomno}
+    </select>
+
+    <update id="updateRecom" parameterType="com.uni.mental.regionComunity.model.dto.RecomDto">
+        UPDATE TBL_RECOM
+        SET RECOM_TITLE=#{recomtitle},RECOM_DATE=NOW(),RECOM_CONTENT=#{recomcontent},RECOM_IMAGE = #{recomimage}
+        WHERE RECOM_NO = #{recomno}
+
+    </update>
+
+    <update id="updateRecomViews" parameterType="int">
+        UPDATE TBL_RECOM
+        SET RECOM_VIEWS = #{recomviews}
+        WHERE RECOM_NO = #{recomno}
+    </update>
+
+    <delete id="deleteRecom" parameterType="com.uni.mental.regionComunity.model.dto.RecomDto">
+        DELETE FROM TBL_RECOM
+        WHERE RECOM_NO=#{recomno}
+    </delete>
+
+    <select id="findRecomByCateno" resultMap="recomResultMap">
+        SELECT
+            A.RECOM_NO
+             ,A.CATE_NO
+             ,A.RECOM_TITLE
+             ,A.RECOM_DATE
+             ,A.RECOM_VIEWS
+             ,A.RECOM_CONTENT
+             ,A.RECOM_IMAGE
+             ,B.MEMBER_ID
+             ,B.MEMBER_NICK
+        FROM TBL_RECOM A
+                LEFT JOIN TBL_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+        WHERE CATE_NO = #{cateno}
+    </select>
 
 
 

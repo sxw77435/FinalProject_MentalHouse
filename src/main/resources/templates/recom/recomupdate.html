@@ -2,6 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>Insert title here</title>
 
@@ -102,6 +104,7 @@
 </head>
 
 <body>
+<div th:replace="common/header :: header"></div>
 <header class="header">
     <ul class="menu">
         <li>
@@ -124,27 +127,27 @@
     <hr>
     <br>
     <div class="create">
-        <form action="/mencom/update" method="post" id="updateForm" >
+        <form action="/recom/recomupdate" method="post" id="updateForm"  enctype="multipart/form-data">
+            <input type="hidden" name="recomno" th:value="${recomDto.recomno}" />
+
             <label>
-                <input id = "title" type="text" name="title" th:value="${mental.title}">
+                <input id = "title" type="text" name="recomtitle" th:value="${recomDto.recomtitle}">
 
             </label>
             <br>
             <br>
-            <label>
-                <input id="nickname" type="text" name="nickname" th:value="${mental.nickName}" readonly>
+            <label class="img-area" id="ImgArea">
+                <ul class="word">UPDATE YOUR NATION PICTURE</ul>
+                <img id="Img" width="190" height="150" onclick="openFileUpload()" th:src="@{/image/{imageFileName}(imageFileName=${recomDto.recomimage})}">
             </label>
+            <div class="thumbnail-file-area">
+                <input type="file" id="thumbnailImg" name="recomimage" onchange="loadImg(this, 1)">
+            </div>
             <br><br>
             <label>
-                <textarea cols="100" rows="15" style="display: inline-block; resize : none;" placeholder="내용을 1000자 내로 입력해주세요" maxlength="1000"></textarea>
+                <textarea cols="100" rows="15" name="recomcontent" style="display: inline-block; resize : none;" placeholder="내용을 1000자 내로 입력해주세요" maxlength="1000" th:text="${recomDto.recomcontent}"></textarea>
             </label>
             <br><br>
-            <label>
-                <input id="cate" type="hidden" name="cate" th:value="${mental.cate}" readonly>
-            </label>
-<!--            <label>이미지 첨부 :-->
-<!--                <input type="file" name="file">-->
-<!--            </label>-->
 
             <br>
             <button type="button" onclick="location.href='mentalList'">취소하기</button>
@@ -153,6 +156,23 @@
         </form>
     </div>
 </div>
+
+<script>
+    function openFileUpload() {
+        document.getElementById('thumbnailImg').click();
+    }
+
+    function loadImg(value) {
+        if (value.files && value.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("Img").src = e.target.result;
+            }
+            reader.readAsDataURL(value.files[0]);
+        }
+    }
+
+</script>
 
 </body>
 
