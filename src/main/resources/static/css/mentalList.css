@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+.con {
+    max-width: 950px;
+    margin: auto;
+}
+.menu {
+    width: 100%;
+    margin-top: 180px;
+}
+
+.menu > li {
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    background-color: lightgray;
+    width: 100%;
+    padding: 5px;
+}
+
+.mental{
+    float: right;
+    margin: 5px;
+}
+
+.table-common>table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-common table th, .table-common table td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.list table {
+    border:none;
+    border-top:2px solid black;
+    border-bottom:2px solid black;
+}
+
+.list table th, .list table td {
+    border:none;
+}
+
+.list table td {
+    border-bottom:1px solid black;
+}
+
+.list table thead {
+    border-bottom:2px solid black;
+    background-color: whitesmoke;
+}
+
+tr {
+    text-align: center;
+}
+
+.btn{
+    width: 85.5%;
+    margin: 20px;
+}
+
+#btn1{
+    float: right;
+    width: 100px;
+    height: 60px;
+    background-color: gray;
+    border: 0px;
+    display: inline-block;
+}
