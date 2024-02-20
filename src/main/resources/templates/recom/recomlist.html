@@ -3,6 +3,10 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
@@ -91,10 +95,44 @@
             display: inline-block;
 
         }
+        .page-number {
+            font-size: 17px; /* 增大页码链接的字体大小 */
+        }
+        .page-link {
+            position: relative;
+            top: -10px; /* 负值表示向上移动 */
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .page-link {
+            text-align: center;
+        }
+
+        .page-number {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .page-number.active {
+            background-color: lightgray;
+            color: white;
+        }
+        .page-link {
+            text-align: center;
+        }
+
+
+
+
     </style>
 </head>
 <body>
-
+<div th:replace="common/header :: header"></div>
 <header class="header">
     <ul class="menu">
         <li>
@@ -109,6 +147,9 @@
         <li>
             <a onclick="location.href='mentalList'">질환별</a>
         </li>
+        <li>
+            <a onclick="location.href='/chatbot/userlist'">채팅</a>
+        </li>
     </ul>
 </header>
 
@@ -119,33 +160,38 @@
     <div class="men">
         <ul>
             <li>
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> 그 외 </span>
+                <a onclick="location.href='/recom/recomlist?cateno=6'">
+                    <span class="mental"> 기타 </span>
                 </a>
             </li>
             <li>
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> 불면증 </span>
+                <a onclick="location.href='/recom/recomlist?cateno=1'">
+                    <span class="mental"> 서울 </span>
                 </a>
             </li>
             <li>
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> ADHD </span>
+                <a onclick="location.href='/recom/recomlist?cateno=2'">
+                    <span class="mental"> 경기 </span>
                 </a>
             </li>
             <li>
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> 조현병</span>
+                <a onclick="location.href='/recom/recomlist?cateno=3'">
+                    <span class="mental"> 부산</span>
                 </a>
             </li>
             <li>
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> 조울증 </span>
+                <a onclick="location.href='/recom/recomlist?cateno=4'">
+                    <span class="mental"> 대구 </span>
                 </a>
             </li>
             <li>
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> 우울증 </span>
+                <a onclick="location.href='/recom/recomlist?cateno=5'">
+                    <span class="mental"> 인천 </span>
+                </a>
+            </li>
+            <li>
+                <a onclick="location.href='/recom/recomlist'">
+                    <span class="mental"> 전부 </span>
                 </a>
             </li>
         </ul>
@@ -162,12 +208,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="mental : ${mentalList}">
-            <td th:text="${mental.no}"></td>
-            <td><a th:href="@{mentalDetailView(no=${mental.no})}" th:text="${mental.title}"></a></td>
-            <td th:text="${mental.nickName}"></td>
-            <td th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH-mm-ss')}"></td>
-            <td th:text="${mental.views}"></td>
+        <tr th:each="recom : ${recomList}" class="total_item">
+            <td th:text="${recom.cateno}" style="display: none"></td>
+            <td th:text="${recom.recomno}"></td>
+            <td><a th:href="@{/recom/recomdetailview/{recomno}(recomno=${recom.recomno})}" th:text="${recom.recomtitle}"></a></td>
+            <td><span class="user-nickname" th:text="${recom.membernick}" th:data-user-id="${recom.memberid}" style="cursor: pointer;"></span><div class="dm-button-container"></div></td>
+            <td th:text="${#dates.format(recom.recomdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${recom.recomviews}"></td>
         </tr>
         </tbody>
 
@@ -177,9 +224,115 @@
 <div class="btn">
     <button type="submit" id="btn1">
 
-        <img src="/static/images/pngwing.com.png" style="width: 50px; height: 50px;" alt="글쓰기" onclick="location.href='mentalEnrollForm'"/>
+        <img src="/static/images/pngwing.com.png" style="width: 50px; height: 50px;" alt="글쓰기" onclick="location.href='recomenroll'"/>
 
     </button>
 </div>
+<div class="pagination-container">
+    <!-- 添加到第一页按钮 -->
+    <a href="#" class="first-page"><img src="/image/btn_first.png"></a>
+    <a href="#" class="prev-page"><img src="/image/btn_prev.png"></a>
+    <span class="page-link"></span>
+    <a href="#" class="next-page"><img src="/image/btn_next.png"></a>
+    <a href="#" class="last-page"><img src="/image/btn_end.png"></a>
+
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        // 使用事件委托监听所有昵称的点击事件
+        $(document).on('click', '.user-nickname', function() {
+            // 获取所选用户的ID
+            var userId = $(this).data('user-id');
+
+            // 检查是否存在对应的"DM보내기"按钮
+            var dmButton = $(this).next('.dm-button-container').find('.dm-button');
+
+            // 如果按钮不存在，则创建一个
+            if (dmButton.length === 0) {
+                dmButton = $('<button>')
+                    .text('DM보내기')
+                    .addClass('dm-button')
+                    .click(function() {
+                        // 点击按钮时执行的操作，跳转到指定页面，并将用户ID作为参数传递
+                        window.location.href = 'http://localhost:8888/chatbot/toWebSocketDemo?userId=' + userId;
+                    });
+
+                // 添加按钮到相应的容器中
+                $(this).next('.dm-button-container').empty().append(dmButton);
+            } else {
+                // 如果按钮已存在，则隐藏按钮
+                dmButton.remove();
+            }
+        });
+    });
+    $(document).ready(function() {
+        // 计算总页数
+        var totalPages = Math.ceil($('.total_item').length / 5);
+
+        // 添加页码链接
+        addPageLinks(totalPages);
+
+        // 初始化显示第一页
+        showPage(1);
+
+        // 点击页码链接
+        $(document).on('click', '.page-number', function() {
+            var pageNumber = parseInt($(this).text());
+            showPage(pageNumber);
+        });
+
+        // 点击第一页按钮
+        $('.first-page').click(function() {
+            showPage(1);
+        });
+
+        // 点击上一页按钮
+        $('.prev-page').click(function() {
+            var currentPage = parseInt($('.page-link .active').text());
+            if (currentPage > 1) {
+                showPage(currentPage - 1);
+            }
+        });
+
+        // 点击下一页按钮
+        $('.next-page').click(function() {
+            var currentPage = parseInt($('.page-link .active').text());
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+            }
+        });
+
+        // 点击最后一页按钮
+        $('.last-page').click(function() {
+            showPage(totalPages);
+        });
+
+        function addPageLinks(totalPages) {
+            var pageLinks = '';
+            for (var i = 1; i <= totalPages; i++) {
+                pageLinks += '<a href="#" class="page-number">' + i + '</a>';
+                if (i !== totalPages) {
+                    pageLinks += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; // 添加更多空格来增加间距
+                }
+            }
+            $('.page-link').html(pageLinks);
+        }
+
+        function showPage(pageNumber) {
+            // 隐藏所有项目
+            $('.total_item').hide();
+            // 计算当前页起始索引和结束索引
+            var startIndex = (pageNumber - 1) * 5;
+            var endIndex = startIndex + 5;
+            // 显示当前页的项目
+            $('.total_item').slice(startIndex, endIndex).show();
+            // 更新页码链接的样式
+            $('.page-number').removeClass('active');
+            $('.page-number').eq(pageNumber - 1).addClass('active');
+        }
+    });
+</script>
 </body>
 </html>

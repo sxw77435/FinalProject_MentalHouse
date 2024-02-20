@@ -65,6 +65,19 @@
         SELECT COUNT(*) FROM TBL_MEMBER WHERE MEMBER_NICK = #{nick}
     </select>
 
+    <select id="getAllUsers" resultMap="loginMemberResultMap" >
+        SELECT
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_PWD,
+            MEMBER_BIR,
+            MEMBER_EMAIL,
+            MEMBER_ADD,
+            MEMBER_MENTAL,
+            MEMBER_NICK
+        FROM TBL_MEMBER
+    </select>
+
 
 
 </mapper>

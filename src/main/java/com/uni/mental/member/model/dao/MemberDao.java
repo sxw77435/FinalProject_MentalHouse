@@ -3,6 +3,8 @@ package com.uni.mental.member.model.dao;
 import com.uni.mental.member.model.dto.MemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface MemberDao {
     MemberDto findMemberById(String memberId);
@@ -14,4 +16,5 @@ public interface MemberDao {
     int nicknameCheck(String nick);
 
 
+    List<MemberDto> getAllUsers();
 }

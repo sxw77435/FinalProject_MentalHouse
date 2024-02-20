@@ -1,20 +1,27 @@
 package com.uni.mental.member.model.service;
 
 import com.uni.mental.member.model.dao.MemberDao;
+import com.uni.mental.member.model.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class MemberService {
 
     private final MemberDao memberDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public MemberService(MemberDao memberDao){
+    public MemberService(MemberDao memberDao, PasswordEncoder passwordEncoder) {
         this.memberDao = memberDao;
+        this.passwordEncoder = passwordEncoder;
     }
+
 
 
     public int idCheck(String id) {
@@ -36,5 +43,19 @@ public class MemberService {
     }
 
 
+    public boolean authenticate(String username, String password) {
+        MemberDto member = memberDao.findMemberById(username);
 
+        // 如果找不到用户，或者用户输入的密码与数据库中存储的密码不匹配，则返回false
+        if (member == null || !passwordEncoder.matches(password, member.getPwd())) {
+            return false;
+        }
+
+        // 用户名和密码匹配，返回true
+        return true;
+    }
+
+    public List<MemberDto> getAllUsers() {
+        return memberDao.getAllUsers();
+    }
 }

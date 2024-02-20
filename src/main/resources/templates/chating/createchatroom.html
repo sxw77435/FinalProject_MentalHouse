@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="password-input" id="passwordInput">
+        <input type="text" placeholder="채팅방 이름을 입력하세요" id="chatroomName">
+        <input type="password" placeholder="채팅방 비번을 입력하세요" id="chatroomPassword">
+        <button onclick="createChatroom()">확인</button>
+    </div>
+<script>
+    function createChatroom() {
+        var chatroomName = document.getElementById('chatroomName').value;
+        var chatroomPassword = document.getElementById('chatroomPassword').value;
+
+        // 发送聊天室的名称和密码到后端
+        $.ajax({
+            type: 'POST',
+            url: '/chatbot/chatroom',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                chatroomname: chatroomName,
+                chatroompwd: chatroomPassword
+            }),
+            success: function (response) {
+                console.log(response);
+                alert('채팅방 성공적으로 만들었습니다.');
+                window.location.href = '/chatbot/userlist';
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
+</script>
+
+
+</body>
+</html>

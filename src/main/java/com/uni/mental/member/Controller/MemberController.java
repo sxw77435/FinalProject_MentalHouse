@@ -1,5 +1,6 @@
 package com.uni.mental.member.Controller;
 
+import com.uni.mental.chating.WebSocketServer;
 import com.uni.mental.member.model.dao.MemberDao;
 import com.uni.mental.member.model.dto.MemberDto;
 import com.uni.mental.member.model.service.MemberService;
@@ -22,12 +23,15 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private WebSocketServer webSocketServer;
 
 
 
 
     @GetMapping("/loginpage")
-    public void memberLoginForm(){}
+    public void memberLoginForm() {
+    }
 
     @GetMapping("/agreement")
     public String agreement() {
@@ -89,8 +93,29 @@ public class MemberController {
 
         return String.valueOf(count);
     }
-    @GetMapping("/success")
-    public String enrollsuccess() {return "login/success";}
 
+    @GetMapping("/success")
+    public String enrollsuccess() {
+        return "login/success";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+        // 根据用户名和密码验证用户
+        boolean isAuthenticated = memberService.authenticate(username, password);
+
+        if (isAuthenticated) {
+            // 用户验证成功，创建WebSocket连接
+            webSocketServer.createWebSocketSession(username);
+
+            // 返回登录成功页面
+            return "redirect:/";
+        } else {
+            // 用户验证失败，返回登录页面或错误提示
+            return "redirect:/login/error";
+        }
+
+
+    }
 
 }

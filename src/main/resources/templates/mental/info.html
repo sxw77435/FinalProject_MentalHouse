@@ -135,6 +135,34 @@
             justify-content: space-between;
             align-items: flex-start; /* 将元素对齐到每行的顶部 */
         }
+        .page-number {
+            font-size: 17px; /* 增大页码链接的字体大小 */
+        }
+        .page-link {
+            position: relative;
+            top: -10px; /* 负值表示向上移动 */
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .page-link {
+            text-align: center;
+        }
+
+        .page-number {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .page-number.active {
+            background-color: lightgray;
+            color: white;
+        }
+d
 
     </style>
 </head>
@@ -190,9 +218,13 @@
             var pageLinks = '';
             for (var i = 1; i <= totalPages; i++) {
                 pageLinks += '<a href="#" class="page-number">' + i + '</a>';
+                if (i !== totalPages) {
+                    pageLinks += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; // 添加更多空格来增加间距
+                }
             }
             $('.page-link').html(pageLinks);
         }
+
 
         // 初始化页面，显示第一页的项目，隐藏其他页的项目
         showPage(1);
@@ -214,6 +246,7 @@
 
         // 添加页码链接
         addPageLinks(totalPages);
+
 
         function showPage(pageNumber) {
             $('.mentalcontainer .item').hide(); // 隐藏所有项目
@@ -355,10 +388,13 @@
                     var pageLinks = '';
                     for (var i = 1; i <= totalPages; i++) {
                         pageLinks += '<a href="#" class="page-number">' + i + '</a>';
+                        if (i !== totalPages) {
+                            pageLinks += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; // 添加更多空格来增加间距
+                        }
                     }
                     $('.page-link').html(pageLinks);
                 }
-                addPageLinks(totalPages);
+
 
                 // 计算并填充“전체”和“현재 페이지”的信息
                 var totalItems = $('.mentalcontainer .item').length; // 获取总项目数量

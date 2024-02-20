@@ -16,7 +16,6 @@
         <result property="mentaltreat" column="MENTAL_TREAT"/>
         <result property="attachno" column="ATTACH_NO"/>
         <result property="attachnewname" column="ATTACH_NEWNAME"/> <!-- 添加这个映射 -->
-
     </resultMap>
 
     <resultMap id="attachResultMap" type="com.uni.mental.mentalInfo.model.dto.AttachDto">

@@ -17,12 +17,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService{
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final MemberDao memberDao;
 
+
     @Autowired
-    public AuthenticationServiceImpl(MemberDao memberDao){ this.memberDao= memberDao;}
+    public AuthenticationServiceImpl(MemberDao memberDao) {
+        this.memberDao = memberDao;
+    }
 
     @Override
     public Map<String, List<String>> getPermitListMap() {
@@ -33,7 +36,13 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 //        adminPermitList.add("/nation/nationinsert");
 //        adminPermitList.add("/nation/nationupdateform/{nationno}");
 //
-//        memberPermitList.add("/nation/populationlist");
+        memberPermitList.add("/recom/recomenroll");
+//        memberPermitList.add("/recom/recomlist");
+        memberPermitList.add("/chatbot/toWebSocketDemo");
+        memberPermitList.add("/chatbot/userlist");
+        memberPermitList.add("/chatbot/chatroom");
+
+
 
 
 //      메뉴보기 페이지는 아무거나 (로그인 안할때도 볼수 있음)
@@ -44,17 +53,19 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         return permitListMap;
     }
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("호출확인");
-        System.out.println("username : "+username);
+        System.out.println("username : " + username);
 
         MemberDto member = memberDao.findMemberById(username);
 
         System.out.println(member);
 
 
-        if(member == null) {
+        if (member == null) {
             throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
         }
         List<MemberRoleDTO> memberRoleList = member.getMemberRoleList();
@@ -64,6 +75,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         System.out.println(authorities);
         return new CustomUser(member, authorities);
     }
+
+
+
 
 
 }
