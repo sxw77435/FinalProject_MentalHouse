@@ -11,12 +11,13 @@
         <result column="AGECOM_DETAIL" property="ageComDetail"/>
         <result column="MEMBER_NICK" property="memberNick"/>
         <result column="AGECOM_DATE" property="ageComDate"/>
-        <result column="AGECOM_VIEWS" property="views"/>
+        <result column="AGECOM_VIEWS" property="ageComViews"/>
     </resultMap>
 
     <select id="findAllView" parameterType="com.uni.mental.agecomunity.model.dto.AgeComDTO">
         SELECT *
         FROM tbl_community_age
+
     </select>
 
     <insert id="registAgeCom" parameterType="com.uni.mental.agecomunity.model.dto.AgeComDTO">
@@ -32,7 +33,7 @@
 
     <update id="updateAgeCom" parameterType="com.uni.mental.agecomunity.model.dto.AgeComDTO">
         UPDATE tbl_community_age
-        SET CATE_NO = #{cateNo}, MEMBER_NICK = #{memberNick}, AGECOM_TITLE = #{ageComTitle}, AGECOM_DETAIL = #{ageComDetail}, AGECOM_DATE = #{ageComDate}, AGECOM_VIEWS = #{views}
+        SET CATE_NO = #{cateNo}, MEMBER_NICK = #{memberNick}, AGECOM_TITLE = #{ageComTitle}, AGECOM_DETAIL = #{ageComDetail}, AGECOM_DATE = #{ageComDate}, AGECOM_VIEWS = #{ageComViews}
         WHERE AGECOM_NO = #{ageComNo}
     </update>
 
