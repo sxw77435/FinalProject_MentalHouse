@@ -126,9 +126,10 @@
             text-align: center;
         }
 
-
-
-
+        .pagination-container {
+            text-align: center; /* 페이지네이션을 가운데 정렬합니다. */
+            margin-top: 20px; /* 페이지네이션과 위쪽 간격을 설정합니다. */
+        }
     </style>
 </head>
 <body>
@@ -229,7 +230,6 @@
     </button>
 </div>
 <div class="pagination-container">
-    <!-- 添加到第一页按钮 -->
     <a href="#" class="first-page"><img src="/image/btn_first.png"></a>
     <a href="#" class="prev-page"><img src="/image/btn_prev.png"></a>
     <span class="page-link"></span>
@@ -241,21 +241,20 @@
 
 <script>
     $(document).ready(function() {
-        // 使用事件委托监听所有昵称的点击事件
+        // 닉네임 클릭
         $(document).on('click', '.user-nickname', function() {
-            // 获取所选用户的ID
+            // 해당선택한 id 얻기
             var userId = $(this).data('user-id');
 
-            // 检查是否存在对应的"DM보내기"按钮
+
             var dmButton = $(this).next('.dm-button-container').find('.dm-button');
 
-            // 如果按钮不存在，则创建一个
             if (dmButton.length === 0) {
                 dmButton = $('<button>')
                     .text('DM보내기')
                     .addClass('dm-button')
                     .click(function() {
-                        // 点击按钮时执行的操作，跳转到指定页面，并将用户ID作为参数传递
+                        // 버튼누른뒤 해당 userId를가지고 채팅 화면 돌리기
                         window.location.href = 'http://localhost:8888/chatbot/toWebSocketDemo?userId=' + userId;
                     });
 

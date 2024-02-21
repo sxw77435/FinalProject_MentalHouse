@@ -20,7 +20,8 @@ public class WebSocketConfig extends ServerEndpointConfig.Configurator {
     @Override
     public void modifyHandshake(ServerEndpointConfig sec, HandshakeRequest request, HandshakeResponse response) {
 
-        //获取httpsession
+        //httpsession 얻기
+        // WebSocketService계속 null 이고 그래서 httpsession 통해서 가져오기
         HttpSession session = (HttpSession) request.getHttpSession();
         sec.getUserProperties().put(HttpSession.class.getName(), session);
         session.setAttribute("webSocketService", webSocketService);

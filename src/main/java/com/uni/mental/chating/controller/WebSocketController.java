@@ -32,18 +32,17 @@ public class WebSocketController {
         this.webSocketDao = webSocketDao;
     }
 
+    // 채팅 화면 나오기
     @GetMapping("/toWebSocketDemo")
     public String toWebSocketDemo(@RequestParam("userId") String userId,Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String memberId = authentication.getName();
 
-        // 从模型中获取接收者的 ID
         String receiverId = userId;
 
-        // 获取两个用户之间的聊天记录
+
         List<WebSocketDto> messages = webSocketService.getChat(memberId, receiverId);
 
-        // 将聊天记录添加到模型中，在页面上显示
         model.addAttribute("messages", messages);
         model.addAttribute("memberId", memberId);
         model.addAttribute("receiverId", receiverId);
@@ -55,19 +54,20 @@ public class WebSocketController {
         return "chating/chat";
     }
 
+    // 채팅 내용이 데이터베이스에 저장
     @PostMapping("/sendChatMessage")
     @ResponseBody
     public String insertChat(@RequestParam("senderId") String senderId,
                              @RequestParam("receiverId") String receiverId,
                              @RequestParam("message") String messageContentJson) {
         try {
-            // 解析 JSON 字符串以获取消息内容
+
             JSONObject messageJson = new JSONObject(messageContentJson);
             String messageContent = messageJson.getString("message");
 
             System.out.println("messageContent"+messageContent);
 
-            // 仅将消息内容保存到数据库
+
             webSocketService.insertChat(senderId, receiverId, messageContent);
 
             return "Message sent successfully";
@@ -76,31 +76,39 @@ public class WebSocketController {
         }
     }
 
+    // 대화 유저들의 리스트 나오기
     @GetMapping("/userlist")
     public String getUserList(Model model) {
-        // 获取用户列表
+
         List<MemberDto> userList = memberService.getAllUsers();
 
-        // 将用户列表添加到模型中
+
         model.addAttribute("userList", userList);
         System.out.println(userList);
 
-        List<ChatroomDto> roomList = webSocketService.getAllChatrooms(); // 从服务层获取房间列表
-        model.addAttribute("roomList", roomList); // 将房间列表添加到模型中
+        List<ChatroomDto> roomList = webSocketService.getAllChatrooms();
+        model.addAttribute("roomList", roomList);
         System.out.println(roomList);
 
 
         return "/chating/userlist";
     }
 
+    // 채팅방 추가
     @PostMapping("/chatroom")
     @ResponseBody
     public String createChatroom(@RequestBody ChatroomDto chatroomDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = authentication.getName();
+        chatroomDto.setChatroomowner(memberId);
         try {
             System.out.println("Received chatroom name: " + chatroomDto.getChatroomname());
             System.out.println("Received chatroom password: " + chatroomDto.getChatroompwd());
 
-            // 调用 WebSocketService 将聊天室信息插入数据库
+            chatroomDto.setChatroomname(chatroomDto.getChatroomname());
+            chatroomDto.setChatroompwd(chatroomDto.getChatroompwd());
+            chatroomDto.setChatroomowner(memberId);
+
             webSocketService.createChatroom(chatroomDto);
             return chatroomDto.getChatroomname();
         } catch (Exception e) {
@@ -109,6 +117,7 @@ public class WebSocketController {
         }
     }
 
+    // 채팅 방 화면 나오기
     @GetMapping("/chatroom")
     public String chatroom(Model model, @RequestParam("chatroomno") int chatroomno){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -117,24 +126,23 @@ public class WebSocketController {
         List<WebSocketDto> messages = webSocketService.getChatByChatroomNo(chatroomno);
 
         model.addAttribute("memberId", memberId);
-        model.addAttribute("messages", messages); // 将获取到的聊天记录添加到模型中
+        model.addAttribute("messages", messages);
 
         return "/chating/chatroom";
     }
 
+    // 채팅방 기록들이 데이터 베이스 에 저장
     @PostMapping("/insertGroupMessage")
     @ResponseBody
     public String insertGroupMessage(@RequestParam("chatroomno") int chatroomno,
                                      @RequestParam("senderId") String senderId,
                                      @RequestParam("message") String messageContentJson) {
         try {
-            // 解析 JSON 字符串以获取消息内容
             JSONObject messageJson = new JSONObject(messageContentJson);
             String messageContent = messageJson.getString("message");
 
             System.out.println("messageContent" + messageContent);
 
-            // 仅将消息内容保存到数据库
             webSocketService.insertGroupMessage(chatroomno, senderId, messageContent);
 
             return "Message sent successfully";
@@ -148,6 +156,7 @@ public class WebSocketController {
         return "/chating/createchatroom";
     }
 
+    // 비번 일치하는지 확인
     @PostMapping("/confirmpwd")
     @ResponseBody
     public ValidationResponse confirmpwd(@RequestParam("roomNo") int roomNo, @RequestParam("password") String password) {
@@ -155,6 +164,8 @@ public class WebSocketController {
         return new ValidationResponse(isValid);
     }
 
+
+//비번 확인 하는 검증 함수
     static class ValidationResponse {
         private boolean valid;
 

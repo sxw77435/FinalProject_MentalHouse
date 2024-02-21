@@ -21,9 +21,9 @@
         margin: 0 auto;
         border: 5px solid #f5f3f3;
         height: 130px;
-        display: flex; /* 添加Flexbox布局 */
-        justify-content: center; /* 水平居中 */
-        align-items: center; /* 垂直居中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-top: 250px;
     }
     .container1::before{
@@ -40,7 +40,7 @@
         width: 60px;
         height: 60px;
         position: absolute;
-        right: -6px; /* 定位到右边 */
+        right: -6px;
         bottom: -6px; /* 定位到底部 */
         background-image: url('/image/right.png'); /* 右下角的图片 */
     }
@@ -227,10 +227,12 @@
     <div class="expand-container" onclick="toggleExpand(this)">
         <div class="expand-icon"></div>
     </div>
+    <th:block sec:authorize="hasRole('ADMIN')">
     <div class="buttons" >
         <button type="button" onclick="updateMental()">Update</button>
         <button type="button" onclick="deleteMental()">Delete</button>
     </div>
+    </th:block>
 </div>
 
 <script>

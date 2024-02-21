@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>User List</title>
     <style>
-        /* 添加样式以美化页面 */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -52,6 +51,10 @@
         .password-input input {
             padding: 5px;
         }
+        .room-info {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +69,7 @@
     </ul>
 
     <!-- 创建多人聊天室按钮 -->
-    <button class="create-chatroom-button" onclick="showPasswordInput()">创建多人聊天室</button>
+    <button class="create-chatroom-button" onclick="showPasswordInput()">채팅방 추가 하기</button>
 
 
     <div class="container1">
@@ -74,7 +77,10 @@
         <ul>
             <!-- 遍历房间列表，为每个房间添加按钮 -->
             <li th:each="room : ${roomList}" th:attr="data-room-no=${room.chatroomno}" onclick="enterChatroom(this)">
-                <span class="chatroom" th:text="${room.chatroomname}"></span>
+                <div class="room-info">
+                    <span class="chatroom" th:text="${room.chatroomname}"></span>
+                    <span class="chatowner">채팅방 주인: <span th:text="${room.chatroomowner}"></span></span>
+                </div>
             </li>
         </ul>
     </div>
@@ -98,7 +104,7 @@
 
     function enterChatroom(button) {
         var roomNo = button.getAttribute('data-room-no');
-        var password = prompt("请输入密码：", "");
+        var password = prompt("채팅방 비밀번호 입력하세요：", "");
 
         if (password !== null) { // 用户点击了确定按钮
             // 发送密码到服务器进行验证
@@ -115,12 +121,12 @@
                         window.location.href = '/chatbot/chatroom?chatroomno=' + roomNo;
                     } else {
                         // 如果密码验证失败，显示错误信息给用户
-                        alert('密码错误，请重新输入。');
+                        alert('비밀번호 틀렸습니다.다시 시도 하세요');
                     }
                 },
                 error: function() {
                     // 处理密码验证过程中的错误
-                    alert('密码验证失败，请稍后再试。');
+                    alert('비번 검증 실패하였습니다');
                 }
             });
         }

@@ -40,14 +40,18 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.json:json:20210307'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
+
 tasks.named('bootBuildImage') {
     builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
 }
 

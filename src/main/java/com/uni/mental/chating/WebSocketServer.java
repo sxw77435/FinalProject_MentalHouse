@@ -18,7 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @Slf4j
 /**
- * html页面与之关联的接口
  * var reqUrl = "http://localhost:8081/websocket/" + cid;
  * socket = new WebSocket(reqUrl.replace("http", "ws"));
  */
@@ -33,26 +32,26 @@ public class WebSocketServer {
 
 
     /**
-     * 静态变量，用来记录当前在线连接数，线程安全的类。
+     * 현재 온라인 연결 수를 기록하는 정적 변수입니다. 스레드 안전한 클래스입니다.
      */
     private static AtomicInteger onlineSessionClientCount = new AtomicInteger(0);
 
     /**
-     * 存放所有在线的客户端
+     * 모든 온라인 클라이언트를 보관하는 곳입니다.
      */
     private static Map<String, Session> onlineSessionClientMap = new ConcurrentHashMap<>();
 
     /**
-     * 连接sid和连接会话
+     * 연결 SID와 연결 세션을 매핑하는 곳입니다.
      */
     private String sid;
     private Session session;
 
     /**
-     * 连接建立成功调用的方法。由前端<code>new WebSocket</code>触发
-     *
-     * @param sid     每次页面建立连接时传入到服务端的id，比如用户id等。可以自定义。
-     * @param session 与某个客户端的连接会话，需要通过它来给客户端发送消息
+
+     연결이 성공적으로 설정될 때 호출되는 메서드입니다. 프론트엔드의 <code>new WebSocket</code>으로부터 트리거됩니다.
+     @param sid 서버에 전달되는 각 페이지마다의 연결 ID입니다. 사용자 ID 등을 포함할 수 있습니다. 사용자 정의가 가능합니다.
+     @param session 특정 클라이언트와의 연결 세션입니다. 이를 통해 클라이언트에게 메시지를 전송할 수 있습니다.
      */
     @OnOpen
     public void onOpen(@PathParam("sid") String sid, Session session, EndpointConfig config) {
@@ -61,9 +60,9 @@ public class WebSocketServer {
 
 
         /**
-         * session.getId()：当前session会话会自动生成一个id，从0开始累加的。
+         session.getId(): 현재 세션에서 자동으로 생성된 ID입니다. 0부터 시작하여 증가합니다.
          */
-        log.info("连接建立中 ==> session_id = {}， sid = {}", session.getId(), sid);
+        log.info("연결 설정 중입니다 ==> session_id = {}， sid = {}", session.getId(), sid);
         // 加入 Map 中。将页面的 sid 和 session 绑定或者 session.getId() 与 session
         // onlineSessionIdClientMap.put(session.getId(), session);
         onlineSessionClientMap.put(sid, session);
@@ -73,16 +72,11 @@ public class WebSocketServer {
         this.sid = sid;
         this.session = session;
         sendToOne(sid, "성공적으로 연결했습니다.");
-        log.info("连接建立成功，当前在线数为：{} ==> 开始监听新连接：session_id = {}， sid = {},。", onlineSessionClientCount, session.getId(), sid);
+        log.info("연결이 성공적으로 설정되었습니다. 현재 온라인 수: {} ==> 새로운 연결 수신 대기 중: session_id = {}， sid = {}。", onlineSessionClientCount, session.getId(), sid);
 
     }
 
-    /**
-     * 连接关闭调用的方法。由前端<code>socket.close()</code>触发
-     *
-     * @param sid
-     * @param session
-     */
+
     @OnClose
     public void onClose(@PathParam("sid") String sid, Session session) {
         //onlineSessionIdClientMap.remove(session.getId());
@@ -91,18 +85,16 @@ public class WebSocketServer {
 
         //在线数减1
         onlineSessionClientCount.decrementAndGet();
-        log.info("连接关闭成功，当前在线数为：{} ==> 关闭该连接信息：session_id = {}， sid = {},。", onlineSessionClientCount, session.getId(), sid);
+        log.info("연결이 성공적으로 닫혔습니다. 현재 온라인 수: {} ==> 연결 닫힘 정보: session_id = {}， sid = {}。", onlineSessionClientCount, session.getId(), sid);
     }
 
     /**
-     * 收到客户端消息后调用的方法。由前端<code>socket.send</code>触发
-     * * 当服务端执行toSession.getAsyncRemote().sendText(xxx)后，前端的socket.onmessage得到监听。
-     *
-     * @param message
-     * @param session
+
+     클라이언트 메시지를 수신하면 호출되는 메서드입니다. 프론트엔드의 <code>socket.send</code>로부터 트리거됩니다.
+     서버가 toSession.getAsyncRemote().sendText(xxx)를 실행하면 프론트엔드의 socket.onmessage가 대기합니다.
+     @param message 수신된 메시지입니다.
+     @param session 클라이언트와의 연결 세션입니다.
      */
-
-
 
     @OnMessage
     public void onMessage(String message, Session session) {
@@ -111,7 +103,6 @@ public class WebSocketServer {
         WebSocketService webSocketService = applicationContext.getBean(WebSocketService.class);
 
         /**
-         * html界面传递来得数据格式，可以自定义.
          * {"senderId":"user-1","toUserId":"user-2","message":"hello websocket"}
          */
         JSONObject jsonObject = new JSONObject(message);
@@ -119,67 +110,51 @@ public class WebSocketServer {
         String receiverId = jsonObject.optString("receiverId");
         String messageContent  = jsonObject.getString("message");
 
-        log.info("服务端收到客户端消息 ==> senderId = {}, receiverId = {}, message = {}", senderId, receiverId, message);
+        log.info("서버가 클라이언트 메시지를 수신했습니다 ==> 발신자 ID = {}, 수신자 ID = {}, 메시지 = {}", senderId, receiverId, message);
 
-        // 根据接收者情况选择插入逻辑
+
         if (receiverId == null || receiverId.isEmpty()) {
 
             int chatroomno = jsonObject.getInt("chatroomno");
 
-            // 处理群发逻辑
+
             webSocketService.insertGroupMessage(chatroomno,senderId, messageContent);
             sendToAll(messageContent);
         } else {
-            // 处理单人聊天逻辑
+
             webSocketService.insertChat(senderId, receiverId, messageContent);
             sendToOne(receiverId, messageContent);
         }
     }
 
 
-    /**
-     * 发生错误调用的方法
-     *
-     * @param session
-     * @param error
-     */
     @OnError
     public void onError(Session session, Throwable error) {
-        log.error("WebSocket发生错误，错误信息为：" + error.getMessage());
+        log.error("WebSocket에서 오류가 발생했습니다. 오류 메시지는 다음과 같습니다: " + error.getMessage());
         error.printStackTrace();
     }
 
-    /**
-     * 群发消息
-     *
-     * @param message 消息
-     */
+
     private void sendToAll(String message) {
         // 遍历在线map集合
         onlineSessionClientMap.forEach((onlineSid, toSession) -> {
             // 排除掉自己
             if (!sid.equalsIgnoreCase(onlineSid)) {
-                log.info("服务端给客户端群发消息 ==> sid = {}, toSid = {}, message = {}", sid, onlineSid, message);
+                log.info("서버가 클라이언트에게 메시지를 그룹으로 전송했습니다 ==> sid = {}, toSid = {}, 메시지 = {}", sid, onlineSid, message);
                 toSession.getAsyncRemote().sendText(message);
             }
         });
     }
 
-    /**
-     * 指定发送消息
-     *
-     * @param toSid
-     * @param message
-     */
     private void sendToOne(String toSid, String message) {
-        // 通过sid查询map中是否存在
+
         Session toSession = onlineSessionClientMap.get(toSid);
         if (toSession == null) {
-            log.error("服务端给客户端发送消息 ==> toSid = {} 不存在, message = {}", toSid, message);
+            log.error("서버가 클라이언트에게 메시지를 전송하려고 시도했지만 toSid = {}가 존재하지 않습니다. 메시지 = {}", toSid, message);
             return;
         }
-        // 异步发送
-        log.info("服务端给客户端发送消息 ==> toSid = {}, message = {}", toSid, message);
+
+        log.info("서버가 클라이언트에게 메시지를 그룹으로 전송했습니다 ==> sid = {}, toSid = {}, 메시지 = {}", toSid, message);
         toSession.getAsyncRemote().sendText(message);
         /*
         // 同步发送
@@ -192,24 +167,24 @@ public class WebSocketServer {
     }
 
     public void createWebSocketSession(String username) {
-        // 假设username为sid
+
         String sid = username;
 
-        // 检查是否存在对应的Session
+
         if (onlineSessionClientMap.containsKey(sid)) {
-            // 存在对应的Session，获取Session对象
+
             Session userSession = onlineSessionClientMap.get(sid);
-            // 判断Session是否打开
+
             if (userSession.isOpen()) {
-                // 如果Session是打开的，发送消息给用户
+
                 String message = "WebSocket session created for user: " + username;
                 userSession.getAsyncRemote().sendText(message);
             } else {
-                // 如果Session已关闭，记录错误日志或进行其他处理
+
                 System.out.println("Session for user " + username + " is closed.");
             }
         } else {
-            // 如果没有找到对应的Session，记录错误日志或进行其他处理
+    
             System.out.println("Session not found for user " + username);
         }
     }

@@ -15,6 +15,7 @@
 
     <resultMap id="ChatroomResultMap" type="com.uni.mental.chating.model.dto.ChatroomDto">
         <id column="CHATROOM_NO" property="chatroomno" />
+        <result column="CHATROOM_OWNER" property="chatroomowner" />
         <result column="CHATROOM_NAME" property="chatroomname" />
         <result column="CHATROOM_PWD" property="chatroompwd" />
         <result column="CREATED_AT" property="createdat" />
@@ -43,12 +44,12 @@
     </select>
 
     <insert id="createChatroom" parameterType="com.uni.mental.chating.model.dto.ChatroomDto">
-        INSERT INTO TBL_CHATROOM (CHATROOM_NAME, CHATROOM_PWD)
-        VALUES (#{chatroomname},#{chatroompwd})
+        INSERT INTO TBL_CHATROOM (CHATROOM_NAME, CHATROOM_PWD, CHATROOM_OWNER)
+        VALUES (#{chatroomname},#{chatroompwd},#{chatroomowner})
     </insert>
 
     <select id="getAllChatrooms" resultMap="ChatroomResultMap">
-        SELECT CHATROOM_NO, CHATROOM_NAME, CHATROOM_PWD , CREATED_AT
+        SELECT CHATROOM_NO, CHATROOM_NAME, CHATROOM_PWD , CREATED_AT, CHATROOM_OWNER
         FROM TBL_CHATROOM
     </select>
 

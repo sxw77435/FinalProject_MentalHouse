@@ -41,6 +41,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         memberPermitList.add("/chatbot/toWebSocketDemo");
         memberPermitList.add("/chatbot/userlist");
         memberPermitList.add("/chatbot/chatroom");
+        memberPermitList.add("/chatbot/createchatroom");
+
+
+        adminPermitList.add("/mental/insert");
+
 
 
 

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uni.mental.mentalAddress.model.dao.AddressDao">
+<mapper namespace="com.uni.mental.mentaladdress.model.dao.AddressDao">
 
-    <resultMap id="AddressResultMap" type="com.uni.mental.mentalAddress.model.dto.AddressDto">
+    <resultMap id="AddressResultMap" type="com.uni.mental.mentaladdress.model.dto.AddressDto">
         <id column="FACILITY_NO" property="facilityno" />
         <result column="FACILITY_NAME" property="facilityname" />
         <result column="FACILITY_ADDRESS" property="facilityaddress" />

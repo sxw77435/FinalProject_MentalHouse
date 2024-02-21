@@ -46,12 +46,11 @@ public class MemberService {
     public boolean authenticate(String username, String password) {
         MemberDto member = memberDao.findMemberById(username);
 
-        // 如果找不到用户，或者用户输入的密码与数据库中存储的密码不匹配，则返回false
+        // 멤버 못 찾거나 비번 틀렀을때 false로 나오기
         if (member == null || !passwordEncoder.matches(password, member.getPwd())) {
             return false;
         }
 
-        // 用户名和密码匹配，返回true
         return true;
     }
 

@@ -115,9 +115,9 @@
 <script type="text/javascript">
     var socket;
     if (typeof (WebSocket) == "undefined") {
-        console.log("您的浏览器不支持 WebSocket");
+        console.log("브라우저는 WebSocket을 지원하지 않습니다.");
     } else {
-        console.log("您的浏览器支持 WebSocket");
+        console.log("브라우저는 WebSocket을 지원합니다.");
         // 实现化 WebSocket 对象，指定要连接的服务器地址与端口  建立连接
         var memberId = document.getElementById("memberId").value;
         console.log("memberId-->" + memberId);
@@ -125,7 +125,7 @@
         socket = new WebSocket(reqUrl);
         // 打开事件
         socket.onopen = function () {
-            console.log("Socket 已打开");
+            console.log("Socket 열립니다");
         };
         // 获得消息事件
         socket.onmessage = function (msg) {
@@ -133,18 +133,18 @@
             displayMessage(msg.data, false);        };
         // 关闭事件
         socket.onclose = function () {
-            console.log("Socket 已关闭");
+            console.log("Socket 닫았습니다");
         };
         // 发生了错误事件
         socket.onerror = function () {
-            alert("Socket 发生了错误");
+            alert("Socket 에러발생합니다");
             // 此时可以尝试刷新页面
         }
     }
 
     function sendMessage() {
         if (typeof (WebSocket) == "undefined") {
-            console.log("您的浏览器不支持 WebSocket");
+            console.log("브라우저는 WebSocket을 지원하지 않습니다.");
         } else {
             var toUserId = document.getElementById('toUserId').value;
             var contentText = document.getElementById('contentText').value;

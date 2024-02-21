@@ -146,31 +146,32 @@
     function addMarker(facility) {
         var marker = new naver.maps.Marker({
             position: new naver.maps.LatLng(facility.facilitylatitude, facility.facilitylongitude),
-            map: map // 将标记添加到地图上
+            map: map //maker는 지도에 넣기
         });
 
-        // 可以选择为标记添加信息窗口
+        // maker클릭하고 해당 정보 나오기
         var infowindow = new naver.maps.InfoWindow({
             content: '<div>' + facility.facilityname + '</div><div>' + facility.facilityaddress + '</div>'
         });
 
-        // 当用户点击标记时显示信息窗口
+
         naver.maps.Event.addListener(marker, 'click', function() {
             infowindow.open(map, marker);
         });
 
-        // 将标记存储到地图的标记列表中
+        // maker에서 지도 나오기
         map.markers.push(marker);
     }
 
     window.onload = function() {
 
-        // 遍历医院列表，为每个医院添加标记到地图上
+        // 병원리스트를 모두 나오기 maker나오기
         addressList.forEach(function(facility) {
             addMarker(facility);
         });
     }
 
+    // 근처 병원 나오기
     function findNearbyFacilities(event) {
         event.preventDefault();
         var searchKeyword = document.getElementById("searchKeyword").value;
@@ -201,15 +202,15 @@
                 document.getElementById("hospitalList").style.display = "none";
 
 
-                // 在更新标记之前清除现有标记
+                // maker업데이터하고 전에 있던 maker 없애기
                 clearMarkers();
 
-                // 更新标记
+
                 data.forEach(function(facility) {
                     addMarker(facility);
                 });
 
-                // 根据数据的范围调整地图视图
+                // 데이터 범의에 따라서 확대
                 if (data.length > 0) {
                     var bounds = new naver.maps.LatLngBounds();
                     data.forEach(function(facility) {
@@ -217,22 +218,21 @@
                     });
                     map.fitBounds(bounds);
 
-                    // 清除之前的圆圈
+
                     clearCircles();
 
-                    // 画一个半径为 x 公里的圆圈，可以根据需要调整半径大小
+                    //반경은 얼마에 동그라미 그리기
                     var circle = new naver.maps.Circle({
                         map: map,
                         center: bounds.getCenter(),
                         radius: 5000,
-                        fillColor: '#0e3799', // 圆圈填充颜色
-                        fillOpacity: 0.2, // 圆圈填充透明度
-                        strokeColor: '#0e3799', // 圆圈边界颜色
-                        strokeOpacity: 0.5, // 圆圈边界透明度
-                        strokeWeight: 1 // 圆圈边界宽度
+                        fillColor: '#0e3799',
+                        fillOpacity: 0.2,
+                        strokeColor: '#0e3799',
+                        strokeOpacity: 0.5,
+                        strokeWeight: 1
                     });
 
-                    // 存储新的圆圈
                     map.circle = circle;
                 }
             })

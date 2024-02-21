@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.uni.mental.regionComunity.model.dao.RecomDao"><!-- 메퍼위치하고  동일하게 네임스페이스 작성-->
+<mapper namespace="com.uni.mental.regioncomunity.model.dao.RecomDao"><!-- 메퍼위치하고  동일하게 네임스페이스 작성-->
 
-    <resultMap type="com.uni.mental.regionComunity.model.dto.RecomDto" id="recomResultMap">
+    <resultMap type="com.uni.mental.regioncomunity.model.dto.RecomDto" id="recomResultMap">
         <id property="recomno" column="RECOM_NO"/>
         <result property="cateno" column="CATE_NO"/>
         <result property="recomtitle" column="RECOM_TITLE"/>
@@ -30,13 +30,13 @@
         <result column="MEMBER_NICK" property="nick" />
     </resultMap>
 
-    <resultMap id="cateResultMap" type="com.uni.mental.regionComunity.model.dto.CateDto">
+    <resultMap id="cateResultMap" type="com.uni.mental.regioncomunity.model.dto.CateDto">
         <id column="CATE_NO" property="cateno" />
         <result column="CATE_NAME" property="catename" />
         <result column="CATE_NAME2" property="catename2" />
     </resultMap>
 
-    <insert id ="insertRecom" parameterType="com.uni.mental.regionComunity.model.dto.RecomDto" useGeneratedKeys="true" keyProperty="recomno">
+    <insert id ="insertRecom" parameterType="com.uni.mental.regioncomunity.model.dto.RecomDto" useGeneratedKeys="true" keyProperty="recomno">
         INSERT INTO TBL_RECOM
         (
           RECOM_NO
@@ -83,7 +83,7 @@
         WHERE RECOM_NO = #{recomno}
     </select>
 
-    <update id="updateRecom" parameterType="com.uni.mental.regionComunity.model.dto.RecomDto">
+    <update id="updateRecom" parameterType="com.uni.mental.regioncomunity.model.dto.RecomDto">
         UPDATE TBL_RECOM
         SET RECOM_TITLE=#{recomtitle},RECOM_DATE=NOW(),RECOM_CONTENT=#{recomcontent},RECOM_IMAGE = #{recomimage}
         WHERE RECOM_NO = #{recomno}
@@ -96,7 +96,7 @@
         WHERE RECOM_NO = #{recomno}
     </update>
 
-    <delete id="deleteRecom" parameterType="com.uni.mental.regionComunity.model.dto.RecomDto">
+    <delete id="deleteRecom" parameterType="com.uni.mental.regioncomunity.model.dto.RecomDto">
         DELETE FROM TBL_RECOM
         WHERE RECOM_NO=#{recomno}
     </delete>

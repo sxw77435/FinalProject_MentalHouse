@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras-springsecurity5">
+
 <head>
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
@@ -22,14 +24,14 @@
             justify-content: center;
             align-items: center;
         }
-        /* 确保::before和::after不会影响布局大小 */
+
         .container1::before,
         .container1::after {
             content: '';
             position: absolute;
             width: 60px;
             height: 60px;
-            background-size: cover; /* 保证背景图片覆盖整个内容，但不改变比例 */
+            background-size: cover;
         }
         .container1::before {
             left: -6px;
@@ -48,20 +50,20 @@
         }
         .image-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 三列等宽 */
-            grid-gap: 20px; /* 根据需要调整间隙大小 */
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
             margin-top: 50px;
         }
 
         .item {
             display: flex;
             flex-direction: column;
-            align-items: center; /* 如果需要，确保内容居中 */
+            align-items: center;
         }
 
         .item img {
-            width: 100%; /* 确保图片不会超出容器宽度 */
-            height: auto; /* 保持图片的原始宽高比 */
+            width: 100%;
+            height: auto;
         }
 
         .mentalname {
@@ -114,7 +116,7 @@
         .search-input {
             padding: 5px;
             width: 26%;
-            height: 40px;
+            height: 48px;
             background-color: #f8f8f8;
             border: none;
         }
@@ -133,14 +135,14 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: flex-start; /* 将元素对齐到每行的顶部 */
+            align-items: flex-start;
         }
         .page-number {
-            font-size: 17px; /* 增大页码链接的字体大小 */
+            font-size: 17px;
         }
         .page-link {
             position: relative;
-            top: -10px; /* 负值表示向上移动 */
+            top: -10px;
             margin-left: 10px;
             margin-right: 10px;
         }
@@ -162,7 +164,22 @@
             background-color: lightgray;
             color: white;
         }
-d
+        button{
+            width: 300px;
+            padding:10px 20px;
+            border-radius: 30px;
+            background-color: white;
+            transition: background-color 0.5s, color 0.5s;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #d3c58d; /* 鼠标悬停时的背景颜色 */
+        }
+        .pagination-container {
+            text-align: center; /* 페이지네이션을 가운데 정렬합니다. */
+            margin-top: 20px; /* 페이지네이션과 위쪽 간격을 설정합니다. */
+        }
 
     </style>
 </head>
@@ -187,11 +204,11 @@ d
             <input type="text" class="search-input" placeholder="검색어 입력하세요" style="font-size: 15px">
             <button class="search-button">검색</button>
         </div>
-        <!-- 将image-container放在外部循环中 -->
+        <!-- image-container는 외부 순환에 넣기 -->
         <div class="mentalcontainer">
             <div class="image-container">
                 <div th:each="mental: ${mentalList}">
-                    <!--将 image-container 放在外部循环中，并且确保每三个元素后都会生成一个新的 image-container-->
+                    <!--image-container 외부순환 넣고，3 item 끝나고 새 image-container 생성-->
                     <div class="item" >
                         <h2 th:text="${mental.mentalinfono}" class="mentalinfo-no" style="display: none"></h2>
                         <img th:src="@{/image/{imageFileName}(imageFileName=${mental.attachnewname})}" alt="질환사진" class="img">
@@ -200,14 +217,18 @@ d
                 </div>
             </div>
         </div>
+        <th:block sec:authorize="hasRole('ADMIN')">
+            <button onclick="location.href='/mental/insert'">INSERT</button>
+        </th:block>
         <div class="pagination-container">
-            <!-- 添加到第一页按钮 -->
+
             <a href="#" class="first-page"><img src="/image/btn_first.png"></a>
             <a href="#" class="prev-page"><img src="/image/btn_prev.png"></a>
             <span class="page-link"></span>
             <a href="#" class="next-page"><img src="/image/btn_next.png"></a>
             <a href="#" class="last-page"><img src="/image/btn_end.png"></a>
         </div>
+
     </div>
 </div>
 
@@ -226,44 +247,38 @@ d
         }
 
 
-        // 初始化页面，显示第一页的项目，隐藏其他页的项目
+        // 화면 초기화 해당 페이지 에 내용만 나오기
         showPage(1);
 
-        // 添加页码点击事件
+        // page클릭
         $(document).on('click', '.page-number', function() {
             var pageNumber = parseInt($(this).text());
             showPage(pageNumber);
+            $('.page-number').removeClass('active'); // 모든 페이지 번호의 활성화 클래스를 제거합니다.
+            $(this).addClass('active'); // 클릭된 페이지 번호에 활성화 클래스를 추가합니다.
             $('.page1').text(pageNumber);
         });
 
-        // 计算并填充“전체”和“현재 페이지”的信息
-        var totalItems = $('.mentalcontainer .item').length; // 获取总项目数量
-        $('.sum').text(totalItems); // 填充“전체”信息
+        // “전체”와“현재 페이지” 계산
+        var totalItems = $('.mentalcontainer .item').length;
+        $('.sum').text(totalItems);
 
-        // 获取总页数，并填充到页面
-        var totalPages = Math.ceil(totalItems / 9); // 计算总页数，每页显示9个项目
-        $('.totalpages').text(totalPages); // 填充“현재 페이지”信息
 
-        // 添加页码链接
+        var totalPages = Math.ceil(totalItems / 9); // 총페이지 계산하고 한페이지에 9개 item에 나오기
+        $('.totalpages').text(totalPages);
+
+        // 페이지 링크 하기
         addPageLinks(totalPages);
 
 
         function showPage(pageNumber) {
-            $('.mentalcontainer .item').hide(); // 隐藏所有项目
-            var startIndex = (pageNumber - 1) * 9; // 计算当前页的起始索引
-            var endIndex = startIndex + 9; // 计算当前页的结束索引
-            $('.mentalcontainer .item').slice(startIndex, endIndex).show(); // 显示当前页的项目
+            $('.mentalcontainer .item').hide(); // 모든 item 숨기
+            var startIndex = (pageNumber - 1) * 9;
+            var endIndex = startIndex + 9;
+            $('.mentalcontainer .item').slice(startIndex, endIndex).show();
             $('.page1').text(pageNumber);
 
         }
-
-        // 计算并填充“전체”和“현재 페이지”的信息
-        var totalItems = $('.mentalcontainer .item').length; // 获取总项目数量
-        $('.sum').text(totalItems); // 填充“전체”信息
-
-        // 获取总页数，并填充到页面
-        var totalPages = Math.ceil(totalItems / 9); // 计算总页数，每页显示9个项目
-        $('.totalpages').text(totalPages); // 填充“현재 페이지”信息
 
 
 
@@ -304,20 +319,19 @@ d
         }).hide();
 
 
-        var totalItems = $('.mentalcontainer .item').length; // 获取总项目数量
-        var totalPages = Math.ceil(totalItems / 9); // 计算总页数，每页显示9个项目
-        $('.total-pages').text(totalPages); // 更新总页数显示
+        var totalItems = $('.mentalcontainer .item').length;
+        var totalPages = Math.ceil(totalItems / 9);
+        $('.total-pages').text(totalPages);
 
-        // 初始化页面，显示第一页的项目，隐藏其他页的项目
         showPage(1);
 
     });
 
 
-    // 当下拉菜单选项改变时，自动填充到搜索框
+    // option 선택했을때 자동 검색창 넣기
     $('.search-select').change(function() {
-        var selectedOption = $(this).val(); // 获取选中的选项
-        $('.search-input').val(selectedOption); // 将选中的值填充到搜索框
+        var selectedOption = $(this).val();
+        $('.search-input').val(selectedOption);
     });
 
     $('.search-input').keypress(function(event) {
@@ -328,31 +342,31 @@ d
         }
     });
 
-    // 点击搜索按钮
+    // 검색 버튼 눌렀을땐
     $('.search-button').click(function() {
 
-        var searchText = $('.search-input').val(); // 获取搜索框的内容
-        console.log("검색내용：", searchText); // 在控制台输出搜索内容，实际应用中应该发送请求到后端
+        var searchText = $('.search-input').val(); //검색창 내용
+        console.log("검색내용：", searchText); // 검색 내용 정확하게 가져오는지 확왼
         $.ajax({
-            url: '/mental/search', // 后端接口的URL
+            url: '/mental/search', // controller중에 url
             method: 'GET',
-            data: { mentalname: searchText }, // 发送搜索关键字作为名为 mentalname 的参数
+            data: { mentalname: searchText }, // 검색한 글를 매개 변수로 백에 보내기
             success: function(response) {
-                console.log("검색결과：", response); // 输出搜索结果
+                console.log("검색결과：", response);
 
-                // 清空原有内容
-                $('.image-container').empty();
 
-                // 如果搜索结果为空，则显示提示信息
+                $('.image-container').empty(); //원래있는 리스트 화면 clear
+
+                // 검색 결과가 없을때 소식 나오기
                 if (response.length === 0) {
                     $('.image-container').append('<p>검색결과가 없습니다.</p>');
                     $('.sum').text('0');
-                    return; // 结束函数执行
+                    return;
                 }
 
-                // 更新页面显示搜索结果
+                // 페이지 업데이터하고 검색 결과 나오기
                 $.each(response, function(key, item) {
-                    // 创建新的项目元素并添加到页面中
+
                     var newItem = '<div class="item">' +
                         '<h2 class="mentalinfo-no" style="display: none">' + item.mentalinfono + '</h2>' +
                         '<img src="http://localhost:8888/image/' + item.attachnewname + '" alt="질환사진" class="img">' + // 注意这里的属性名
@@ -360,7 +374,7 @@ d
                         '</div>';
                     $('.image-container').append(newItem);
 
-                    // 添加点击事件
+                    // 똑같기 해당 item 클릭하고 상세 페이지 들어가기
                     $('.item').last().click(function() {
                         var mentalinfono = $(this).find('.mentalinfo-no').text();
                         var detailPageURL = "/mental/detail/" + mentalinfono;
@@ -368,45 +382,52 @@ d
                     });
                 });
 
-                var totalItems = $('.mentalcontainer .item').length; // 获取总项目数量
-                var totalPages = Math.ceil(totalItems / 9); // 计算总页数，每页显示9个项目
-                $('.total-pages').text(totalPages); // 更新总页数显示
+                var totalItems = $('.mentalcontainer .item').length;
+                var totalPages = Math.ceil(totalItems / 9);
+                $('.total-pages').text(totalPages);
 
-                // 初始化页面，显示第一页的项目，隐藏其他页的项目
+
                 showPage(1);
 
                 function showPage(pageNumber) {
-                    $('.mentalcontainer .item').hide(); // 隐藏所有项目
-                    var startIndex = (pageNumber - 1) * 9; // 计算当前页的起始索引
-                    var endIndex = startIndex + 9; // 计算当前页的结束索引
-                    $('.mentalcontainer .item').slice(startIndex, endIndex).show(); // 显示当前页的项目
+                    $('.mentalcontainer .item').hide();
+                    var startIndex = (pageNumber - 1) * 9;
+                    var endIndex = startIndex + 9;
+                    $('.mentalcontainer .item').slice(startIndex, endIndex).show();
                     $('.page1').text(pageNumber);
 
                 }
+                $(document).on('click', '.page-number', function() {
+                    var pageNumber = parseInt($(this).text());
+                    showPage(pageNumber);
+                    $('.page-number').removeClass('active'); // 모든 페이지 번호의 활성화 클래스를 제거합니다.
+                    $(this).addClass('active'); // 클릭된 페이지 번호에 활성화 클래스를 추가합니다.
+                    $('.page1').text(pageNumber);
+                });
+
+                addPageLinks(totalPages);
 
                 function addPageLinks(totalPages) {
                     var pageLinks = '';
                     for (var i = 1; i <= totalPages; i++) {
                         pageLinks += '<a href="#" class="page-number">' + i + '</a>';
                         if (i !== totalPages) {
-                            pageLinks += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; // 添加更多空格来增加间距
+                            pageLinks += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                         }
                     }
                     $('.page-link').html(pageLinks);
                 }
 
 
-                // 计算并填充“전체”和“현재 페이지”的信息
-                var totalItems = $('.mentalcontainer .item').length; // 获取总项目数量
+                var totalItems = $('.mentalcontainer .item').length;
                 $('.sum').text(totalItems); // 填充“전체”信息
 
-                // 获取总页数，并填充到页面
-                var totalPages = Math.ceil(totalItems / 9); // 计算总页数，每页显示9个项目
-                $('.totalpages').text(totalPages); // 填充“현재 페이지”信息
+                var totalPages = Math.ceil(totalItems / 9);
+                $('.totalpages').text(totalPages);
             },
             error: function(xhr, status, error) {
-                console.error("검색요청실패：", error); // 输出错误信息
-                // 在实际应用中可以显示提示信息或者进行其他处理
+                console.error("검색요청실패：", error);
+
             }
         });
 
