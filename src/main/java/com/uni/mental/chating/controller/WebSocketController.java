@@ -67,8 +67,10 @@ public class WebSocketController {
 
             System.out.println("messageContent"+messageContent);
 
+            String senderemail = memberService.getEmailById(senderId);
+            String receiveremail = memberService.getEmailById(receiverId);
 
-            webSocketService.insertChat(senderId, receiverId, messageContent);
+            webSocketService.insertChat(senderId, receiverId, messageContent,senderemail,receiveremail );
 
             return "Message sent successfully";
         } catch (Exception e) {
@@ -164,8 +166,6 @@ public class WebSocketController {
         return new ValidationResponse(isValid);
     }
 
-
-//비번 확인 하는 검증 함수
     static class ValidationResponse {
         private boolean valid;
 

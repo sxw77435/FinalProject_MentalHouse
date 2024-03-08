@@ -15,8 +15,10 @@
         </ul>
         </th:block>
         <th:block sec:authorize="isAuthenticated()">
-            <li style="margin: 0;" class="welcome"><span sec:authentication="name"></span>환영합니다</li>
-            <li style="margin: 0; border-left: 1px solid #aaa;"><a href="/logout/logoutpage" style="color: #131a1f">로그아웃</a></li>
+            <li style="border-left: 1px solid #aaa; " class="welcome"><a href="/logout/logoutpage">로그아웃</a></li>
+            <li style="border-left: 1px solid #aaa;margin-right: 5px; " class="welcome"><a href="/mypage/mypage">마이페이지</a></li>
+            <li class="welcome"><span sec:authentication="name"></span>님 환영합니다</li>
+
         </th:block>
     </div>
     <div id="header">
@@ -25,7 +27,7 @@
                 <div style="float: left">
                     <img src="/img/logo.png" class="logo" alt="">
                 </div>
-                <h1>정신건강정보포털</h1>
+                <h1>MentalHouse</h1>
             </a>
         </div>
         <ul>
@@ -38,7 +40,7 @@
             <li style="padding: 10px; margin: 0 6px;">
                 <a href="">정신건강정보</a>
                 <ul class="dropdown">
-                    <li><a href="/mental/info">정신건강정보</a></li>
+                    <li><a href="">정신건강정보</a></li>
                 </ul>
             </li>
             <li style="padding: 10px; margin: 0 6px;">
@@ -52,8 +54,8 @@
             <li style="padding: 10px; margin: 0 6px;">
                 <a href="">공지사항</a>
                 <ul class="dropdown">
-                    <li><a href="">공지사항</a></li>
-                    <li><a href="">QnA</a></li>
+                    <li><a href="/notice/notice">공지사항</a></li>
+                    <li><a href="/qna/qna">QnA</a></li>
                 </ul>
             </li>
             <li style="padding: 10px; margin: 0 6px;">

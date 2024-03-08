@@ -10,7 +10,8 @@
         <result column="RECEIVER_ID" property="receiverId" />
         <result column="MESSAGE" property="message" />
         <result column="SEND_TIME" property="sendtime" />
-
+        <result column="SENDER_EMAIL" property="sendemail" />
+        <result column="RECEIVER_EMAIL" property="receiveremail" />
     </resultMap>
 
     <resultMap id="ChatroomResultMap" type="com.uni.mental.chating.model.dto.ChatroomDto">
@@ -31,8 +32,8 @@
     </resultMap>
 
     <insert id="insertChat" parameterType="com.uni.mental.chating.model.dto.WebSocketDto">
-        INSERT INTO TBL_CHATING (SENDER_ID, RECEIVER_ID, MESSAGE)
-        VALUES (#{senderId}, #{receiverId}, #{message})
+        INSERT INTO TBL_CHATING (SENDER_ID, RECEIVER_ID, MESSAGE,SENDER_EMAIL,RECEIVER_EMAIL )
+        VALUES (#{senderId}, #{receiverId}, #{message} ,#{senderemail},#{receiveremail})
     </insert>
 
     <select id="getChat" resultMap="WebSocketResultMap">

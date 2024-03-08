@@ -17,4 +17,8 @@ public interface MemberDao {
 
 
     List<MemberDto> getAllUsers();
+
+    String getEmailById(String memberId);
+
+    MemberDto findByEmail(String email);
 }

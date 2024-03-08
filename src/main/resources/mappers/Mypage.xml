@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uni.mental.mypage.model.dao.MypageDao">
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.mypage.model.dto.MypageDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+        <result column="MEMBER_EXIT" property="exit" />
+    </resultMap>
+
+
+    <select id="getMypageById" parameterType="string" resultType="com.uni.mental.mypage.model.dto.MypageDto">
+        SELECT
+            *
+        FROM
+            tbl_member
+        WHERE
+            MEMBER_ID = #{userId}
+    </select>
+
+    <select id="mypageDetail" parameterType="int">
+        SELECT * FROM tbl_member WHERE MEMBER_NO = #{no}
+    </select>
+
+    <update id="updateMypage" parameterType="com.uni.mental.mypage.model.dto.MypageDto">
+        UPDATE tbl_member
+        SET
+            MEMBER_ID = #{id},
+            MEMBER_EMAIL = #{email},
+            MEMBER_ADD = #{add},
+            MEMBER_MENTAL = #{mental},
+            MEMBER_NICK = #{nick}
+        WHERE MEMBER_NO = #{no}
+    </update>
+
+    <update id="deleteMypage" parameterType="com.uni.mental.mypage.model.dto.MypageDto">
+        UPDATE tbl_member
+        SET
+            MEMBER_EXIT = 'Y'
+        WHERE MEMBER_NO = #{no}
+    </update>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>마이페이지 수정</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        *{
+            padding:0;margin:0
+        }
+        li{
+            list-style:none
+        }
+        a {
+            text-decoration:none;
+            font-size:14px;
+        }
+        .con {
+            max-width: 950px;
+            margin: auto;
+        }
+        .menu {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 200px;
+        }
+
+        .menu > li {
+            width: 25%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            background-color: lightgray;
+        }
+
+        .menu a {
+            color: black;
+        }
+
+        .mental{
+            float: right;
+            margin: 5px;
+        }
+
+
+
+        .table-common>table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        .table-common table th, .table-common table td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .list table {
+            border:none;
+            border-top:2px solid black;
+            border-bottom:2px solid black;
+        }
+
+        .list table th, .list table td {
+            border:none;
+        }
+
+        .list table td {
+            border-bottom:1px solid black;
+        }
+
+        .list table thead {
+            border-bottom:2px solid black;
+            background-color: whitesmoke;
+        }
+
+        tr {
+            text-align: center;
+        }
+        .btn{
+            width: 85.5%;
+            margin: 20px;
+        }
+        #btn1{
+            float: right;
+            width: 100px;
+            height: 60px;
+            background-color: gray;
+            border: 0px;
+            display: inline-block;
+
+        }
+        .page-link {
+            text-align: center;
+        }
+
+        .page-number {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .page-number.active {
+            background-color: lightgray;
+            color: white;
+        }
+
+        .pagination-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pagination-controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: lightgray;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pagination-controls button:hover {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="common/header :: header"></div>
+<header class="header">
+    <ul class="menu">
+        <li>
+            <a onclick="location.href='/main/main'">홈</a>
+        </li>
+        <li>
+            <a onclick="location.href='/notice/notice'">공지사항</a>
+        </li>
+        <li>
+            <a onclick="location.href='/qna/qna'">QnA</a>
+        </li>
+        <li>
+            <a onclick="location.href='/mypage/mypage'">마이페이지</a>
+        </li>
+    </ul>
+</header>
+<div class="container">
+    <h6>마이페이지 수정</h6>
+    <br>
+    <form action="/mypage/update" method="post" >
+        <div class="form-group" >
+            <input type="hidden" id="no" name="no" th:value="${mypage.no}" >
+            <label for="id">아이디:</label>
+            <input type="text" id="id" name="id" th:value="${mypage.id}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">이메일:</label>
+            <input type="text" id="email" name="email" th:value="${mypage.email}">
+        </div>
+        <div class="form-group">
+            <label for="add">주소:</label>
+            <input type="text" id="add" name="add" th:value="${mypage.add}">
+        </div>
+        <div class="form-group">
+            <label for="mental">멘탈:</label>
+            <select id="mental" name="mental">
+                <option value="우울증" th:selected="${mypage.mental == '우울증'}">우울증</option>
+                <option value="강박증" th:selected="${mypage.mental == '강박증'}">강박증</option>
+                <option value="조울증" th:selected="${mypage.mental == '조울증'}">조울증</option>
+                <option value="알콜중독증" th:selected="${mypage.mental == '알콜중독증'}">알콜중독증</option>
+                <option value="PTSD" th:selected="${mypage.mental == 'PTSD'}">PTSD</option>
+                <option value="기타" th:selected="${mypage.mental == '기타'}">기타</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nick">닉네임:</label>
+            <input type="text" id="nick" name="nick" th:value="${mypage.nick}">
+        </div>
+        <button type="submit">수정완료</button>
+    </form>
+    <br>
+    <form action="/mypage/delete" method="post">
+        <input type="hidden" name="mypageNo" th:value="${mypage.no}">
+        <button class="deletbtn" type="submit">탈퇴하기</button>
+    </form>
+</div>
+
+<div th:replace="common/footer :: footer"></div>
+</body>
+</html>
+

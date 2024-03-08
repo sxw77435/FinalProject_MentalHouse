@@ -57,4 +57,9 @@ public class MemberService {
     public List<MemberDto> getAllUsers() {
         return memberDao.getAllUsers();
     }
+
+    public String getEmailById(String memberId) {
+        return memberDao.getEmailById(memberId);
+    }
+
 }

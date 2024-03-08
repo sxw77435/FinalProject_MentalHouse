@@ -13,6 +13,7 @@
         <result column="MEMBER_ADD" property="add" />
         <result column="MEMBER_MENTAL" property="mental" />
         <result column="MEMBER_NICK" property="nick" />
+        <result column="MEMBER_EXIT" property="exit"/>
         <collection property = "memberRoleList" resultMap="memberRoleResultMap"/>
 
     </resultMap>
@@ -48,7 +49,7 @@
         FROM TBL_MEMBER A
                  LEFT JOIN TBL_MEMBER_ROLE B ON(A.MEMBER_NO = B.MEMBER_NO)
                  LEFT JOIN TBL_AUTHORITY C  ON(B.AUTHORITY_NO = C.AUTHORITY_NO)
-        WHERE MEMBER_ID = #{memberId}
+        WHERE MEMBER_ID = #{memberId} AND MEMBER_EXIT = 'N'
     </select>
 
     <insert id="enrollMember" parameterType="com.uni.mental.member.model.dto.MemberDto">
@@ -77,6 +78,34 @@
             MEMBER_NICK
         FROM TBL_MEMBER
     </select>
+
+    <select id="getEmailById" resultType="java.lang.String">
+        SELECT member_email
+        FROM tbl_member
+        WHERE member_id = #{memberId}
+    </select>
+
+    <select id="findByEmail" resultMap="loginMemberResultMap" parameterType="java.lang.String">
+        SELECT
+            A.MEMBER_NO
+             , A.MEMBER_ID
+             , A.MEMBER_PWD
+             , A.MEMBER_BIR
+             , A.MEMBER_EMAIL
+             , A.MEMBER_ADD
+             , A.MEMBER_MENTAL
+             , A.MEMBER_NICK
+             , B.MEMBER_NO REF_MEMBER_NO
+             , B.AUTHORITY_NO REF_AUTHORITY_NO
+             , C.AUTHORITY_NO REF_AUTHORITY_NO2
+             , C.AUTHORITY_NAME
+             , C.AUTHORITY_DESC
+        FROM TBL_MEMBER A
+                 LEFT JOIN TBL_MEMBER_ROLE B ON(A.MEMBER_NO = B.MEMBER_NO)
+                 LEFT JOIN TBL_AUTHORITY C  ON(B.AUTHORITY_NO = C.AUTHORITY_NO)
+        WHERE MEMBER_EMAIL = #{email}
+    </select>
+
 
 
 

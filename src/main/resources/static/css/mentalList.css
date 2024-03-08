@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+header{
+    padding-top: 46px;
+}
+
 .con {
     max-width: 950px;
     margin: auto;
@@ -68,4 +72,8 @@ tr {
     background-color: gray;
     border: 0px;
     display: inline-block;
+}
+
+.selected-category {
+    background-color: #ff7603; /* 선택된 카테고리의 배경색 */
 }

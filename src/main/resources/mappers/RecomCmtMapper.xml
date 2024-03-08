@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uni.mental.regioncomunity.model.dao.RecmtDao">
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="memberid" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+    </resultMap>
+
+    <resultMap id="recomCmtResultMap" type="com.uni.mental.regioncomunity.model.dto.RecomCmtDto">
+
+        <id column="RECMT_NO" property="recmtno"/>
+        <result column="RECOM_NO" property="recomno"/>
+        <result column="RECMT_CONTENT" property="content"/>
+        <result column="MEMBER_ID" property="memberid"/>
+        <result column="RECMT_DATE" property="recmtdate"/>
+        <result column="MEMBER_NICK" property="membernick" />
+
+    </resultMap>
+
+    <select id="getRecmtList" parameterType="com.uni.mental.regioncomunity.model.dto.RecomCmtDto">
+        select
+            A.RECMT_NO as recmtno
+        ,A.MEMBER_ID as memberid
+        ,A.RECOM_NO as recomno
+        ,A.RECMT_CONTENT as content
+        ,A.RECMT_DATE as recmtdate
+        ,C.MEMBER_NICK as membernick
+        from tbl_recmt A
+            left join tbl_recom B on(B.RECOM_NO = A.RECOM_NO)
+            left join tbl_member C on(A.member_id = C.member_id)
+        where A.RECOM_NO = #{recomno}
+        order by A.RECOM_NO desc
+    </select>
+
+    <insert id="insertRecmt" parameterType="com.uni.mental.regioncomunity.model.dto.RecomCmtDto">
+        insert into tbl_recmt(member_id, RECOM_NO, RECMT_CONTENT, RECMT_DATE)
+        values(#{memberid},#{recomno},#{content},now())
+    </insert>
+
+    <delete id="deleteRecmt" parameterType="int">
+        DELETE FROM tbl_recmt WHERE RECMT_NO = #{recmtno}
+    </delete>
+</mapper>

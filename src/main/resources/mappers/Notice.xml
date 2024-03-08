@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uni.mental.notice.model.dao.NoticeDao">
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+    </resultMap>
+
+    <resultMap id="noticeResultMap" type="com.uni.mental.notice.model.dto.NoticeDto">
+
+        <id column="NOTICE_NO" property="no"/>
+        <result column="NOTICE_ID" property="id" />
+        <result column="NOTICE_TITLE" property="title" />
+        <result column="NOTICE_CONTENT" property="content" />
+        <result column="NOTICE_DATE" property="date" />
+
+    </resultMap>
+<!--    <select id="getList" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">-->
+<!--        select-->
+<!--            A.NOTICE_NO as no-->
+<!--        ,A.NOTICE_ID as id-->
+<!--        ,A.NOTICE_TITLE as title-->
+<!--        ,A.NOTICE_CONTENT as content-->
+<!--        ,A.NOTICE_DATE as date-->
+<!--        ,B.member_nick as nick-->
+<!--        from tbl_notice A-->
+<!--            left join tbl_member B on(A.NOTICE_ID = B.member_id)-->
+<!--        where A.NOTICE_NO = #{menNo}-->
+<!--        order by A.NOTICE_NO desc-->
+<!--    </select>-->
+    <select id="getAllNotices"  parameterType="com.uni.mental.notice.model.dto.NoticeDto" >
+        SELECT
+           *
+        FROM
+            tbl_notice
+    </select>
+    <insert id="addNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+        insert into tbl_notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_DATE)
+        values(#{title},#{content},now())
+    </insert>
+
+    <delete id="deleteNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+        delete
+        from tbl_notice
+        where NOTICE_NO = #{no}
+    </delete>
+
+    <update id="updateNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+        UPDATE tbl_notice
+        SET
+            NOTICE_TITLE = #{title},
+            NOTICE_CONTENT = #{content}
+        WHERE NOTICE_NO = #{no}
+    </update>
+
+    <select id="getNoticeById" parameterType="int">
+        SELECT * FROM tbl_notice WHERE NOTICE_NO = #{noticeNo}
+    </select>
+
+    <select id="selectOne" parameterType="int" resultType="com.uni.mental.notice.model.dto.NoticeDto">
+        SELECT * FROM tbl_notice WHERE NOTICE_NO = #{noticeNo}
+    </select>
+
+
+
+</mapper>

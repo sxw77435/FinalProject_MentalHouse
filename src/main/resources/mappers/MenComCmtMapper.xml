@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uni.mental.mentalcomunity.model.dao.MenComCmtDAO">
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+    </resultMap>
+
+    <resultMap id="menComCmtResultMap" type="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+
+        <id column="mencmt_no" property="no"/>
+        <result column="member_id" property="id"/>
+        <result column="men_no" property="menNo"/>
+        <result column="mencmt_content" property="content"/>
+        <result column="mencmt_date" property="date"/>
+        <result column="member_nick" property="nick" />
+
+    </resultMap>
+
+    <select id="getList" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+        select
+            A.mencmt_no as no
+        ,A.member_id as id
+        ,A.men_no as menNo
+        ,A.mencmt_content as content
+        ,A.mencmt_date as date
+        ,C.member_nick as nick
+        from tbl_mental_reply A
+            left join tbl_mental B on(B.men_no = A.men_no)
+            left join tbl_member C on(A.member_id = C.member_id)
+        where A.men_no = #{menNo}
+        order by A.mencmt_no desc
+    </select>
+
+    <insert id="insertComment" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+            insert into tbl_mental_reply(member_id, men_no, mencmt_content, mencmt_date)
+            values(#{id},#{menNo},#{content},now())
+    </insert>
+
+    <delete id="deleteComment" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+
+            delete
+            from tbl_mental_reply
+            where mencmt_no = #{no}
+
+    </delete>
+</mapper>

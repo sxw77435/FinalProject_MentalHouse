@@ -41,6 +41,11 @@ dependencies {
     implementation 'org.json:json:20210307'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+    implementation group: 'com.rometools', name: 'rome', version: '1.13.1'
+    implementation 'net.coobird:thumbnailator:0.4.14'
+    implementation 'org.imgscalr:imgscalr-lib:4.2'
+
 }
 
 tasks.named('bootBuildImage') {

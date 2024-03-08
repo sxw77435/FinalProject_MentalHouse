@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uni.mental.qna.model.dao.QnaDao">
+
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+    </resultMap>
+
+    <resultMap id="qnaResultMap" type="com.uni.mental.qna.model.dto.QnaDto">
+
+        <id column="QNA_NO" property="no"/>
+        <result column="QNA_TITLE" property="title" />
+        <result column="QNA_CONTENT" property="content" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="QNA_DATE" property="date" />
+
+
+
+    </resultMap>
+    <select id="getAllQna"  parameterType="com.uni.mental.qna.model.dto.QnaDto" >
+        SELECT
+           *
+        FROM
+            tbl_qna
+    </select>
+<!--    <select id="getAllQna"  parameterType="com.uni.mental.qna.model.dto.QnaDto" >-->
+<!--        select-->
+<!--            *-->
+<!--        from tbl_qna A-->
+<!--            left join tbl_member B on(A.MEMBER_ID = B.member_id)-->
+<!--        where QNA_NO = #{no}-->
+<!--    </select>-->
+
+    <insert id="addQna" parameterType="com.uni.mental.qna.model.dto.QnaDto">
+        insert into tbl_qna(QNA_TITLE, QNA_CONTENT, MEMBER_ID, QNA_DATE)
+        values (#{title}, #{content}, #{id}, now())
+    </insert>
+
+
+
+    <delete id="deleteQna" parameterType="com.uni.mental.qna.model.dto.QnaDto">
+        delete
+        from tbl_qna
+        where QNA_NO = #{no}
+    </delete>
+
+    <update id="updateQna" parameterType="com.uni.mental.qna.model.dto.QnaDto">
+        UPDATE tbl_qna
+        SET
+            QNA_TITLE = #{title},
+            QNA_CONTENT = #{content},
+            QNA_DATE = now()
+        WHERE QNA_NO = #{no}
+    </update>
+
+    <select id="getQnaById" parameterType="int">
+        SELECT * FROM tbl_qna WHERE QNA_NO = #{qnaNo}
+    </select>
+
+    <select id="selectOne" parameterType="int" resultType="com.uni.mental.qna.model.dto.QnaDto">
+        SELECT * FROM tbl_qna WHERE QNA_NO = #{qnaNo}
+    </select>
+
+
+
+
+</mapper>

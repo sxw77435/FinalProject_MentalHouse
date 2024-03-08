@@ -1,7 +1,5 @@
 package com.uni.mental.checkup.controller;
 
-import com.uni.mental.checkup.model.dto.CheckupResultDTO;
-import com.uni.mental.checkup.model.dto.CheckupUserDTO;
 import com.uni.mental.checkup.model.dto.MessageResponse;
 import com.uni.mental.checkup.model.service.CheckupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +41,11 @@ public class CheckupController {
         double percentage = ((double) yesCount / totalQuestions) * 100;
 
         if (percentage >= 80) {
-            result = "위험! 전문가와 상담을 권장합니다.";
+            result = "위험, 전문가와의 상담을 권장합니다.";
         } else if (percentage >= 50) {
-            result = "주의!";
+            result = "의심, 전문가와의 상담을 권장합니다.";
         } else {
-            result = "양호";
+            result = "양호한 상태입니다.";
         }
 
         return ResponseEntity.ok(new MessageResponse(result)); // result를 MessageResponse 객체에 담아 JSON 형식으로 반환

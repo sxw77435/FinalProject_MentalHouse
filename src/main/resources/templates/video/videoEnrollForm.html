@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영상입력폼</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#viewThumbmail").on("click",function(){
+
+                var urlValue = $("input[name='link']").val();
+
+                var youtbeid = urlValue.split("/")[3]
+
+                // thumbnail url 작성
+                // 예) https://img.youtube.com/vi/J_zGQHAt5m0/0.jpg
+                var thumbnailUrl = "https://img.youtube.com/vi/" + youtbeid + "/0.jpg";
+                //alert(thumbnailUrl)
+
+                // 실제 입력할 링크를 만들고
+                // input_url에 입력한다.
+                // https://www.youtube.com/embed/izAVz-IcEQM
+                var url = "https://www.youtube.com/embed/" + youtbeid
+                $("input[name='url']").val(url)
+
+
+                // 이름이 thumbnail인 input에 thumbnailUrl을 넣자
+                $("input[name='thumbnail']").val(thumbnailUrl)
+
+                // 세번째 칸에 이미지를 추가하자
+                $("#thumbnailImage").attr("src", thumbnailUrl);
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+
+
+<form id="boardenrollForm" method="post" action="regist">
+    <table align="center" wedth="600" border="1">
+        <tr>
+            <td><label>제목 : </label></td>
+            <td width="300"><input type="text" name="title" value="" size="50"></td>
+        </tr>
+        <tr>
+            <td><label >내용 : </label></td>
+            <td width="300"><textarea name="content"  rows="4" cols="52"></textarea></td>
+        </tr>
+        <tr>
+            <td><label>링크 : </label></td>
+            <td width="300"><input type="text" name="link" value="" size="50"></td>
+        </tr>
+        <tr>
+            <td><label>입력링크 : </label></td>
+            <td width="300"><input type="text" name="url" value="" size="50"></td>
+        </tr>
+        <tr>
+            <td><label>썸네일 : </label></td>
+            <td width="300">
+                <input type="text" name="thumbnail" value="" size="50">
+                <img src="" alt="Thumbnail Image" id="thumbnailImage" width="300" height="200">
+            </td>
+        </tr>
+        <tr>
+            <td >
+            </td>
+            <td width="300">
+                <input type="button" id="viewThumbmail" value="썸네일 적용">
+                <input type="submit" value="등록">
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.uni.mental.chating;
 
 import com.uni.mental.chating.model.service.WebSocketService;
+import com.uni.mental.member.model.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.mail.MessagingException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -57,6 +59,8 @@ public class WebSocketServer {
     public void onOpen(@PathParam("sid") String sid, Session session, EndpointConfig config) {
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         WebSocketService webSocketService = (WebSocketService) httpSession.getAttribute("webSocketService");
+        MemberService memberService = (MemberService) httpSession.getAttribute("memberService");
+
 
 
         /**
@@ -96,11 +100,14 @@ public class WebSocketServer {
      @param session 클라이언트와의 연결 세션입니다.
      */
 
+
     @OnMessage
     public void onMessage(String message, Session session) {
 
         ApplicationContext applicationContext = contextProvider.getApplicationContext();
         WebSocketService webSocketService = applicationContext.getBean(WebSocketService.class);
+        MemberService memberService = applicationContext.getBean(MemberService.class);
+
 
         /**
          * {"senderId":"user-1","toUserId":"user-2","message":"hello websocket"}
@@ -110,20 +117,65 @@ public class WebSocketServer {
         String receiverId = jsonObject.optString("receiverId");
         String messageContent  = jsonObject.getString("message");
 
+
+
         log.info("서버가 클라이언트 메시지를 수신했습니다 ==> 발신자 ID = {}, 수신자 ID = {}, 메시지 = {}", senderId, receiverId, message);
 
 
         if (receiverId == null || receiverId.isEmpty()) {
 
             int chatroomno = jsonObject.getInt("chatroomno");
-
-
             webSocketService.insertGroupMessage(chatroomno,senderId, messageContent);
             sendToAll(messageContent);
         } else {
+            String senderemail = memberService.getEmailById(senderId);
+            String receiveremail = memberService.getEmailById(receiverId);
 
-            webSocketService.insertChat(senderId, receiverId, messageContent);
+            webSocketService.insertChat(senderId, receiverId, messageContent ,senderemail,receiveremail);
             sendToOne(receiverId, messageContent);
+            sendPersonalChatEmail(receiveremail, senderId, messageContent);
+        }
+    }
+
+    private void sendPersonalChatEmail(String receiveremail, String senderId, String messageContent) {
+
+        String subject = "Mental House 새로운 대화 알림";
+        String logoUrl = "https://i.postimg.cc/gjGJd3GH/Kakao-Talk-20240129-150246095.png";
+
+        String body = "<html><head><style>"
+                + "table { border-collapse: collapse; width: 100%; }"
+                + "td { padding: 10px; }"
+                + "img { width:80px; height:auto; margin-right:10px; }"
+                + ".sender { font-weight: bold; }"
+                + ".notification { border: 2px solid orange; padding: 10px; }"
+                + "</style></head>"
+                + "<body>"
+                + "<div class='notification'>"
+                + "<table>"
+                + "<tr>"
+                + "<td colspan='3' align='center'><img src='" + logoUrl + "' alt='Logo'></td>"
+                + "</tr>"
+                + "<tr>"
+                + "<td colspan='3' align='center'><p style='color:orange; margin: 0;font-size:20px;'>Mental House</p></td>"
+                + "</tr>"
+                + "<tr>"
+                + "<td colspan='3' align='center'><p class='sender' style='font-size:18px;'>" + senderId + "님이 새로운 메시지를 보냈습니다.</p></td>"
+                + "</tr>"
+                + "</table>"
+                + "</div>"
+                + "</body></html>";
+
+
+        sendEmailNotification(receiveremail, subject, body);
+    }
+
+
+    private void sendEmailNotification(String receiveremail, String subject, String body) {
+        try {
+            EmailAPI.sendEmail(receiveremail, subject, body);
+            log.info("메일 성공적으로 보냈습니다！");
+        } catch (MessagingException e) {
+            log.error("메일 보내기 실패하였습니다：" + e.getMessage());
         }
     }
 
@@ -136,9 +188,8 @@ public class WebSocketServer {
 
 
     private void sendToAll(String message) {
-        // 遍历在线map集合
         onlineSessionClientMap.forEach((onlineSid, toSession) -> {
-            // 排除掉自己
+
             if (!sid.equalsIgnoreCase(onlineSid)) {
                 log.info("서버가 클라이언트에게 메시지를 그룹으로 전송했습니다 ==> sid = {}, toSid = {}, 메시지 = {}", sid, onlineSid, message);
                 toSession.getAsyncRemote().sendText(message);
@@ -188,5 +239,7 @@ public class WebSocketServer {
             System.out.println("Session not found for user " + username);
         }
     }
+
+
 }
 

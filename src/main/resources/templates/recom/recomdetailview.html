@@ -2,6 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
@@ -38,7 +40,7 @@
         }
         .card{
             width:80%;
-            display : inline-block;
+            display : block;
             margin: 20px;
             margin-left: 10%;
             height: 500px;
@@ -85,6 +87,62 @@
             float: left;
         }
 
+        .but{
+            width: 20%;
+            float: right;
+            display: flex;
+            margin: 20px;
+        }
+        .but button{
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            border-bottom: none;
+            background-color: white;
+            font-size: 14px;
+
+        }
+        .deletbtn{
+            margin-left: 10px;
+        }
+        #commentTable{
+            display: inline;
+        }
+        .nick{
+            display: inline;
+            margin: 10px;
+
+        }
+        .date{
+            font-size: 10px;
+            display: inline;
+        }
+        .content{
+            margin : 20px;
+            margin-top: 30px;
+        }
+        .commentOne{
+            width: 800px;
+            height: 100px;
+            margin: 20px;
+            border:1px solid lightgray;
+            overflow: auto;
+            max-height: 200px;
+
+        }
+        .deleteComment{
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            display: inline;
+            float: right;
+            vertical-align: top;
+            background-color: white;
+        }
+        .comment{
+            float: left;
+        }
+
     </style>
 </head>
 
@@ -125,24 +183,128 @@
             </div>
         </div>
         <div class="but">
+            <th:block th:if="${recomDto.memberid==memberId}">
             <a th:href="@{/recom/recomupdate/{recomno}(recomno=${recomDto.recomno})}">수정하기</a>
             <form th:action="@{/recom/recomdelete/{recomno}(recomno=${recomDto.recomno})}" method="post">
                 <button type="submit">게시물 삭제하기</button>
             </form>
+            </th:block>
+
         </div>
     </div>
 </div>
 
 <div class="reply">
-    <a>댓글쓰기</a>
-    <br>
-    <hr>
-    <br>
-    <label>
-        <textarea cols="50" rows="5" placeholder="댓글을 입력해주세요"></textarea>
-    </label>
-    <input class="btn" type="submit" value="등록">
+    <form method="post" onsubmit="return saveComment()" id="commentForm">
+        <a>댓글쓰기</a>
+        <br><hr><br>
+        <input type="hidden" id="recomno" th:value="${recomDto.recomno}">
+
+        <label>
+            <textarea id="content" cols="50" rows="5" placeholder="댓글을 입력해주세요" maxlength="499"></textarea>
+        </label>
+
+        <input class="btn" type="button" value="등록" onclick="return saveComment()">
+    </form>
+    <br><br><br><br><br>
+    <div id="commentTable">
+        <div class="commentOne" th:each="recmt : ${recmtList}" >
+
+            <div class="comment">
+                <h1 class="nick" th:text="${recmt.membernick}"></h1>
+
+                <h3 class="date" th:text="${#dates.format(recmt.recmtdate, 'yyyy-MM-dd HH-mm-ss')}"></h3>
+            </div>
+            <th:block th:if="${recmt.memberid == memberid}">
+                <form class="deleteForm">
+                    <input type="hidden" th:value="${recmt.recmtno}" />
+                    <button type="deletbtn" class="deleteComment">삭제</button>
+                </form>
+            </th:block>
+
+            <p class="content" th:text="${recmt.content}"></p>
+        </div>
+
+    </div>
 </div>
+<div th:replace="common/footer :: footer"></div>
 </body>
+<script>
+    $(function () {
+        window.saveComment = function () {
+            console.log($("#recomno").val());
+
+
+            const formData = new FormData();
+            formData.append("recomno", $("#recomno").val());
+            formData.append("content", $("#content").val());
+
+            console.log(formData);
+
+            $.ajax({
+                url: "/insertRecmt",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+            })
+                .done(function (fragment) {
+                    $('#commentTable').replaceWith(fragment);
+
+                    // 댓글을 삽입한 후에 댓글 리스트를 다시 불러오도록 수정
+                    $.get("/getRecmtList", {recomno: $("#recomno").val()}, function(data) {
+                        $('#commentTable').html(data);
+
+                        $("#content").val('');
+                    });
+                });
+        };
+        $(document).on('click', '.deleteComment', function() {
+            var recmtno = $(this).closest('form').find('input[type=hidden]').val();
+            console.log(recmtno);
+
+            // Ajax 요청
+            $.ajax({
+                type: 'POST',
+                url: '/deleteRecmt',
+                data: { recmtno: recmtno },
+                success: function(response) {
+                    // 성공적으로 삭제된 경우 해당 댓글을 화면에서 제거
+                    $('#comment-' + recmtno).remove();
+
+                    // 삭제 후 알림창 표시
+                    var confirmResult = confirm('댓글을 삭제하였습니다!');
+
+                    // 확인을 받은 경우 페이지 새로고침
+                    if (confirmResult) {
+                        location.reload();
+                    }
+                },
+                complete: function() {
+                    // Ajax 요청이 완료된 후에 입력창 초기화
+                    $("#content").val('');
+                }
+            });
+        });
+        // 엔터 키를 눌렀을 때 댓글 저장 함수 호출
+        $('#content').keypress(function (e) {
+            if (e.which === 13) { // 13은 엔터 키의 keyCode입니다.
+                e.preventDefault(); // 엔터 키의 기본 동작 막기
+                saveComment(); // 댓글 저장 함수 호출
+
+                // 댓글 저장 후 입력창 초기화
+                $("#content").val('');
+            }
+        });
+
+        // 페이지 로드 시 댓글 리스트 가져와서 보여주기
+        $.get("/getRecmtList", {recomno: $("#recomno").val()}, function(data) {
+            $('#commentTable').html(data);
+        });
+    });
+
+
+
+</script>
 
 </html>

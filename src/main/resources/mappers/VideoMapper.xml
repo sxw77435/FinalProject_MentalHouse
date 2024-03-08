@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uni.mental.video.model.dao.VideoDAO">
+
+
+    <resultMap id="menComCmtResultMap" type="com.uni.mental.video.model.dto.VideoDTO">
+
+        <id column="video_no" property="no"/>
+        <result column="video_title" property="title"/>
+        <result column="video_content" property="content"/>
+        <result column="video_date" property="date"/>
+        <result column="video_link" property="link"/>
+        <result column="video_thumbnail" property="thumbnail" />
+
+    </resultMap>
+
+    <select id="findAllView" parameterType="com.uni.mental.video.model.dto.VideoDTO">
+
+        select
+                *
+        from tbl_video
+        order by video_no desc
+    </select>
+
+    <insert id="registVideo" parameterType="com.uni.mental.video.model.dto.VideoDTO">
+
+        insert into  tbl_video (video_title, video_content,video_date,video_link,video_thumbnail)
+        values (#{title},#{content},now(),#{link},#{thumbnail})
+
+    </insert>
+
+    <select id="selectOne" parameterType="com.uni.mental.video.model.dto.VideoDTO">
+
+        select
+            *
+        from tbl_video
+        where video_no = #{no}
+
+    </select>
+
+    <delete id="deleteVideo"  parameterType="com.uni.mental.video.model.dto.VideoDTO">
+        delete
+        from tbl_video
+        where video_no = #{no}
+
+    </delete>
+</mapper>

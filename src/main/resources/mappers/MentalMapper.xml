@@ -6,46 +6,114 @@
 <mapper namespace="com.uni.mental.mentalcomunity.model.dao.MenComDAO">
     <resultMap id="mentalResultMap" type="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
         <id column="men_no" property="no"/>
-        <result column="member_nick" property="nickName"/>
+        <result column="member_id" property="id"/>
         <result column="men_title" property="title"/>
         <result column="men_content" property="content"/>
-        <result column="men_date" property="date" jdbcType="DATE"/>
+        <result column="men_views" property="views" jdbcType="INTEGER"/>
         <result column="cate_no" property="cate"/>
-        <result column="men_views" property="views"/>
+        <result property="date" column="men_date" javaType="java.util.Date"/>
+        <result column="member_nick" property="nick" />
+        <result column="men_image" property="image" />
     </resultMap>
 
+    <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
+        <id column="MEMBER_NO" property="no" />
+        <result column="MEMBER_ID" property="id" />
+        <result column="MEMBER_PWD" property="pwd" />
+        <result column="MEMBER_BIR" property="bir" />
+        <result column="MEMBER_EMAIL" property="email" />
+        <result column="MEMBER_ADD" property="add" />
+        <result column="MEMBER_MENTAL" property="mental" />
+        <result column="MEMBER_NICK" property="nick" />
+    </resultMap>
 
+    <resultMap id="menComCmtResultMap" type="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
 
+        <id column="mencmt_no" property="no"/>
+        <result column="member_id" property="id"/>
+        <result column="men_no" property="menNo"/>
+        <result column="mencmt_content" property="content"/>
+        <result column="mencmt_date" property="date"/>
 
-<select id="selectOne" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
+    </resultMap>
+
+    <select id="mencmtList" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+
+        select
+             mencmt_no
+            ,member_id
+            ,men_no
+            ,mencmt_content
+            ,mencmt_date
+        from tbl_mental_reply
+        where mencmt_no = #{no}
+        order by mencmt_no desc
+
+    </select>
+
+    <insert id="insertComment" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+            insert into tbl_mental_reply(member_id, men_no, mencmt_content, mencmt_date)
+            values(#{id},#{menNo},#{content},now())
+    </insert>
+
+<select id="selectOne" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
     select
-    *
-    from tbl_mental
+        A.men_no,
+        A.member_id,
+        A.men_title,
+        A.men_content,
+        A.men_views,
+        A.cate_no,
+        A.men_date,
+        B.member_nick,
+        A.men_image
+
+    from tbl_mental A
+    left join tbl_member B on(A.member_id = B.member_id)
     where men_no = #{no}
+
 </select>
 
     <insert id="registMenCom" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
-        insert into tbl_mental(member_nick,men_title, men_content, men_date, cate_no, men_views)
-        values (#{nickName},#{title}, #{content}, NOW(), #{cate}, DEFAULT)
+        insert into tbl_mental(member_id,men_title, men_content, men_date, cate_no, men_views,men_image)
+        values (#{id},#{title},#{content},NOW(),#{cate}, DEFAULT,#{image})
     </insert>
 
-<select id="findAllView" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
-    select
-        *
-    from tbl_mental
+    <select id="findAllCate" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
+        SELECT A.men_no, A.member_id, A.men_title, A.men_content, A.men_views, A.cate_no, A.men_date,B.member_nick,
+               A.men_image
+        FROM tbl_mental A
+        LEFT JOIN tbl_member B ON (A.member_id = B.member_id)
+        LEFT JOIN tbl_cate C ON (A.cate_no = C.cate_no)
+        where A.cate_no = #{cate}
+        ORDER BY A.men_no DESC
 
-</select>
 
-    <select id="findAllViewCount" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
-        select
-            count(*)
-        from tbl_mental
     </select>
+
+    <select id="findImageFileNameById" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
+
+            select
+                men_Image
+            from tbl_mental
+            where men_no = #{no}
+
+    </select>
+    <select id="findAllView" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
+        SELECT A.men_no, A.member_id, A.men_title, A.men_content, A.men_views, A.cate_no, A.men_date,B.member_nick,
+               A.men_image
+        FROM tbl_mental A
+                 LEFT JOIN tbl_member B ON (A.member_id = B.member_id)
+        ORDER BY A.men_no DESC
+
+    </select>
+
+
 
     <update id="updateMencom" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
         update TBL_mental
         set
-            men_title=#{title}, men_content=#{content}
+            men_title=#{title}, men_content=#{content}, men_image = #{image}
         where men_no = #{no}
     </update>
 
@@ -57,6 +125,11 @@
 
     </delete>
 
-
+<update id="updateViews" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
+        update tbl_mental
+        set
+            men_views = men_views +1
+        where men_no = #{no}
+</update>
 
 </mapper>

@@ -37,12 +37,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        adminPermitList.add("/nation/nationupdateform/{nationno}");
 //
         memberPermitList.add("/recom/recomenroll");
-//        memberPermitList.add("/recom/recomlist");
+        memberPermitList.add("/recom/recomlist");
         memberPermitList.add("/chatbot/toWebSocketDemo");
         memberPermitList.add("/chatbot/userlist");
         memberPermitList.add("/chatbot/chatroom");
         memberPermitList.add("/chatbot/createchatroom");
-
+        memberPermitList.add("/mencom/mentalList");
 
         adminPermitList.add("/mental/insert");
 

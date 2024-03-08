@@ -115,6 +115,11 @@ public class RecomController {
     @GetMapping("/recomdetailview/{recomno}")
     public String findRecomByCode(@PathVariable int recomno, Model model) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = authentication.getName();
+        model.addAttribute("memberId", memberId);
+        System.out.println(memberId);
+
         RecomDto recomDto = recomService.findRecomByCode(recomno);
         recomService.updateRecomViews(recomno, recomDto.getRecomviews() + 1); // 조회수 +1
 

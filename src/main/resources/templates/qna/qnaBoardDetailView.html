@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+        <title>QnA 조회</title>
+        <link rel="stylesheet" href="/css/basic.css">
+        <link rel="stylesheet" href="/css/custom_reset.css">
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <style>
+            *{
+                padding:0;margin:0
+            }
+            li{
+                list-style:none
+            }
+            a {
+                text-decoration:none;
+                font-size:14px;
+            }
+
+            .menu {
+                width: 100%;
+                overflow: hidden;
+                margin-top: 200px;
+            }
+
+            .menu > li {
+                width: 25%; /*20*5=100%*/
+                float: left;
+                text-align: center;
+                line-height: 40px;
+                background-color: lightgray;
+            }
+
+            .menu a {
+                color: black;
+            }
+            .card{
+                width:80%;
+                display : block;
+                margin: 20px;
+                margin-left: 10%;
+                height: 500px;
+            }
+            .reply{
+                width:80%;
+                display : inline-block;
+                margin: 20px;
+                margin-left: 10%;
+            }
+            .title {
+                font-size: 25px;
+                float: left;
+                margin: 10px;
+                display: block;
+            }
+            .title dd{
+                font-size: 15px;
+                display: block;
+                float: left;
+                margin: 5px;
+            }
+            .title a {
+                text-align: center;
+                margin:30px;
+                font-size: 20px;
+            }
+            .line{
+                width:100%;
+                border-bottom:0;
+                text-align: left;
+                margin-left : 0;
+            }
+            .btn{
+                height:78px;
+                width: 100px;
+                display: inline-block;
+                float: left;
+                margin: 10px;
+            }
+            textarea{
+                resize : none;
+                margin: 10px;
+                float: left;
+            }
+
+            .but{
+                width: 20%;
+                float: right;
+                display: flex;
+                margin: 20px;
+            }
+            .but button{
+                border-left: none;
+                border-right: none;
+                border-top: none;
+                border-bottom: none;
+                background-color: white;
+                font-size: 14px;
+
+            }
+            .deletbtn{
+                margin-left: 10px;
+            }
+            #commentTable{
+                display: inline;
+            }
+            .nick{
+                display: inline;
+                margin: 10px;
+
+            }
+            .date{
+                font-size: 10px;
+                display: inline;
+            }
+            .content{
+                margin : 20px;
+                margin-top: 30px;
+            }
+            .commentOne{
+                width: 800px;
+                height: 100px;
+                margin: 20px;
+                border: 1px solid lightgray;
+                overflow: auto;
+                max-height: 200px;
+
+            }
+            .deleteComment{
+                border-top: none;
+                border-right: none;
+                border-left: none;
+                display: inline;
+                float: right;
+                vertical-align: top;
+                background-color: white;
+            }
+            .comment{
+                float: left;
+            }
+            .btn-container {
+                margin-top: 20px;
+                text-align: right;
+            }
+            .btn-container button {
+                padding: 10px 20px;
+                margin: 0 10px;
+                background-color: #0e3799;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn-container button:hover {
+                background-color: #073167;
+            }
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            li {
+                list-style: none;
+            }
+
+            a {
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .menu {
+                width: 100%;
+                overflow: hidden;
+                margin-top: 20px;
+            }
+
+            .menu > li {
+                width: 25%;
+                float: left;
+                text-align: center;
+                line-height: 40px;
+                background-color: lightgray;
+            }
+
+            .menu a {
+                color: black;
+                display: block;
+            }
+
+            .table-common table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            .table-common table th, .table-common table td {
+                border: 1px solid black;
+                padding: 10px;
+                text-align: left;
+            }
+
+            .table-common table th {
+                background-color: #f2f2f2;
+            }
+
+            .table-common table tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .table-common table tr:hover {
+                background-color: #ddd;
+            }
+
+            .btn-container {
+                margin-top: 20px;
+                text-align: right;
+            }
+
+            .btn-container button {
+                padding: 10px 20px;
+                margin: 0 10px;
+                background-color: #0e3799;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn-container button:hover {
+                background-color: #073167;
+            }
+
+            #container {
+                width: 800px;
+                margin: 20px auto;
+                text-align: left; /* 내용 좌측 정렬 */
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+            }
+
+            .header {
+                margin-top: 20px; /* 타임리프 헤더의 상단 여백 추가 */
+            }
+
+            .footer {
+                margin-top: 20px; /* 타임리프 푸터의 상단 여백 추가 */
+            }
+            *{
+                padding:0;margin:0
+            }
+            li{
+                list-style:none
+            }
+            a {
+                text-decoration:none;
+                font-size:14px;
+            }
+
+            .menu {
+                width: 100%;
+                overflow: hidden;
+                margin-top: 200px;
+            }
+
+            .menu > li {
+                width: 25%; /*20*5=100%*/
+                float: left;
+                text-align: center;
+                line-height: 40px;
+                background-color: lightgray;
+            }
+
+            .menu a {
+                color: black;
+            }
+            .card{
+                width:70%;
+                display : inline-block;
+                margin: 20px;
+                margin-left: 15%;
+                height: 500px;
+            }
+            .create label{
+                display: inline-block;
+
+            }
+            .create button{
+                width: 100px;
+                border-left: none;
+                border-bottom: none;
+                border-right: none;
+                border-top: none;
+                float: right;
+                margin: 20px;
+            }
+            .create #title{
+
+                width: 500px;
+                height: 32px;
+                font-size: 15px;
+                border: 0;
+                border-radius: 15px;
+                outline: none;
+                padding-left: 10px;
+                background-color: rgb(233, 233, 233);
+            }
+            .create textarea{
+                width: 500px;
+                height: 200px;
+                font-size: 15px;
+                border: 0;
+                border-radius: 15px;
+                outline: none;
+                padding-left: 10px;
+                background-color: rgb(233, 233, 233);
+            }
+        </style>
+
+</head>
+<body>
+<div class="header" th:replace="common/header :: header"></div>
+<header class="header">
+    <ul class="menu">
+        <li>
+            <a onclick="location.href='/main/main'">홈</a>
+        </li>
+        <li>
+            <a onclick="location.href='/notice/notice'">공지사항</a>
+        </li>
+        <li>
+            <a onclick="location.href='/qna/qna'">QnA</a>
+        </li>
+        <li>
+            <a onclick="location.href='/mypage/mypage'">마이페이지</a>
+        </li>
+    </ul>
+</header>
+<div class="card">
+
+    <div class="title">
+        <h6>QnA 조회</h6><br>
+        <h3 th:text="${qna.no + '. ' + qna.title}"></h3>
+        <dl>
+            <dd th:text="${qna.id}"></dd>
+            <dd th:text="${#dates.format(qna.date, 'yyyy-MM-dd HH-mm-ss')}"></dd>
+        </dl>
+        <br>
+        <hr class="line"><br>
+        <div th:text="${qna.content}"></div>
+    </div>
+</div>
+<div class="but" >
+    <th:block th:if="${qna.id == user}">
+        <a th:href="@{qnaUpdateForm(no=${qna.no})}">
+            <button type="submit">수정</button>
+        </a>
+        <form action="/qna/delete" method="post">
+            <input type="hidden" name="qnaNo" th:value="${qna.no}">
+            <button class="deletbtn" type="submit">삭제</button>
+        </form>
+    </th:block>
+</div>
+
+<!-- 댓글 작성 폼 -->
+<div class="reply" >
+    <form  method="post" onsubmit="return saveComment()" id="commentForm">
+        <a>댓글쓰기</a>
+        <br><hr><br>
+        <input type="hidden" id="no" th:value="${qna.no}">
+
+        <label>
+            <textarea id="content" cols="50" rows="5" placeholder="댓글을 입력해주세요" maxlength="499" th:if="${#authorization.expression('hasRole(''ADMIN'')')}"></textarea>
+        </label>
+        <input class="btn" type="button" value="등록" onclick="return saveComment()" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+
+    </form>
+</div>
+
+
+<!-- 댓글 목록 -->
+<div id="commentTable">
+    <div class="commentOne" th:each="comment : ${commentList}" >
+        <div class="comment">
+            <h1 class="nick" th:text="${comment.nick}"></h1>
+            <h3 class="date" th:text="${#dates.format(comment.date, 'yyyy-MM-dd HH-mm-ss')}"></h3>
+        </div>
+
+        <!-- 댓글 삭제 버튼 -->
+        <th:block>
+            <form class="deleteForm">
+                <input type="hidden" name="pno" th:value="${comment.pno}" />
+                <button type="button" class="deleteReply" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">삭제</button>
+            </form>
+        </th:block>
+
+        <p class="content" th:text="${comment.content}"></p>
+    </div>
+</div>
+
+
+
+<div class="footer" th:replace="common/footer :: footer"></div>
+</body>
+<script>
+    $(function () {
+        window.saveComment = function () {
+            console.log($("#no").val());
+
+
+            const formData = new FormData();
+            formData.append("no", $("#no").val());
+            formData.append("content", $("#content").val());
+
+            console.log(formData);
+
+            $.ajax({
+                url: "/insertReply",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+            })
+                .done(function (fragment) {
+                    $('#commentTable').replaceWith(fragment);
+                     // 새로운 댓글이 추가된 후, 댓글 목록을 다시 가져와서 화면에 반영
+                    $.get("/getReplyList", {no: $("#no").val()}, function(data) {
+                        $('#commentTable').html(data);
+
+                        $("#content").val('');
+                    });
+                });
+        };
+        $(document).on('click', '.deleteReply', function() {
+            var commentNo = $(this).closest('form').find('input[type=hidden]').val();
+
+            // Ajax 요청
+            $.ajax({
+                type: 'POST',
+                url: '/deleteReply',
+                data: { pno: commentNo },
+                success: function(response) {
+                    // 성공적으로 삭제된 경우 해당 댓글을 화면에서 제거
+                    $('#comment-' + commentNo).remove();
+
+                    // 삭제 후 알림창 표시
+                    var confirmResult = confirm('댓글을 삭제하였습니다!');
+
+                    // 확인을 받은 경우 페이지 새로고침
+                    if (confirmResult) {
+                        location.reload();
+                    }
+                },
+                complete: function() {
+                    // Ajax 요청이 완료된 후에 입력창 초기화
+                    $("#content").val('');
+                }
+            });
+        });
+
+
+        // 엔터 키를 눌렀을 때 댓글 저장 함수 호출
+        $('#content').keypress(function (e) {
+            if (e.which === 13) { // 13은 엔터 키의 keyCode입니다.
+                e.preventDefault(); // 엔터 키의 기본 동작 막기
+                saveComment(); // 댓글 저장 함수 호출
+
+                // 댓글 저장 후 입력창 초기화
+                $("#content").val('');
+            }
+        });
+
+        // 페이지 로드 시 댓글 리스트 가져와서 보여주기
+        $.get("/getReplyList", {no: $("#no").val()}, function(data) {
+            $('#commentTable').html(data);
+        });
+    });
+
+
+
+</script>
+</html>
