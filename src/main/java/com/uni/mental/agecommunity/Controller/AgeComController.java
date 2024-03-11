@@ -1,10 +1,12 @@
-package com.uni.mental.agecomunity.Controller;
+package com.uni.mental.agecommunity.Controller;
 
-import com.uni.mental.agecomunity.model.dao.AgeComDAO;
-import com.uni.mental.agecomunity.model.dto.AgeCmtDTO;
-import com.uni.mental.agecomunity.model.dto.AgeComDTO;
-import com.uni.mental.agecomunity.model.service.AgeCmtService;
-import com.uni.mental.agecomunity.model.service.AgeComService;
+import com.uni.mental.agecommunity.Controller.Valid;
+import com.uni.mental.agecommunity.model.dao.AgeComDAO;
+import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
+import com.uni.mental.agecommunity.model.dto.AgeComDTO;
+import com.uni.mental.agecommunity.model.service.AgeCmtService;
+import com.uni.mental.agecommunity.model.service.AgeComService;
+import com.uni.mental.authentication.model.dto.CustomUser;
 import net.coobird.thumbnailator.Thumbnails;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
@@ -85,7 +87,7 @@ public class AgeComController {
         }
         // 모델에 cateNo 추가해서 선택한 카테고리의 span태그에 background 컬러 넣음
         model.addAttribute("cateNo", cateNo);
-        
+
         int totalPages = (int) Math.ceil((double) totalCount / size);
 
         model.addAttribute("ageComList", ageComList);
@@ -98,9 +100,21 @@ public class AgeComController {
     @GetMapping("/AgeComEnrollForm")
     public String AgeComEnrollForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String memberNick = authentication.getName(); // 현재 인증된 사용자의 이름(닉네임) 가져오기
+        Object principal = authentication.getPrincipal();
 
-        model.addAttribute("memberNick", memberNick);
+        CustomUser customUser = null;
+        if (principal instanceof CustomUser) {
+            customUser = (CustomUser) principal;
+            String memberNick = customUser.getNick(); // CustomUser로부터 닉네임을 가져옵니다.
+            model.addAttribute("memberNick", memberNick);
+        } else {
+            // principal이 CustomUser 타입이 아닐 경우, 기본값이나 다른 정보를 사용합니다.
+            String memberNick = authentication.getName(); // 현재 인증된 사용자의 이름(닉네임) 가져오기
+
+            model.addAttribute("memberNick", memberNick);
+            System.out.println("닉네임 정보가 없어 기본값으로 대체함");
+        }
+
         return "agecom/AgeComEnrollForm"; // Thymeleaf 템플릿 이름 반환
     }
 

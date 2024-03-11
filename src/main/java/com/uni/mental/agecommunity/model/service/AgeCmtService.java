@@ -1,6 +1,6 @@
-package com.uni.mental.agecomunity.model.service;
+package com.uni.mental.agecommunity.model.service;
 
-import com.uni.mental.agecomunity.model.dto.AgeCmtDTO;
+import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
 import java.util.List;
 
 public interface AgeCmtService {

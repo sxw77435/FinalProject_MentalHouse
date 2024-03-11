@@ -5,6 +5,7 @@ import com.uni.mental.chating.WebSocketServer;
 import com.uni.mental.member.model.dao.MemberDao;
 import com.uni.mental.member.model.dto.MemberDto;
 import com.uni.mental.member.model.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,14 +48,20 @@ public class MemberController {
 
 
     @GetMapping("/loginpage")
-    public void memberLoginForm() {
+    public String memberLoginForm(HttpServletRequest request, Model model) {
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        if (csrfToken != null) {
+            model.addAttribute("_csrf", csrfToken);
+        }
+        return "login/loginpage"; // 뷰 이름을 반환하여 해당 뷰로 이동하도록 합니다.
     }
 
     @GetMapping("/agreement")
-    public String agreement() {
+    public String agreement(HttpSession session, Model model) {
+        model.addAttribute("tempEmail", session.getAttribute("tempEmail"));
+        model.addAttribute("tempNickname", session.getAttribute("tempNickname"));
         return "login/agreement";
     }
-
     @GetMapping("/enroll")
     public String enrollForm() {
         return "login/enroll";
@@ -212,7 +220,10 @@ public class MemberController {
             return ResponseEntity.ok(Collections.singletonMap("redirectUrl", "/login/agreement"));
         }
     }
-
+//    @GetMapping("/kakao-logout")
+//    public String kakaoLogout() {
+//        return "redirect:/logout/logoutpage";
+//    }
 
     // 추가 정보 입력 페이지 요청 처리
     @GetMapping("/additional-info")
@@ -233,8 +244,8 @@ public class MemberController {
         System.out.println("tempNickname" + session.getAttribute("tempNickname"));
         System.out.println("DTO:" + memberDto);
 
-        String email = (String) session.getAttribute("email");
-        String nickname = (String) session.getAttribute("nickname");
+        String email = (String) session.getAttribute("tempEmail");
+        String nickname = (String) session.getAttribute("tempNickname");
         // 사용자로부터 받은 비밀번호를 BCrypt 형식으로 인코딩
         String encodedPassword = passwordEncoder.encode(memberDto.getPwd());
         // email 값을 MEMBER_ID로 사용
@@ -247,10 +258,9 @@ public class MemberController {
         memberDao.enrollMember(memberDto);
         System.out.println("After saving to database: " + memberDto); // 로그 추가
 
-        session.removeAttribute("email");
-        session.removeAttribute("nickname");
+        session.removeAttribute("tempEmail");
+        session.removeAttribute("tempNickname");
 
         return "redirect:/login/success";
     }
-
 }
