@@ -74,8 +74,6 @@ public class MemberController {
                                @RequestParam("post") String post,
                                @RequestParam("address1") String address1,
                                @RequestParam("address2") String address2,
-                               @RequestParam("email1") String email1,
-                               @RequestParam("email2") String email2,
                                MemberDto memberDto,
                                Model model) {
         // 주소 처리
@@ -91,10 +89,6 @@ public class MemberController {
 
         String encodedPassword = passwordEncoder.encode(memberDto.getPwd());
         memberDto.setPwd(encodedPassword);
-
-        //email처리
-        String email = email1 + email2;
-        memberDto.setEmail(email);
 
         // 데이터 베이스에 저장
         memberDao.enrollMember(memberDto);
@@ -172,9 +166,7 @@ public class MemberController {
     }
 
     @GetMapping("/success")
-    public String enrollsuccess() {
-        return "login/success";
-    }
+    public String enrollsuccess() { return "login/success";}
 
     @PostMapping("/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -220,10 +212,7 @@ public class MemberController {
             return ResponseEntity.ok(Collections.singletonMap("redirectUrl", "/login/agreement"));
         }
     }
-//    @GetMapping("/kakao-logout")
-//    public String kakaoLogout() {
-//        return "redirect:/logout/logoutpage";
-//    }
+
 
     // 추가 정보 입력 페이지 요청 처리
     @GetMapping("/additional-info")
@@ -263,4 +252,5 @@ public class MemberController {
 
         return "redirect:/login/success";
     }
+
 }

@@ -43,8 +43,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         memberPermitList.add("/chatbot/chatroom");
         memberPermitList.add("/chatbot/createchatroom");
         memberPermitList.add("/mencom/mentalList");
-
         adminPermitList.add("/mental/insert");
+//        memberPermitList.add("/agecom/AgeComList");
+//        memberPermitList.add("/agecom/AgeComEnrollForm");
 
 
 
