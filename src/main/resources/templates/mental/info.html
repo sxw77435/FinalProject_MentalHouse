@@ -165,16 +165,12 @@ xmlns:sec="http://www.thymeleaf.org/extras-springsecurity5">
             color: white;
         }
         button{
-            width: 300px;
+            width: 200px;
             padding:10px 20px;
             border-radius: 30px;
-            background-color: white;
+            background-color: #d3c58d;
             transition: background-color 0.5s, color 0.5s;
-            margin-left: 10px;
-        }
-
-        button:hover {
-            background-color: #d3c58d; /* 鼠标悬停时的背景颜色 */
+            text-align: center;
         }
         .pagination-container {
             text-align: center; /* 페이지네이션을 가운데 정렬합니다. */
@@ -195,7 +191,9 @@ xmlns:sec="http://www.thymeleaf.org/extras-springsecurity5">
             <div class="page">
                 <div class="text" id="text1">전체 <div class="sum" style="color: #ce135b; font-weight: bold;"></div>건 </div>
                 <div class="text" id="text2">현재 페이지 <div class="pagenow" ></div><div class="page1" style="color:#ce135b "></div>/<div class="totalpages" style="font-weight: bold;"></div> </div>
+
             </div>
+
             <select class="search-select" style="font-size: 15px">
                 <option value="option1">Option 1</option>
                 <option value="option2">Option 2</option>
@@ -203,10 +201,13 @@ xmlns:sec="http://www.thymeleaf.org/extras-springsecurity5">
             </select>
             <input type="text" class="search-input" placeholder="검색어 입력하세요" style="font-size: 15px">
             <button class="search-button">검색</button>
+
         </div>
         <!-- image-container는 외부 순환에 넣기 -->
         <div class="mentalcontainer">
+
             <div class="image-container">
+
                 <div th:each="mental: ${mentalList}">
                     <!--image-container 외부순환 넣고，3 item 끝나고 새 image-container 생성-->
                     <div class="item" >
@@ -217,9 +218,7 @@ xmlns:sec="http://www.thymeleaf.org/extras-springsecurity5">
                 </div>
             </div>
         </div>
-        <th:block sec:authorize="hasRole('ADMIN')">
-            <button onclick="location.href='/mental/insert'">INSERT</button>
-        </th:block>
+
         <div class="pagination-container">
 
             <a href="#" class="first-page"><img src="/image/btn_first.png"></a>
@@ -228,6 +227,9 @@ xmlns:sec="http://www.thymeleaf.org/extras-springsecurity5">
             <a href="#" class="next-page"><img src="/image/btn_next.png"></a>
             <a href="#" class="last-page"><img src="/image/btn_end.png"></a>
         </div>
+        <th:block sec:authorize="hasRole('ADMIN')">
+            <button onclick="location.href='/mental/insert'" style="font-size: 16px;margin-left: 70px;">정신건강 정보 등록</button>
+        </th:block>
 
     </div>
 </div>

@@ -1,4 +1,4 @@
-package com.uni.mental.agecomunity.model.dto;
+package com.uni.mental.agecommunity.model.dto;
 
 import lombok.Data;
 
