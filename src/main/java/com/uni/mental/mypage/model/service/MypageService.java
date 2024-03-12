@@ -14,4 +14,8 @@ public interface MypageService {
     MypageDto updateMypage(MypageDto mypageupdate);
 
     void deleteMypage(int mypageNo);
+
+
+
+
 }
