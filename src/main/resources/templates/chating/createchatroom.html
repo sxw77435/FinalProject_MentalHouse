@@ -1,24 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Chatroom</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+        }
+        .password-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 28%;
+            height: 30px;
+            margin-top: 300px;
+        }
+        input[type="text"],
+        input[type="password"],
+        button {
+            margin: 5px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #e59037;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e77906;
+        }
+    </style>
 </head>
 <body>
+<div th:replace="common/header :: header"></div>
 
-    <div class="password-input" id="passwordInput">
-        <input type="text" placeholder="채팅방 이름을 입력하세요" id="chatroomName">
-        <input type="password" placeholder="채팅방 비번을 입력하세요" id="chatroomPassword">
-        <button onclick="createChatroom()">확인</button>
-    </div>
+<div class="password-input">
+    <h1 style="font-size: 24px;font-weight: bold; margin-bottom: 10px;">채팅방 추가</h1>
+    <input type="text" placeholder="Enter Chatroom Name" id="chatroomName">
+    <input type="password" placeholder="Enter Chatroom Password" id="chatroomPassword">
+    <button onclick="createChatroom()">Create</button>
+</div>
+
 <script>
     function createChatroom() {
         var chatroomName = document.getElementById('chatroomName').value;
         var chatroomPassword = document.getElementById('chatroomPassword').value;
 
-        // 发送聊天室的名称和密码到后端
         $.ajax({
             type: 'POST',
             url: '/chatbot/chatroom',
@@ -29,7 +72,7 @@
             }),
             success: function (response) {
                 console.log(response);
-                alert('채팅방 성공적으로 만들었습니다.');
+                alert('Chatroom created successfully.');
                 window.location.href = '/chatbot/userlist';
             },
             error: function (error) {
@@ -37,9 +80,7 @@
             }
         });
     }
-
 </script>
-
 
 </body>
 </html>

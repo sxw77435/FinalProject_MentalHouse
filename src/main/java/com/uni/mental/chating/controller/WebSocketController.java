@@ -40,7 +40,6 @@ public class WebSocketController {
 
         String receiverId = userId;
 
-
         List<WebSocketDto> messages = webSocketService.getChat(memberId, receiverId);
 
         model.addAttribute("messages", messages);
