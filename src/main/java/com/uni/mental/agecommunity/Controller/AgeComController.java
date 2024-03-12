@@ -1,6 +1,5 @@
 package com.uni.mental.agecommunity.Controller;
 
-import com.uni.mental.agecommunity.Controller.Valid;
 import com.uni.mental.agecommunity.model.dao.AgeComDAO;
 import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
 import com.uni.mental.agecommunity.model.dto.AgeComDTO;
@@ -87,7 +86,7 @@ public class AgeComController {
         }
         // 모델에 cateNo 추가해서 선택한 카테고리의 span태그에 background 컬러 넣음
         model.addAttribute("cateNo", cateNo);
-
+        
         int totalPages = (int) Math.ceil((double) totalCount / size);
 
         model.addAttribute("ageComList", ageComList);
