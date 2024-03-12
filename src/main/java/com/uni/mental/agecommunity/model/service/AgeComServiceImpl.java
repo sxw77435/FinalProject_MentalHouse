@@ -1,7 +1,7 @@
-package com.uni.mental.agecomunity.model.service;
+package com.uni.mental.agecommunity.model.service;
 
-import com.uni.mental.agecomunity.model.dao.AgeComDAO;
-import com.uni.mental.agecomunity.model.dto.AgeComDTO;
+import com.uni.mental.agecommunity.model.dao.AgeComDAO;
+import com.uni.mental.agecommunity.model.dto.AgeComDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

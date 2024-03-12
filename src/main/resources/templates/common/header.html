@@ -15,7 +15,7 @@
         </ul>
         </th:block>
         <th:block sec:authorize="isAuthenticated()">
-            <li style="border-left: 1px solid #aaa; " class="welcome"><a href="/logout/logoutpage">로그아웃</a></li>
+            <li style="border-left: 1px solid #aaa; " class="welcome"><a th:onclick="'javascript:kakaoLogout();'">로그아웃</a></li>
             <li style="border-left: 1px solid #aaa;margin-right: 5px; " class="welcome"><a href="/mypage/mypage">마이페이지</a></li>
             <li class="welcome"><span sec:authentication="name"></span>님 환영합니다</li>
 
@@ -40,7 +40,7 @@
             <li style="padding: 10px; margin: 0 6px;">
                 <a href="">정신건강정보</a>
                 <ul class="dropdown">
-                    <li><a href="">정신건강정보</a></li>
+                    <li><a href="/mental/info">정신건강정보</a></li>
                 </ul>
             </li>
             <li style="padding: 10px; margin: 0 6px;">

@@ -1,17 +1,15 @@
-package com.uni.mental.agecomunity.Controller;
+package com.uni.mental.agecommunity.Controller;
 
-import com.uni.mental.agecomunity.model.dao.AgeComDAO;
-import com.uni.mental.agecomunity.model.dto.AgeCmtDTO;
-import com.uni.mental.agecomunity.model.dto.AgeComDTO;
-import com.uni.mental.agecomunity.model.service.AgeCmtService;
+import com.uni.mental.agecommunity.model.dao.AgeComDAO;
+import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
+import com.uni.mental.agecommunity.model.service.AgeCmtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/agecom")

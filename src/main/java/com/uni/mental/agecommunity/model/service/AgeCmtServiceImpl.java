@@ -1,7 +1,7 @@
-package com.uni.mental.agecomunity.model.service;
+package com.uni.mental.agecommunity.model.service;
 
-import com.uni.mental.agecomunity.model.dao.AgeCmtDAO;
-import com.uni.mental.agecomunity.model.dto.AgeCmtDTO;
+import com.uni.mental.agecommunity.model.dao.AgeCmtDAO;
+import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

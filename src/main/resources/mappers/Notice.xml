@@ -15,7 +15,7 @@
         <result column="MEMBER_NICK" property="nick" />
     </resultMap>
 
-    <resultMap id="noticeResultMap" type="com.uni.mental.notice.model.dto.NoticeDto">
+    <resultMap id="noticeResultMap" type="com.uni.mental.notice.model.dto.NoticeDTO">
 
         <id column="NOTICE_NO" property="no"/>
         <result column="NOTICE_ID" property="id" />
@@ -37,24 +37,24 @@
 <!--        where A.NOTICE_NO = #{menNo}-->
 <!--        order by A.NOTICE_NO desc-->
 <!--    </select>-->
-    <select id="getAllNotices"  parameterType="com.uni.mental.notice.model.dto.NoticeDto" >
+    <select id="getAllNotices"  parameterType="com.uni.mental.notice.model.dto.NoticeDTO" >
         SELECT
            *
         FROM
             tbl_notice
     </select>
-    <insert id="addNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+    <insert id="addNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
         insert into tbl_notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_DATE)
         values(#{title},#{content},now())
     </insert>
 
-    <delete id="deleteNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+    <delete id="deleteNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
         delete
         from tbl_notice
         where NOTICE_NO = #{no}
     </delete>
 
-    <update id="updateNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+    <update id="updateNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
         UPDATE tbl_notice
         SET
             NOTICE_TITLE = #{title},
@@ -66,7 +66,7 @@
         SELECT * FROM tbl_notice WHERE NOTICE_NO = #{noticeNo}
     </select>
 
-    <select id="selectOne" parameterType="int" resultType="com.uni.mental.notice.model.dto.NoticeDto">
+    <select id="selectOne" parameterType="int" resultType="com.uni.mental.notice.model.dto.NoticeDTO">
         SELECT * FROM tbl_notice WHERE NOTICE_NO = #{noticeNo}
     </select>
 

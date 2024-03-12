@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>Chat Page</title>
     <style>
-        /* 추가된 CSS 스타일 */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -14,11 +13,12 @@
             background-color: #f5f5f5;
         }
         .container {
-            max-width: 500px;
+            max-width: 400px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
         }
         #chatMessages {
             overflow-y: auto;
@@ -27,7 +27,7 @@
             border: 1px solid #ccc;
             background-color: #f9f9f9;
             border-radius: 5px;
-            height: 800px;
+            height: 500px;
         }
         #chatMessages p {
             margin: 5px 0;
@@ -41,7 +41,7 @@
         }
         button {
             padding: 10px;
-            background-color: #007bff;
+            background-color: #e59037;
             color: #fff;
             border: none;
             cursor: pointer;
@@ -53,6 +53,7 @@
         .message-wrapper {
             margin-bottom: 10px;
             overflow: hidden;
+            background-image: url('/image/img.png');
         }
         .message {
             overflow: hidden;
@@ -82,9 +83,27 @@
             background-color: #f0f0f0;
             color: #333;
         }
+        #header img {
+            width: 50px;
+            height: 50px;
+        }
+        #header h1 {
+            display: inline;
+        }
+        #header h1 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 6px;
+            color: #333;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
+<div class="center" style="text-align: center; margin-top: 30px; margin-bottom: 15px;">
+    <img src="/image/img_1.png" alt="Image" style="width: 55px; height: 55px; margin-left: 10px;">
+    <h1 style="display: inline;" >친구</h1>
+</div>
 <div class="container">
     <input id="memberId" type="hidden" th:value="${memberId}">
     <input id="toUserId" type="hidden" th:attr="value=${receiverId}">
@@ -103,11 +122,13 @@
             </div>
 
         </div>
-        <div class="line">--------------------------------------- 새 채팅 ---------------------------------------</div>
+        <div class="line">------------------------------ 새 채팅 -----------------------------</div>
     </div>
 
-    <input id="contentText" name="contentText" type="text" placeholder="메시지를 입력하세요">
-    <button type="button" onclick="sendMessage()">➤</button>
+    <div style="display: flex;">
+        <input id="contentText" name="contentText" type="text" placeholder="메시지를 입력하세요">
+        <button type="button" onclick="sendMessage()">➤</button>
+    </div>
 </div>
 
 
@@ -217,5 +238,6 @@
 
 
 </script>
+
 </body>
 </html>

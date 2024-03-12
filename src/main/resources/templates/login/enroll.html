@@ -236,97 +236,11 @@
                 option.text = year;
                 selectElement.appendChild(option);
             }
-            document.getElementById('birthMonth').addEventListener('blur', addLeadingZeroAndRangeCheck);
-            document.getElementById('birthDate').addEventListener('blur', addLeadingZeroAndRangeCheck);
-
-            function addLeadingZeroAndRangeCheck(event) {
-                let input = event.target.value;
-
-                // 如果输入的长度为1且输入的数字在1到9之间，则在前面添加一个 0
-                if (input.length === 1 && parseInt(input) >= 0 && parseInt(input) <= 9) {
-                    event.target.value = '0' + input;
-                }
-
-                // 如果输入的数字小于1，则设为 01
-                if (parseInt(input) < 1) {
-                    event.target.value = '01';
-                }
-                // 如果输入的数字大于31，则设为 31
-                else if (parseInt(input) > 31) {
-                    event.target.value = '31';
-                }
-            }
         </script>
-        <div class="form-group email-form">
-            <label for="email" style="margin-top: 30px;">이메일</label>
-            <div class="input-group">
-                <input type="text" class="form-control" name="email1" id="email" placeholder="이메일" style="width: 40%;" >
-                <select class="form-control" name="email2" id="email2" style="border-radius: 20px; height: 35px; border: 1px solid black; width: 32%;">
-                    <option>@naver.com</option>
-                    <option>@daum.net</option>
-                    <option>@gmail.com</option>
-                    <option>@hanmail.com</option>
-                    <option>@yahoo.co.kr</option>
-                </select>
-                <button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
-            </div>
-            <div class="mail-check-box" >
-                <label for="verificationCode">인증 코드*</label>
-                <input class="form-control mail-check-input" id="verificationCode" name="verificationCode"  placeholder="인증번호 6자리를 입력해주세요!"  maxlength="6" style="margin-top: 10px; width: 70%;border-radius: 5px; height: 35px; border: 1px solid black;">
-            </div>
-            <span id="mail-check-warn"></span>
+        <div class="form-group">
+            <label for="email" style="margin-top: 30px">이메일*</label>
+            <input type="email" id="email" name="email" required>
         </div>
-        <script>
-            var code; // 将code变量声明在外部作用域
-
-            function sendVerificationCode() {
-                var email = document.getElementById("email").value;
-                var emailDomain = document.getElementById("email2").value;
-                var fullEmail = email + emailDomain;
-
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/login/sendVerificationCode", true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            var code = xhr.responseText; // 获取从后端返回的验证码
-                            console.log(code);
-                            // 存储验证码以备后用
-                            sessionStorage.setItem('verificationCode', code);
-                            alert("인증 코드가 이메일로 전송되었습니다.");
-                        } else {
-                            alert("인증 코드 전송에 실패했습니다. 나중에 다시 시도해주세요.");
-                        }
-                    }
-                };
-
-                var data = JSON.stringify({ "email": fullEmail });
-                xhr.send(data);
-            }
-
-            function verificationCode() {
-                var inputCode = document.getElementById("verificationCode").value;
-                var storedCode = sessionStorage.getItem('verificationCode'); // 从sessionStorage中获取存储的验证码
-
-                if (inputCode === storedCode) {
-                    document.getElementById("mail-check-warn").textContent = "인증 완료했습니다";
-                    document.getElementById("mail-check-warn").style.color = "green";
-                    document.getElementById("mail-check-warn").style.fontSize = "13px";
-                } else {
-                    document.getElementById("mail-check-warn").textContent = "인증 코드가 일치하지 않습니다.";
-                    document.getElementById("mail-check-warn").style.color = "red";
-                    document.getElementById("mail-check-warn").style.fontSize = "13px";
-                }
-            }
-
-            // 绑定发送验证码按钮的点击事件
-            document.getElementById("mail-Check-Btn").addEventListener("click", sendVerificationCode);
-
-            document.getElementById("verificationCode").addEventListener("input", verificationCode);
-
-        </script>
         <div class="form-group">
             <label for="address">주소*</label>
             <ul id="address"></ul>
@@ -353,7 +267,7 @@
             <label for="mentalStatus" style="font-size: 16px; margin-top: 30px;">멘탈 상태:</label>
             <select id="mentalStatus" name="mental" style="border-radius: 20px; height: 35px; border: 1px solid black; width: 100%;">
                 <option value="">상태 선택하세요</option>
-                <option value="우을증">우을증 </option>
+                <option value="우울증">우울증 </option>
                 <option value="강박증">강박증</option>
                 <option value="조울증">조울증</option>
                 <option value="알코중독증">알코중독증</option>

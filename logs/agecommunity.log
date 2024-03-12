@@ -218,6 +218,7 @@
 [2m2024-03-12 11:31:11.096[0;39m [32mDEBUG[0;39m [35m9204[0;39m [2m---[0;39m [2m[io-8888-exec-10][0;39m [36morg.mybatis.spring.SqlSessionUtils      [0;39m [2m  49[0;39m [2m:[0;39m Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6777be18]
 [2m2024-03-12 11:31:11.096[0;39m [32mDEBUG[0;39m [35m9204[0;39m [2m---[0;39m [2m[io-8888-exec-10][0;39m [36morg.mybatis.spring.SqlSessionUtils      [0;39m [2m  49[0;39m [2m:[0;39m Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6777be18]
 [2m2024-03-12 11:31:11.096[0;39m [32mDEBUG[0;39m [35m9204[0;39m [2m---[0;39m [2m[io-8888-exec-10][0;39m [36morg.mybatis.spring.SqlSessionUtils      [0;39m [2m  49[0;39m [2m:[0;39m Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6777be18]
+<<<<<<< HEAD
 [2m2024-03-12 11:37:31.281[0;39m [32m INFO[0;39m [35m3372[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m 139[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
 [2m2024-03-12 11:37:31.284[0;39m [32m INFO[0;39m [35m3372[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m 208[0;39m [2m:[0;39m Finished Spring Data repository scanning in 1 ms. Found 0 JPA repository interfaces.
 [2m2024-03-12 11:37:31.347[0;39m [32mDEBUG[0;39m [35m3372[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.m.s.mapper.ClassPathMapperScanner     [0;39m [2m 476[0;39m [2m:[0;39m Identified candidate component class: file [C:\workspace\Final\build\classes\java\main\com\uni\mental\agecommunity\model\dao\AgeCmtDAO.class]
@@ -435,3 +436,5 @@
 [2m2024-03-12 11:38:24.917[0;39m [32mDEBUG[0;39m [35m3372[0;39m [2m---[0;39m [2m[nio-8888-exec-7][0;39m [36morg.mybatis.spring.SqlSessionUtils      [0;39m [2m  49[0;39m [2m:[0;39m Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@7c3817bc]
 [2m2024-03-12 11:38:25.838[0;39m [32m INFO[0;39m [35m3372[0;39m [2m---[0;39m [2m[   File Watcher][0;39m [36mrtingClassPathChangeChangedEventListener[0;39m [2m 211[0;39m [2m:[0;39m Restarting due to 36 class path changes (0 additions, 36 deletions, 0 modifications)
 [2m2024-03-12 11:38:25.898[0;39m [32m INFO[0;39m [35m3372[0;39m [2m---[0;39m [2m[     Thread-857][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m 650[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+=======
+>>>>>>> origin/xinweiso

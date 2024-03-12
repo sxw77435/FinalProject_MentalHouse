@@ -1,6 +1,6 @@
-package com.uni.mental.agecomunity.model.dao;
+package com.uni.mental.agecommunity.model.dao;
 
-import com.uni.mental.agecomunity.model.dto.AgeComDTO;
+import com.uni.mental.agecommunity.model.dto.AgeComDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
