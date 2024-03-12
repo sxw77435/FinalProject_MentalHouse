@@ -20,6 +20,7 @@
         }
         .form-group {
             margin-bottom: 20px;
+            width: 100%;
         }
         label {
             display: block;
@@ -34,8 +35,8 @@
             box-sizing: border-box;
         }
         button {
-            padding: 10px 20px;
-            background-color: #007bff;
+            padding: 5px 10px;
+            background-color: #333;
             color: #ffffff;
             border: none;
             border-radius: 5px;
@@ -54,10 +55,6 @@
             text-decoration:none;
             font-size:14px;
         }
-        .con {
-            max-width: 950px;
-            margin: auto;
-        }
         .menu {
             width: 100%;
             overflow: hidden;
@@ -75,13 +72,6 @@
         .menu a {
             color: black;
         }
-
-        .mental{
-            float: right;
-            margin: 5px;
-        }
-
-
 
         .table-common>table {
             width: 100%;
@@ -116,55 +106,23 @@
         tr {
             text-align: center;
         }
-        .btn{
-            width: 85.5%;
-            margin: 20px;
-        }
-        #btn1{
-            float: right;
-            width: 100px;
-            height: 60px;
-            background-color: gray;
-            border: 0px;
-            display: inline-block;
-
-        }
-        .page-link {
-            text-align: center;
-        }
-
-        .page-number {
-            display: inline-block;
-            margin: 0 5px;
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            cursor: pointer;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .page-number.active {
-            background-color: lightgray;
-            color: white;
-        }
-
-        .pagination-controls {
-            text-align: center;
-            margin-top: 10px;
-        }
-
         .pagination-controls button {
+            background-color: #333;
             margin: 0 5px;
             padding: 5px 10px;
-            background-color: lightgray;
             border: none;
             color: white;
             cursor: pointer;
         }
-
         .pagination-controls button:hover {
             background-color: lightgray;
+        }
+        .button-group {
+            text-align: center;
+        }
+        .button-group button {
+            margin: 0 10px;
+            float: right;
         }
     </style>
 </head>
@@ -226,7 +184,7 @@
         <button class="deletbtn" type="submit">탈퇴하기</button>
     </form>
 </div>
-
+<br>
 <div th:replace="common/footer :: footer"></div>
 </body>
 </html>

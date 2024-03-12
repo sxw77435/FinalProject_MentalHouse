@@ -14,25 +14,11 @@
             margin: 0;
             padding: 20px;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
         .card h3 {
             margin: 0 0 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid #333;
             color: #333;
-        }
-        .card-content {
-            margin-bottom: 10px;
         }
         .card-content strong {
             color: #333;
@@ -42,12 +28,6 @@
         .card-content span {
             color: #666;
         }
-        .role-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            margin-top: 10px;
-        }
         .role-list li {
             margin-bottom: 4px;
             color: #666;
@@ -55,32 +35,60 @@
         .menu {
             width: 100%;
             overflow: hidden;
-            margin-top: 200px;
+            margin-top: 20px;
         }
-
         .menu > li {
-            width: 25%; /*20*5=100%*/
+            width: 25%;
             float: left;
             text-align: center;
             line-height: 40px;
             background-color: lightgray;
         }
-
         .menu a {
             color: black;
+            text-decoration: none;
+            display: block;
         }
-        .table-common>table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .con {
-            max-width: 950px;
+        .my-page-container {
+            max-width: 980px;
             margin: auto;
+            margin-top: 15px;
         }
+        .my-page-item {
+            border: 2px solid #ddd;
+            margin: 100px auto;
+            padding: 25px;
+            width: 700px;
+            background-color: white;
+        }
+        .my-page-item label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .my-page-item span {
+            color: #666;
+        }
+        .my-page-item button {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: right;
+            margin-left: 10px;
+        }
+        .my-page-item button:hover {
+            background-color: #555;
+        }
+
     </style>
 </head>
 <body>
 <div th:replace="common/header :: header"></div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 <header class="header">
     <ul class="menu">
         <li>
@@ -97,40 +105,42 @@
         </li>
     </ul>
 </header>
-<section class="list table-common con">
-    <table>
-        <thead>
-        <tr>
-            <th>회원번호</th>
-            <th>아이디</th>
-            <th>생년월일</th>
-            <th>이메일</th>
-            <th>주소</th>
-            <th>멘탈</th>
-            <th>닉네임</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="member : ${members}">
-            <td th:text="${member.no}"></td>
-            <td th:text="${member.id}"></td>
-            <td th:text="${member.bir}"></td>
-            <td th:text="${member.email}"></td>
-            <td th:text="${member.add}"></td>
-            <td th:text="${member.mental}"></td>
-            <td th:text="${member.nick}"></td>
-            <a th:href="@{/mypage/mypageBoardDetailView/{no}(no=${member.no})}" style="width: 80px; height: 25px; margin-left: 100%;">
-                <button>수정하기</button>
-            </a>
-        </tr>
-        </tbody>
-    </table>
-    <div class="btn" >
-
+<div class="my-page-container">
+    <div class="my-page-item" th:each="member : ${members}">
+        <label>회원번호</label>
+        <span th:text="${member.no}"></span>
+        <br>
+        <br>
+        <label>ID</label>
+        <span th:text="${member.id}"></span>
+        <br>
+        <br>
+        <label>생년월일</label>
+        <span th:text="${member.bir}"></span>
+        <br>
+        <br>
+        <label>이메일</label>
+        <span th:text="${member.email}"></span>
+        <br>
+        <br>
+        <label>주소</label>
+        <span th:text="${member.add}"></span>
+        <br>
+        <br>
+        <label>멘탈</label>
+        <span th:text="${member.mental}"></span>
+        <br>
+        <br>
+        <label>닉네임</label>
+        <span th:text="${member.nick}"></span>
+        <a th:href="@{/mypage/mypageBoardDetailView/{no}(no=${member.no})}">
+            <button>수정하기</button>
+        </a>
     </div>
+</div>
 
 
-</section>
+
 <div th:replace="common/footer :: footer"></div>
 </body>
 </html>
