@@ -27,18 +27,18 @@ public class MenComCmtService {
 
     }
 
-    public int insertComment(MenComCmtDTO result) throws Exception {
+    public int insertComment(MenComCmtDTO result)  {
 
-       int comment = menComCmtDAO.insertComment(result);
 
-        if(comment <=0){
-            throw new Exception("게시물 수정 실패");
-        }
-        return comment;
+        menComCmtDAO.updateReplyCnt(result.getMenNo(),1);
+
+        return menComCmtDAO.insertComment(result);
     }
 
     public List<MenComCmtDTO> getList(MenComCmtDTO result) throws Exception {
 
         return menComCmtDAO.getList(result);
     }
+
+
 }

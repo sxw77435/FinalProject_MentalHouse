@@ -10,7 +10,8 @@
 
     <style>
         *{
-            padding:0;margin:0
+            padding:0;
+            margin:0
         }
         li{
             list-style:none
@@ -23,7 +24,7 @@
         .menu {
             width: 100%;
             overflow: hidden;
-            margin-top: 200px;
+            margin-top: 280px;
         }
 
         .menu > li {
@@ -85,7 +86,7 @@
         }
 
         .but{
-            width: 100%;
+            width: 80%;
             display: flex; /* 수정 및 삭제 버튼을 한 줄에 표시하는 스타일 추가 */
             justify-content: flex-start; /* 왼쪽 정렬 */
             margin-left: 120px;
@@ -134,18 +135,15 @@
         }
         .content{
             font-size: 20px;
+            margin: 20px;
+            margin-top: 35px;
         }
-
-
 
         li{
             font-size: 15px;
 
         }
-        .date{
-            width: 130px;
-            height: 0;
-        }
+
         span{
             font-size: 15px;
             color: gray;
@@ -155,9 +153,32 @@
             color: gray;
         }
         .date{
-            margin-left: 15px;
-        }
 
+            display: inline;
+            font-size: 10px;
+        }
+        .nick{
+            display: inline;
+            margin: 10px;
+
+        }
+        .btn {
+            background: #7f93a3;
+            display: block;
+            width: 120px;
+            padding: 0;
+            margin: 10px 20px 10px 0;
+            font-weight: 600;
+            text-align: center;
+            line-height: 50px;
+            color: #FFF;
+            border-radius: 5px;
+            transition: all 0.2s ;
+            border-bottom: none;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+        }
     </style>
 </head>
 
@@ -166,16 +187,16 @@
 <header class="header">
     <ul class="menu">
         <li>
-            <a onclick="location.href='mentalList'">홈</a>
+            <a onclick="location.href='mental_list'">홈</a>
         </li>
         <li>
-            <a onclick="location.href='mentalList'">지역별</a>
+            <a onclick="location.href='mental_list'">지역별</a>
         </li>
         <li>
-            <a onclick="location.href='mentalList'">연령별</a>
+            <a onclick="location.href='mental_list'">연령별</a>
         </li>
         <li>
-            <a onclick="location.href='mentalList'">질환별</a>
+            <a onclick="location.href='mental_list'">질환별</a>
         </li>
     </ul>
 </header>
@@ -198,16 +219,18 @@
 
 </div>
 <div class="but">
+
     <th:block th:if="${mental.id == user}">
-        <a th:href="@{mentalUpdateForm(no=${mental.no})}">
+        <a th:href="@{mental_update(no=${mental.no})}">
             <input type="hidden" name="image" th:value="${mental.image}"/>
-            <button type="submit">수정</button>
+            <button type="submit" >수정</button>
         </a>
         <form action="/mencom/delete" method="post">
             <input type="hidden" name="no" th:value="${mental.no}">
             <button class="deletbtn" type="submit">삭제</button>
         </form>
     </th:block>
+
 </div>
 
 <div class="reply">
@@ -217,18 +240,18 @@
     <input type="hidden" id="menNo" th:value="${mental.no}">
 
     <label>
-        <textarea id="content" cols="50" rows="5" placeholder="댓글을 입력해주세요" maxlength="499"></textarea>
+        <textarea id="content" cols="100" rows="5" placeholder="댓글을 입력해주세요" maxlength="499"></textarea>
     </label>
 
     <input class="btn" type="button" value="등록" onclick="return saveComment()">
     </form>
     <br><br><br><br><br>
 <div id="commentTable">
+
     <div class="commentOne" th:each="comment : ${commentList}" >
 
         <div class="comment">
             <h1 class="nick" th:text="${comment.nick}"></h1>
-
             <h3 class="date" th:text="${#dates.format(comment.date, 'yyyy-MM-dd HH-mm-ss')}"></h3>
         </div>
             <th:block th:if="${comment.id == user}">

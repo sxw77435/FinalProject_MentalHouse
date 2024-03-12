@@ -14,6 +14,8 @@
         <result property="date" column="men_date" javaType="java.util.Date"/>
         <result column="member_nick" property="nick" />
         <result column="men_image" property="image" />
+        <result column="replyCnt" property="replycnt" />
+        <result column="cate_name2" property="catename2"/>
     </resultMap>
 
     <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
@@ -37,25 +39,6 @@
 
     </resultMap>
 
-    <select id="mencmtList" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
-
-        select
-             mencmt_no
-            ,member_id
-            ,men_no
-            ,mencmt_content
-            ,mencmt_date
-        from tbl_mental_reply
-        where mencmt_no = #{no}
-        order by mencmt_no desc
-
-    </select>
-
-    <insert id="insertComment" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
-            insert into tbl_mental_reply(member_id, men_no, mencmt_content, mencmt_date)
-            values(#{id},#{menNo},#{content},now())
-    </insert>
-
 <select id="selectOne" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
     select
         A.men_no,
@@ -66,10 +49,12 @@
         A.cate_no,
         A.men_date,
         B.member_nick,
-        A.men_image
-
+        A.men_image,
+        A.replyCnt,
+        C.cate_name2
     from tbl_mental A
     left join tbl_member B on(A.member_id = B.member_id)
+    LEFT JOIN TBL_CATE C ON (A.cate_no = C.cate_no)
     where men_no = #{no}
 
 </select>
@@ -80,16 +65,26 @@
     </insert>
 
     <select id="findAllCate" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
-        SELECT A.men_no, A.member_id, A.men_title, A.men_content, A.men_views, A.cate_no, A.men_date,B.member_nick,
-               A.men_image
+        SELECT A.men_no,
+               A.member_id,
+               A.men_title,
+               A.men_content,
+               A.men_views,
+               A.cate_no,
+               A.men_date,
+               B.member_nick,
+               A.men_image,
+               A.replyCnt,
+               C.cate_name2
         FROM tbl_mental A
-        LEFT JOIN tbl_member B ON (A.member_id = B.member_id)
-        LEFT JOIN tbl_cate C ON (A.cate_no = C.cate_no)
+        LEFT JOIN TBL_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+        LEFT JOIN TBL_CATE C ON (A.cate_no = C.cate_no)
         where A.cate_no = #{cate}
         ORDER BY A.men_no DESC
 
 
     </select>
+
 
     <select id="findImageFileNameById" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO">
 
@@ -101,7 +96,9 @@
     </select>
     <select id="findAllView" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
         SELECT A.men_no, A.member_id, A.men_title, A.men_content, A.men_views, A.cate_no, A.men_date,B.member_nick,
-               A.men_image
+               A.men_image,
+               A.replyCnt,
+               C.cate_name2
         FROM tbl_mental A
                  LEFT JOIN tbl_member B ON (A.member_id = B.member_id)
         ORDER BY A.men_no DESC
