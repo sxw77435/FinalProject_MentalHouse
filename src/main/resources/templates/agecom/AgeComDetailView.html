@@ -44,7 +44,7 @@
         <img th:if="${ageComDTO.attachNewname}" th:src="@{'/attach/' + ${ageComDTO.attachNewname}}" class="responsive-image" alt="Attached Image" loading="lazy">
     </div>
 </div>
-<div class="but">
+<div class="but" th:if="${ageComDTO.memberNick == #authentication?.name}">
     <a th:href="@{/agecom/AgeComUpdateForm(no=${ageComDTO.ageComNo})}">수정하기</a>
     <form th:action="@{/agecom/delete}" method="post" onsubmit="return confirmDelete()">
     <input type="hidden" name="no" th:value="${ageComDTO.ageComNo}">

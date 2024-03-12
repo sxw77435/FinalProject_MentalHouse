@@ -1,6 +1,6 @@
-package com.uni.mental.agecomunity.model.dao;
+package com.uni.mental.agecommunity.model.dao;
 
-import com.uni.mental.agecomunity.model.dto.AgeCmtDTO;
+import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
