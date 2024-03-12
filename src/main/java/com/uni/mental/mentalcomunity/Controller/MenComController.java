@@ -1,6 +1,5 @@
 package com.uni.mental.mentalcomunity.Controller;
 
-import com.uni.mental.mentalcomunity.model.dao.MenComDAO;
 import com.uni.mental.mentalcomunity.model.dto.MenComDTO;
 import com.uni.mental.mentalcomunity.model.service.MenComService;
 import org.springframework.core.io.ResourceLoader;
@@ -25,44 +24,50 @@ import java.util.UUID;
 @RequestMapping("/mencom")
 public class MenComController {
 
-    private final MenComDAO menComDAO;
+
 
     private final ResourceLoader resourceLoader;
 
     private final MenComService menComService;
 
-    public MenComController(MenComDAO menComDAO, ResourceLoader resourceLoader, MenComService menComService) {
-        this.menComDAO = menComDAO;
+    public MenComController(ResourceLoader resourceLoader, MenComService menComService) {
         this.resourceLoader = resourceLoader;
-
-
         this.menComService = menComService;
     }
 
-    @GetMapping("mentalList")
+    @GetMapping("mental_list")
     public void MentalList(Model model,
-                            @RequestParam(name="cate",required = false,defaultValue = "7") int cate) {
-        List<MenComDTO> cate2 = menComService.findAllCate(cate);
-        List<MenComDTO> mentalList = menComService.findAllView();
-        System.out.println(cate2);
+                            @RequestParam(name="cate",required = false,defaultValue = "7") Integer cate) {
+        List<MenComDTO> mentalList;
+
+        if (cate != null) {
+            // CATENO따라서 리스트 나오기
+            mentalList = menComService.findAllCate(cate);
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+mentalList);
+        } else {
+            mentalList = menComService.findAllView();
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!"+mentalList);
+        }
+
+        model.addAttribute("cate", cate);
         model.addAttribute("mentalList", mentalList);
     }
 
 
-    @GetMapping("mentalEnrollForm")
+    @GetMapping("mental_enroll")
     public void MentalEnrollForm(){}
 
-    @GetMapping("mentalUpdateForm")
+    @GetMapping("mental_update")
     public ModelAndView MentalUpdateForm(@RequestParam("no") String no, ModelAndView mv){
         MenComDTO mental = menComService.selectOne(Integer.parseInt(no));
 
         mv.addObject("mental",mental);
-        mv.setViewName("mencom/mentalUpdateForm");
+        mv.setViewName("mencom/mental_update");
 
         return mv;
     }
-    @GetMapping("mentalDetailView")
-    public ModelAndView MentalDetailView(@RequestParam("no") String no, ModelAndView mv
+    @GetMapping("mental_detail")
+    public ModelAndView MentalDetail(@RequestParam("no") String no, ModelAndView mv
                                          ){
         MenComDTO mental = menComService.selectOne(Integer.parseInt(no));
         int updateViews = menComService.updateViews(Integer.parseInt(no));
@@ -71,23 +76,20 @@ public class MenComController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
 
-        mv.addObject("user",id);
-        System.out.println("~~~~~~~~~~~~~~~~~"+id);
+        mv.addObject("user", id);
+        mv.addObject("updateViews", updateViews);
+        mv.addObject("mental", mental);
 
-        mv.addObject("updateViews",updateViews);
-        mv.addObject("mental",mental);
-
-        System.out.println(mental);
-        mv.setViewName("mencom/mentalDetailView");
+        mv.setViewName("mencom/mental_detail");
 
         return mv;
     }
 
     @PostMapping(value = "regist",produces = MediaType.IMAGE_PNG_VALUE)
-    public ModelAndView MentalRegist(
-                                     @RequestParam(value = "image",required = false) MultipartFile uploadFile,
-                                     @Validated MenComDTO menCom,
-                                     BindingResult bindingResult) {
+    public ModelAndView MentalRegist(@RequestParam(value = "image",required = false) MultipartFile uploadFile,
+                                     @ModelAttribute @Validated MenComDTO menCom,
+                                     BindingResult bindingResult
+                                    ) {
 
         System.out.println(uploadFile);
         ModelAndView modelAndView = new ModelAndView();
@@ -110,11 +112,11 @@ public class MenComController {
                 menCom.setId(id);
 
 
-                // 插入数据到数据库
+
                 int result = menComService.registMenCom(menCom);
 
                 if (result > 0) {
-                    modelAndView.setViewName("redirect:/mencom/mentalList");
+                    modelAndView.setViewName("redirect:/mencom/mental_list");
                     modelAndView.addObject("message", "등록 성공");
                 } else {
                     modelAndView.setViewName("error");
@@ -181,7 +183,7 @@ public class MenComController {
         }
 
 
-        return "redirect:/mencom/mentalList";
+        return "redirect:/mencom/mental_list";
     }
 
 
@@ -189,7 +191,7 @@ public class MenComController {
 public String MentalDelete(@RequestParam("no") int no){
     menComService.deleteMencom(no);
 
-    return "redirect:/mencom/mentalList";
+    return "redirect:/mencom/mental_list";
 }
 
 

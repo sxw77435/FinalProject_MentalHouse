@@ -22,7 +22,7 @@ public class VideoController {
         this.videoService = videoService;
     }
 
-    @GetMapping("videoList")
+    @GetMapping("video_list")
     public void video(Model model)  {
         List<VideoDTO> videoList = videoService.findAllView();
         System.out.println(videoList);
@@ -30,7 +30,7 @@ public class VideoController {
 
     }
 
-    @GetMapping("videoEnrollForm")
+    @GetMapping("video_enroll")
     public void videoEnrollForm(){}
 
     @PostMapping("regist")
@@ -38,14 +38,14 @@ public class VideoController {
 
         videoService.registVideo(videoDTO);
 
-        return "redirect:/video/videoList";
+        return "redirect:/video/video_list";
     }
-    @GetMapping("videoDetailView")
+    @GetMapping("video_detail")
     public ModelAndView videoDetailView(@RequestParam("no") String no, ModelAndView mv){
 
         VideoDTO video = videoService.selectOne(Integer.parseInt(no));
         mv.addObject("video", video);
-        mv.setViewName("video/videoDetailView");
+        mv.setViewName("video/video_detail");
         System.out.println(video);
 
 
@@ -57,6 +57,6 @@ public class VideoController {
 
         videoService.deleteVideo(Integer.parseInt(no));
 
-        return "redirect:/video/videoList";
+        return "redirect:/video/video_list";
     }
 }

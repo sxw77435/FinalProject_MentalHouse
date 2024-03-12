@@ -10,7 +10,6 @@ public class MenComDTO {
     private String id;
 
     private String title;
-
     private String content;
     private Integer views;
     private int cate;
@@ -21,8 +20,11 @@ public class MenComDTO {
 
     private String image;
 
+    private int replycnt;
 
-    public MenComDTO(Integer no, String id, String title, String content, Integer views, int cate, Date date, String nick,String image ) {
+    private String catename2;
+
+    public MenComDTO(Integer no, String id, String title, String content, Integer views, int cate, Date date, String nick, String image, int replycnt, String catename2) {
         this.no = no;
         this.id = id;
         this.title = title;
@@ -32,6 +34,25 @@ public class MenComDTO {
         this.date = date;
         this.nick = nick;
         this.image = image;
+        this.replycnt = replycnt;
+        this.catename2 = catename2;
+    }
+
+    @Override
+    public String toString() {
+        return "MenComDTO{" +
+                "no=" + no +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", views=" + views +
+                ", cate=" + cate +
+                ", date=" + date +
+                ", nick='" + nick + '\'' +
+                ", image='" + image + '\'' +
+                ", replycnt=" + replycnt +
+                ", catename2='" + catename2 + '\'' +
+                '}';
     }
 
     public Integer getNo() {
@@ -106,18 +127,19 @@ public class MenComDTO {
         this.image = image;
     }
 
-    @Override
-    public String toString() {
-        return "MenComDTO{" +
-                "no=" + no +
-                ", id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", views=" + views +
-                ", cate=" + cate +
-                ", date=" + date +
-                ", nick='" + nick + '\'' +
-                ", image='" + image + '\'' +
-                '}';
+    public int getReplycnt() {
+        return replycnt;
+    }
+
+    public void setReplycnt(int replycnt) {
+        this.replycnt = replycnt;
+    }
+
+    public String getCatename2() {
+        return catename2;
+    }
+
+    public void setCatename2(String catename2) {
+        this.catename2 = catename2;
     }
 }

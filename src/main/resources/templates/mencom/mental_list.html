@@ -26,17 +26,21 @@
         .menu {
             width: 100%;
             overflow: hidden;
-            margin-top: 200px;
+            margin-top: 250px;
         }
 
         .menu > li {
-            width: 25%; /*20*5=100%*/
+            width: 33%; /*20*5=100%*/
             float: left;
             text-align: center;
             line-height: 40px;
-            background-color: lightgray;
-        }
+            background-color: #5093ca;
 
+        }
+        .menu > li button{
+            color: #fff;
+            background: none;
+        }
         .menu a {
             color: black;
         }
@@ -55,14 +59,14 @@
 
 
         .table-common table th, .table-common table td {
-            border: 1px solid black;
+            border: 1px solid #467de1;
             padding: 10px;
         }
 
         .list table {
             border:none;
-            border-top:2px solid black;
-            border-bottom:2px solid black;
+            border-top:3px solid #566f9b;
+            border-bottom:2px solid #566f9b;
         }
 
         .list table th, .list table td {
@@ -70,29 +74,65 @@
         }
 
         .list table td {
-            border-bottom:1px solid black;
+            border-bottom:1px solid #467de1;
         }
 
         .list table thead {
-            border-bottom:2px solid black;
+            border-bottom:1px solid #467de1;
             background-color: whitesmoke;
         }
 
         tr {
             text-align: center;
         }
-        .btn{
-            width: 85.5%;
-            margin: 20px;
-        }
-        #btn1{
-            float: right;
-            width: 100px;
-            height: 60px;
-            background-color: gray;
-            border: 0px;
-            display: inline-block;
 
+
+
+        .btn{
+            margin-right: 85px;
+            margin-bottom: 5px;
+
+        }
+        .btn button, .btn a {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+
+        }
+
+        .btn button img, .btn a img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .men ul{
+            width:500px;
+            float: left;
+        }
+        .men button{
+            background-color: #bae0ec;
+            border: 1px #ddd solid;
+            margin: 0 3px;
+            width: 70px;
+            height: 30px;
+            margin-bottom: 5px;
+            border-radius: 2px;
+        }
+
+        .men button:hover{
+            background-color: #657d9a;
+
+        }
+
+
+        .page-number {
+            font-size: 17px;
+        }
+        .page-link {
+            position: relative;
+            top: -10px;
+            margin-left: 10px;
+            margin-right: 10px;
         }
         .page-link {
             text-align: center;
@@ -100,7 +140,6 @@
 
         .page-number {
             display: inline-block;
-            margin: 0 5px;
             padding: 5px 10px;
             background-color: #f0f0f0;
             border: 1px solid #ddd;
@@ -113,24 +152,34 @@
             background-color: lightgray;
             color: white;
         }
-
-        .pagination-controls {
+        .page-link {
             text-align: center;
-            margin-top: 10px;
         }
 
-        .pagination-controls button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            background-color: lightgray;
-            border: none;
+        .pagination-container {
+            text-align: center; /* 페이지네이션을 가운데 정렬합니다. */
+            margin-top: 20px; /* 페이지네이션과 위쪽 간격을 설정합니다. */
+        }
+        .men button .selected{
+            background-color: #005ea0;
             color: white;
-            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px;
+        }
+        b{
+            margin-left: 10px;
+            color: red;
+        }
+        .cnt {
+            color: red;
+            font-size: 12px
         }
 
-        .pagination-controls button:hover {
-            background-color: lightgray;
-        }
     </style>
 </head>
 
@@ -138,66 +187,69 @@
 <div th:replace="common/header :: header"></div>
 <header class="header">
     <ul class="menu">
+<!--        <li>-->
+<!--            <button onclick="location.href='mental_list'">홈</button>-->
+<!--        </li>-->
         <li>
-            <a onclick="location.href='mentalList'">홈</a>
+            <button onclick="location.href='mental_list'">지역별</button>
         </li>
         <li>
-            <a onclick="location.href='mentalList'">지역별</a>
+            <button onclick="location.href='mental_list'">연령별</button>
         </li>
         <li>
-            <a onclick="location.href='mentalList'">연령별</a>
-        </li>
-        <li>
-            <a onclick="location.href='mentalList'">질환별</a>
+            <button onclick="location.href='mental_list'">질환별</button>
         </li>
     </ul>
 
 </header>
 <br>
 
-<h1 class="con">게시판</h1>
 <br>
 <section class="list table-common con">
     <div class="men">
         <ul>
+<!--            <li>-->
+<!--                <button onclick="location.href='mental_list'">-->
+<!--                    <span th:class="${cate == null ? 'selected' : ''}" class="mental"> 전체 </span>-->
+<!--                </button>-->
+<!--            </li>-->
             <li>
-
-                <a onclick="location.href='mentalList'">
-                    <span class="mental"> 전체 </span>
-                </a>
+                <button onclick="location.href='mental_list?cate=7'" th:class="${cate == 7 ? 'selected' : ''}">
+                    <span th:class="${cate == 7 ? 'selected' : ''}" class="mental"> 우울증 </span>
+                </button>
             </li>
             <li>
-                <a onclick="location.href='mentalList?cate=7'">
-                    <span class="mental"> 우울증 </span>
-                </a>
+                <button  onclick="location.href='mental_list?cate=8'">
+                    <span th:class="${cate == 8 ? 'selected' : ''}" class="mental"> 조울증 </span>
+                </button>
             </li>
             <li>
-                <a onclick="location.href='mentalList?cate=8'">
-                    <span class="mental"> 불면증 </span>
-                </a>
+                <button  onclick="location.href='mental_list?cate=9'">
+                    <span th:class="${cate == 9 ? 'selected' : ''}" class="mental"> 조현병 </span>
+                </button>
             </li>
             <li>
-                <a onclick="location.href='mentalList?cate=9'">
-                    <span class="mental"> ADHD </span>
-                </a>
+                <button onclick="location.href='mental_list?cate=10'">
+                    <span  th:class="${cate == 10 ? 'selected' : ''}" class="mental"> 불면증</span>
+                </button>
             </li>
             <li>
-                <a onclick="location.href='mentalList?cate=10'">
-                    <span class="mental"> 조현병</span>
-                </a>
+                <button  onclick="location.href='mental_list?cate=11'">
+                    <span th:class="${cate == 11 ? 'selected' : ''}" class="mental"> ADHD </span>
+                </button>
             </li>
             <li>
-                <a onclick="location.href='mentalList?cate=11'">
-                    <span class="mental"> 조울증 </span>
-                </a>
-            </li>
-            <li>
-                <a onclick="location.href='mentalList?cate=12'">
-                    <span class="mental"> 그 외 </span>
-                </a>
+                <button  onclick="location.href='mental_list?cate=12'">
+                    <span th:class="${cate == 12 ? 'selected' : ''}" class="mental"> 그 외 </span>
+                </button>
             </li>
         </ul>
-
+        <div class="btn">
+            <button  style="width: 80px; height: 25px; margin-left: 100%; border-color: gray" onclick="location.href='mental_enroll'">
+                <img src="/img/writer.png" style="width: 20px; height:20px" alt="글쓰기">
+                <a>글쓰기 </a>
+            </button>
+        </div>
 
 
     </div>
@@ -216,9 +268,11 @@
 
 <!--                 Thymeleaf로부터 받은 데이터를 이용하여 게시물 목록을 동적으로 생성-->
                 <tr th:each="mental : ${mentalList}" class="total_item" >
+                    <td th:text="${mental.cate}" style="display: none"></td>
                     <td th:text="${mental.no}"></td>
                     <td>
-                       <a th:href="@{mentalDetailView(no=${mental.no})}" th:text="${mental.title}"></a>
+                       <a th:href="@{mental_detail(no=${mental.no})}" th:text="${mental.title}"></a>
+                        <b>[<span class = "cnt" th:text="${mental.replycnt}"></span>]</b>
                     </td>
                     <td th:text="${mental.nick}"></td>
                     <td th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH:mm')}"></td>
@@ -238,21 +292,18 @@
         <!-- 다음 페이지로 이동하는 버튼 -->
         <a href="#" class="next-page"><img src="/image/btn_next.png"></a>
         <a href="#" class="last-page"><img src="/image/btn_end.png"></a>
-    </div>
+    </div><br>
 
-    <div class="btn">
-        <button style="width: 80px; height: 25px; margin-left: 100%;" onclick="location.href='mentalEnrollForm'"><a>글쓰기</a></button>
-    </div>
 </section>
 
 
 
 <script>
     $(document).ready(function() {
-        // 전체 페이지
+        // 计算总页数
         var totalPages = Math.ceil($('.total_item').length /15);
 
-        // 페이지 링크
+        // 添加页码链接
         addPageLinks(totalPages);
 
         // 初始化显示第一页
@@ -319,7 +370,7 @@
     });
 </script>
 
-<div th:replace="common/footer :: footer"></div>
+<footer th:replace="common/footer :: footer"></footer>
 </body>
 
 </html>

@@ -12,8 +12,6 @@
         margin: 0;
     }
 
-
-
     .section-one {
         margin: 30px;
         margin-left: 50px;
@@ -30,7 +28,7 @@
     .h1 {
         font-size: 25px;
         margin: 30px;
-        margin-top: 200px;
+        margin-top: 250px;
     }
 
     hr {
@@ -85,7 +83,7 @@
             <h4 class="title">
                 <a th:href="${entry1.link}" th:text="${entry1.title}" />
             </h4>
-            <a class="author" th:text="${#dates.format(entry1.publishedDate, 'yyyy-MM-dd HH:mm:ss')}"></a>
+            <a class="author" th:text="${#dates.format(entry1.publishedDate, 'yyyy-MM-dd HH:mm')}"></a>
         </div>
     </section>
 </div>
@@ -98,7 +96,7 @@
             <h4 class="title">
                 <a th:href="${entry2.link}" th:text="${entry2.title}" />
             </h4>
-            <a class="author" th:text="${#dates.format(entry2.publishedDate, 'yyyy-MM-dd HH:mm:ss')}"></a>
+            <a class="author" th:text="${#dates.format(entry2.publishedDate, 'yyyy-MM-dd HH:mm')}"></a>
         </div>
     </section>
 </div>
