@@ -65,6 +65,8 @@
             *
         FROM TBL_RECOM A
         LEFT JOIN TBL_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
+        ORDER BY RECOM_NO DESC
+
     </select>
 
     <select id="findRecomByCode" resultMap="recomResultMap"><!-- 메소드명하고 동일하게-->
