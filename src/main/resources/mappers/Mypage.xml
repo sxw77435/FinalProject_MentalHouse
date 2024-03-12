@@ -14,6 +14,7 @@
         <result column="MEMBER_MENTAL" property="mental" />
         <result column="MEMBER_NICK" property="nick" />
         <result column="MEMBER_EXIT" property="exit" />
+        <result column="MEMBER_NEWPWD" property="newpwd" />
     </resultMap>
 
 
@@ -47,6 +48,8 @@
             MEMBER_EXIT = 'Y'
         WHERE MEMBER_NO = #{no}
     </update>
+
+
 
 
 

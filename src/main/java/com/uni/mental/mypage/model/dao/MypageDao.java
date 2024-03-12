@@ -15,5 +15,8 @@ public interface MypageDao {
 
     void updateMypage(MypageDto mypageupdate);
     void deleteMypage(Integer  mypageNo);
+    // 비밀번호 업데이트 메서드 추가
+
+
 
 }
