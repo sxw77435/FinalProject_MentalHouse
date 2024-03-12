@@ -4,6 +4,7 @@ import com.uni.mental.chating.EmailAPI;
 import com.uni.mental.chating.WebSocketServer;
 import com.uni.mental.member.model.dao.MemberDao;
 import com.uni.mental.member.model.dto.MemberDto;
+import com.uni.mental.member.model.dto.MemberRoleDTO;
 import com.uni.mental.member.model.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -192,12 +194,13 @@ public class MemberController {
                                         HttpSession session) {
         MemberDto existingMember = memberDao.findByEmail(email);
         if (existingMember != null) {
-            // 사용자 인증 정보 설정
-            List<SimpleGrantedAuthority> authorities = existingMember.getMemberRoleList().stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getAuthority().getName()))
+            // 사용자 권한 정보 조회
+            List<MemberRoleDTO> memberRoleList = existingMember.getMemberRoleList();
+            List<GrantedAuthority> authorities = memberRoleList.stream()
+                    .map(memberRole -> new SimpleGrantedAuthority(memberRole.getAuthority().getName()))
                     .collect(Collectors.toList());
 
-            // 사용자 세션 정보 설정
+            // 사용자 인증 정보 설정
             Authentication authentication = new UsernamePasswordAuthenticationToken(existingMember.getId(), null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
