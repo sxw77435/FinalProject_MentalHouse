@@ -45,7 +45,7 @@ public class MenComCmtController {
 
         System.out.println("commentList의 아이디입니다."+commentList);
 
-        return "mencom/mentalDetailView :: #commentTable";
+        return "mencom/mental_detail :: #commentTable";
     }
 
     @RequestMapping(value = "deleteComment", method = {RequestMethod.POST})
@@ -54,7 +54,7 @@ public class MenComCmtController {
         menComCmtService.deleteComment(no);
 
 
-        return "mencom/mentalDetailView :: #commentTable";
+        return "mencom/mental_detail :: #commentTable";
     }
     @GetMapping("/getCommentList")
     public String getCommentList(Model model, @RequestParam Integer menNo) {
@@ -73,9 +73,8 @@ public class MenComCmtController {
             e.printStackTrace();
             // 예외 처리
         }
-        return "mencom/mentalDetailView :: #commentTable";
+        return "mencom/mental_detail :: #commentTable";
     }
-
 
 
 

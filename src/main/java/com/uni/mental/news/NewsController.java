@@ -19,7 +19,7 @@ import java.util.List;
 public class NewsController {
 
 
-    @GetMapping("newsList")
+    @GetMapping("news_list")
     public void news(Model model) throws IOException, FeedException {
         //RSS를 이용해서 뉴스를 실시간으로 받아서 업데이트 시켜준다.
         URL feedSource = new URL("https://www.psychiatricnews.net/rss/allArticle.xml");

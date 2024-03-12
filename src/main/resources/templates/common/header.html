@@ -15,7 +15,7 @@
         </ul>
         </th:block>
         <th:block sec:authorize="isAuthenticated()">
-            <li style="border-left: 1px solid #aaa; " class="welcome"><a href="/logout/logoutpage">로그아웃</a></li>
+            <li style="border-left: 1px solid #aaa; " class="welcome"><a th:onclick="'javascript:kakaoLogout();'">로그아웃</a></li>
             <li style="border-left: 1px solid #aaa;margin-right: 5px; " class="welcome"><a href="/mypage/mypage">마이페이지</a></li>
             <li class="welcome"><span sec:authentication="name"></span>님 환영합니다</li>
 
@@ -40,7 +40,7 @@
             <li style="padding: 10px; margin: 0 6px;">
                 <a href="">정신건강정보</a>
                 <ul class="dropdown">
-                    <li><a href="">정신건강정보</a></li>
+                    <li><a href="/mental/info">정신건강정보</a></li>
                 </ul>
             </li>
             <li style="padding: 10px; margin: 0 6px;">
@@ -61,8 +61,8 @@
             <li style="padding: 10px; margin: 0 6px;">
                 <a href="">도움이 되는 정보</a>
                 <ul class="dropdown">
-                    <li><a href="">뉴스</a></li>
-                    <li><a href="">동영상</a></li>
+                    <li><a href="/news/news_list">뉴스</a></li>
+                    <li><a href="/video/video_list">동영상</a></li>
                     <li><a href="/address/nearbyfacilities">근처 병원찾기</a></li>
                 </ul>
             </li>
@@ -71,7 +71,7 @@
                 <ul class="dropdown">
 
                     <li><a href="/recom/recomlist">지역별 커뮤니티</a></li>
-                    <li><a href="/mencom/mentalList">질환별 커뮤니티</a></li>
+                    <li><a href="/mencom/mental_list">질환별 커뮤니티</a></li>
                     <li><a href="/agecom/AgeComList">연령별 커뮤니티</a></li>
 
                 </ul>

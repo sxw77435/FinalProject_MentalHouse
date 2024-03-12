@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+        *{
+            padding:0;margin:0
+        }
+        li{
+            list-style:none
+        }
+        a {
+            text-decoration:none;
+            font-size:14px;
+        }
+
+        .menu {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 200px;
+        }
+
+        .menu > li {
+            width: 25%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            background-color: lightgray;
+        }
+
+        .menu a {
+            color: black;
+        }
+        .card{
+            width:70%;
+            display : inline-block;
+            margin: 20px;
+            margin-left: 15%;
+            height: 500px;
+        }
+        .create label{
+            display: inline-block;
+
+        }
+        .create button{
+            width: 100px;
+            border-left: none;
+            border-bottom: none;
+            border-right: none;
+            border-top: none;
+            float: right;
+            margin: 20px;
+        }
+        .create #title{
+
+            width: 500px;
+            height: 32px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+        .create #nickname{
+
+            width: 500px;
+            height: 32px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+        .create textarea{
+            width: 500px;
+            height: 200px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+
+        .create button{
+            width: 100px;
+            height: 20px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            background-color: rgb(233, 233, 233);
+        }
+
+        .textarea{
+            width: 500px;
+            height: 200px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="common/header :: header"></div>
+<header class="header">
+    <ul class="menu">
+        <li>
+            <a onclick="location.href='mentalList'">홈</a>
+        </li>
+        <li>
+            <a onclick="location.href='mentalList'">지역별</a>
+        </li>
+        <li>
+            <a onclick="location.href='mentalList'">연령별</a>
+        </li>
+        <li>
+            <a onclick="location.href='mentalList'">질환별</a>
+        </li>
+    </ul>
+</header>
+<div class="card">
+    <h1>게시글 수정하기</h1>
+    <br>
+    <hr>
+    <br>
+    <div class="create">
+        <form action="/mencom/update" method="post" id="updateForm" enctype="multipart/form-data">
+
+        <label>
+                <input type="hidden" name="no" th:value="${mental.no}">
+                <input id = "title" type="text" name="title" th:value="${mental.title}">
+
+            </label>
+            <br><br>
+            <label>
+                <textarea cols="100" rows="15" id="content" name="content" style="display: inline-block; resize : none;" th:text="${mental.content}" maxlength="1000"></textarea>
+            </label>
+            <br><br>
+            <label>
+                <input id="cate" type="hidden" name="cate" th:value="${mental.cate}" readonly>
+            </label>
+            <img width="55%" id="previewImage" th:src="@{'/image/' + ${mental.image}}" class="image">
+            <label>이미지 첨부 :
+                <input type="file" name="image" id="imageInput" />
+            </label>
+            <br>
+            <button type="button" onclick="location.href='mental_list'">취소하기</button>
+            <button type="submit" >수정하기</button>
+
+        </form>
+    </div>
+</div>
+<div style="display: block" th:replace="common/footer :: footer"></div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("change", "#imageInput", function () {
+            var preview = document.getElementById('previewImage');
+            var imageInput = this;
+
+            if (imageInput.files && imageInput.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // 이미지를 선택한 경우에는 새로운 이미지 URL을 설정
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                // 이미지 파일을 선택하지 않은 경우 기존 이미지 URL 사용
+                preview.src = "@{'/image/' + ${mental.image}}";
+            }
+        });
+    });
+
+</script>
+</html>

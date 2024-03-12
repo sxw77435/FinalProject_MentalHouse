@@ -54,4 +54,11 @@
             where mencmt_no = #{no}
 
     </delete>
+    <update id="updateReplyCnt" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">
+
+        UPDATE tbl_mental
+        SET replyCnt = replyCnt + #{amount}
+        where tbl_mental.men_no = #{no}
+
+    </update>
 </mapper>

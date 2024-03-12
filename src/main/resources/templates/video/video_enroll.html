@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/custom_reset.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#viewThumbmail").on("click",function(){
+
+                var urlValue = $("input[name='link']").val();
+
+                var youtbeid = urlValue.split("/")[3]
+
+                // thumbnail url 작성
+                // 예) https://img.youtube.com/vi/J_zGQHAt5m0/0.jpg
+                var thumbnailUrl = "https://img.youtube.com/vi/" + youtbeid + "/0.jpg";
+                //alert(thumbnailUrl)
+
+                // 실제 입력할 링크를 만들고
+                // input_url에 입력한다.
+                // https://www.youtube.com/embed/izAVz-IcEQM
+                var url = "https://www.youtube.com/embed/" + youtbeid
+                $("input[name='url']").val(url)
+
+
+                // 이름이 thumbnail인 input에 thumbnailUrl을 넣자
+                $("input[name='thumbnail']").val(thumbnailUrl)
+
+                // 세번째 칸에 이미지를 추가하자
+                $("#thumbnailImage").attr("src", thumbnailUrl);
+
+            });
+
+        });
+    </script>
+    <style>
+        *{
+            padding:0;margin:0
+        }
+        li{
+            list-style:none
+        }
+        a {
+            text-decoration:none;
+            font-size:14px;
+        }
+
+
+        .menu > li {
+            width: 25%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            background-color: lightgray;
+        }
+
+        .menu a {
+            color: black;
+        }
+        .card{
+            width:70%;
+            display : inline-block;
+            margin: 20px;
+            margin-left: 15%;
+            margin-top: 200px;
+            height: 500px;
+        }
+        .create label{
+            display: inline-block;
+
+        }
+        .create button{
+            width: 100px;
+            border-left: none;
+            border-bottom: none;
+            border-right: none;
+            border-top: none;
+            float: right;
+            margin: 20px;
+        }
+        .create .title{
+
+            width: 500px;
+            height: 32px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+        .create textarea{
+            width: 500px;
+            height: 200px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+
+    </style>
+</head>
+
+<body>
+<div th:replace="common/header :: header"></div>
+
+<div class="card">
+    <h2>동영상 작성하기</h2>
+    <br>
+    <hr>
+    <br>
+    <div class="create">
+        <form action="regist" method="post" id="boardenrollForm">
+            <label>
+                <input class = "title" type="text" name="title" value="" placeholder="제목을 입력하세요">
+            </label>
+            <br>
+            <br>
+            <label>
+                <textarea cols="100" rows="15" id="content" name="content" style="display: inline-block; resize : none;" placeholder="내용을 1000자 내로 입력해주세요"maxlength="1000"></textarea>
+            </label>
+            <br><br>
+            <input class = "title" type="text" name="link" value="" placeholder="유튜브 링크를 입력하세요">
+            <br><br>
+            <input class = "title" type="text" name="url" value="" placeholder="적용 버튼을 눌러주세요 !">
+            <input class = "title" type="text" name="thumbnail" value="" ><br>
+            <img src="" alt="Thumbnail Image" id="thumbnailImage" width="300" height="200">
+            <br>
+            <input type="button" id="viewThumbmail" value="썸네일 적용">
+            <input type="submit" value="등록">
+
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>
+</body>
+</html>

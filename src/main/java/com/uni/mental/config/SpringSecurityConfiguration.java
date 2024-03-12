@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -42,41 +41,35 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         Map<String, List<String>> permitListMap = authenticationService.getPermitListMap();
 
         List<String> adminPermitList = permitListMap.get("adminPermitList");
         List<String> memberPermitList = permitListMap.get("memberPermitList");
 
-        adminPermitList.forEach(url -> System.out.println("admin permit list : " + url));
-        memberPermitList.forEach(url -> System.out.println("member permit list : " + url));
-
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorizeHttpRequests)->authorizeHttpRequests
-//                        .requestMatchers("menu/**").authenticated() //인증
-//                        .requestMatchers(("admin/**")).hasRole("ADMIN")
-//                        .requestMatchers("order/**").hasAnyRole("ADMIN","MEMBER")
-                                .requestMatchers(memberPermitList.toArray(new String[memberPermitList.size()])).hasAnyRole("MEMBER","ADMIN")
-                                .requestMatchers(adminPermitList.toArray(new String[adminPermitList.size()])).hasRole("ADMIN")
-                                .anyRequest().permitAll()
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(memberPermitList.toArray(new String[0])).hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers(adminPermitList.toArray(new String[0])).hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login/loginpage")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/",true)
-                        .failureForwardUrl("/error/login"))
-                .logout(logout ->logout
+                        .defaultSuccessUrl("/main", true)
+                        .failureUrl("/login/loginpage?error=true")
+                )
+                .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout/logoutpage"))
                         .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
-                        .logoutSuccessUrl("/"))
-                .exceptionHandling((exception)->exception.accessDeniedPage("/error/denied"));
+                        .logoutSuccessUrl("/")
+                )
 
+                .exceptionHandling(exception -> exception.accessDeniedPage("/error/denied"));
 
         return http.build();
-
-
-
     }
+
 }
