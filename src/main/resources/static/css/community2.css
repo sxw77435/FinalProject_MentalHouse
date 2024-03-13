@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+*{
+    padding:0;margin:0
+}
+li{
+    list-style:none
+}
+a {
+    text-decoration:none;
+    font-size:14px;
+}
+.con {
+    max-width: 950px;
+    margin: auto;
+}
+.menu {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 250px;
+}
+
+.menu > li {
+    width: 33%; /*20*5=100%*/
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    background-color: #5093ca;
+
+}
+.menu > li button{
+    color: #fff;
+    background: none;
+}
+.menu a {
+    color: black;
+}
+
+.mental{
+    float: right;
+    margin: 5px;
+}
+
+
+
+.table-common>table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.table-common table th, .table-common table td {
+    border: 1px solid #467de1;
+    padding: 10px;
+}
+
+.list table {
+    border:none;
+    border-top:3px solid #566f9b;
+    border-bottom:2px solid #566f9b;
+}
+
+.list table th, .list table td {
+    border:none;
+}
+
+.list table td {
+    border-bottom:1px solid #467de1;
+}
+
+.list table thead {
+    border-bottom:1px solid #467de1;
+    background-color: whitesmoke;
+}
+
+tr {
+    text-align: center;
+}
+
+
+
+.btn{
+    margin-right: 85px;
+    margin-bottom: 5px;
+
+}
+.btn button, .btn a {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+
+}
+
+.btn button img, .btn a img {
+    width: 20px;
+    height: 20px;
+}
+
+.men ul{
+    width:500px;
+    float: left;
+}
+.men button{
+    background-color: #bae0ec;
+    border: 1px #ddd solid;
+    margin: 0 3px;
+    width: 70px;
+    height: 30px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+}
+
+.men button:hover{
+    background-color: #657d9a;
+
+}
+
+
+.page-number {
+    font-size: 17px;
+}
+.page-link {
+    position: relative;
+    top: -10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.page-link {
+    text-align: center;
+}
+
+.page-number {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+}
+
+.page-number.active {
+    background-color: lightgray;
+    color: white;
+}
+.page-link {
+    text-align: center;
+}
+
+.pagination-container {
+    text-align: center; /* 페이지네이션을 가운데 정렬합니다. */
+    margin-top: 20px; /* 페이지네이션과 위쪽 간격을 설정합니다. */
+}
+.men button .selected{
+    background-color: #005ea0;
+    color: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+}
+b{
+    margin-left: 10px;
+    color: red;
+}
+.cnt {
+    color: red;
+    font-size: 12px
+}
