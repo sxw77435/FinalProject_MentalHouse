@@ -87,8 +87,6 @@
             text-align: center;
         }
 
-
-
         .btn{
             margin-right: 85px;
             margin-bottom: 5px;
@@ -111,7 +109,7 @@
             float: left;
         }
         .men button{
-            background-color: #bae0ec;
+            background-color: #bae0ec ;
             border: 1px #ddd solid;
             margin: 0 3px;
             width: 70px;
@@ -161,9 +159,9 @@
             text-align: center; /* 페이지네이션을 가운데 정렬합니다. */
             margin-top: 20px; /* 페이지네이션과 위쪽 간격을 설정합니다. */
         }
-        .men button .selected{
-            background-color: #005ea0;
-            color: white;
+        .men span.selected{
+            background-color: #005ea0 !important;
+            color: white !important;
             width: 100%;
             height: 100%;
             display: flex;
@@ -172,6 +170,7 @@
             align-items: center;
             border-radius: 2px;
         }
+
         b{
             margin-left: 10px;
             color: red;
@@ -210,38 +209,33 @@
     <div class="men">
         <ul>
             <li>
-                <button onclick="location.href='recomlist'">
-                    <span  class="mental"> 전체보기 </span>
+                <button onclick="location.href='recomlist?cateno=1'" th:class="${cateno == 1 ? 'selected' : ''}">
+                    <span th:class="${cateno == 1 ? 'selected' : ''}" class="mental"> 서울 </span>
                 </button>
             </li>
             <li>
-            <button onclick="location.href='recomlist?cateno=1'" th:class="${cate == 1 ? 'selected' : ''}">
-                <span th:class="${cate == 1 ? 'selected' : ''}" class="mental"> 서울 </span>
-            </button>
+                <button onclick="location.href='recomlist?cateno=2'">
+                    <span th:class="${cateno == 2 ? 'selected' : ''}" class="mental"> 경기 </span>
+                </button>
             </li>
             <li>
-            <button onclick="location.href='recomlist?cateno=2'" th:class="${cate == 2 ? 'selected' : ''}">
-                <span th:class="${cate == 2 ? 'selected' : ''}" class="mental"> 경기 </span>
-            </button>
-            </li>
-            <li>
-                <button  onclick="location.href='recomlist?cateno=3'">
-                    <span th:class="${cate == 3 ? 'selected' : ''}" class="mental"> 부산 </span>
+                <button  onclick="location.href='recomlist?cateno=3'" >
+                    <span th:class="${cateno == 3 ? 'selected' : ''}" class="mental"> 부산 </span>
                 </button>
             </li>
             <li>
                 <button  onclick="location.href='recomlist?cateno=4'">
-                    <span th:class="${cate == 4 ? 'selected' : ''}" class="mental"> 대구 </span>
+                    <span th:class="${cateno == 4 ? 'selected' : ''}" class="mental"> 대구 </span>
                 </button>
             </li>
             <li>
                 <button onclick="location.href='recomlist?cateno=5'">
-                    <span  th:class="${cate == 5 ? 'selected' : ''}" class="mental"> 인천</span>
+                    <span  th:class="${cateno == 5 ? 'selected' : ''}" class="mental"> 인천</span>
                 </button>
             </li>
             <li>
                 <button  onclick="location.href='recomlist?cateno=6'">
-                    <span th:class="${cate == 6 ? 'selected' : ''}" class="mental"> 기타 </span>
+                    <span th:class="${cateno == 6 ? 'selected' : ''}" class="mental"> 기타 </span>
                 </button>
             </li>
 
@@ -268,7 +262,11 @@
         <tr th:each="recom : ${recomList}" class="total_item">
             <td th:text="${recom.cateno}" style="display: none"></td>
             <td th:text="${recom.recomno}"></td>
-            <td><a th:href="@{/recom/recomdetailview/{recomno}(recomno=${recom.recomno})}" th:text="${recom.recomtitle}"></a></td>
+            <td>
+                <a th:href="@{/recom/recomdetailview/{recomno}(recomno=${recom.recomno})}" th:text="${recom.recomtitle}"></a>
+                <b>[<span class = "cnt" th:text="${recom.replycount}"></span>]</b>
+
+            </td>
             <td><span class="user-nickname" th:text="${recom.membernick}" th:data-user-id="${recom.memberid}" style="cursor: pointer;"></span><div class="dm-button-container"></div></td>
             <td th:text="${#dates.format(recom.recomdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${recom.recomviews}"></td>
@@ -291,6 +289,9 @@
 <div th:replace="common/footer :: footer"></div>
 
 <script>
+
+
+
     $(document).ready(function() {
         // 닉네임 클릭
         $(document).on('click', '.user-nickname', function() {
