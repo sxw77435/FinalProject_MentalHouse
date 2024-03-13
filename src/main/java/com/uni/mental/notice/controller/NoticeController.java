@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("notice")
@@ -22,14 +24,14 @@ public class NoticeController {
 
     @GetMapping("/notice")
     public String showNotice(Model model) {
-
-
-        // 공지사항 데이터를 가져와서 모델에 추가
-        model.addAttribute("notices", noticeService.getAllNotices()); // 예시: noticeService를 사용하여 공지사항 데이터를 가져옴
-
+        // 공지사항 데이터를 번호를 기준으로 오름차순으로 정렬하여 가져와서 모델에 추가
+        List<NoticeDTO> notices = noticeService.getAllNotices(); // 번호를 기준으로 오름차순으로 정렬된 공지사항 데이터를 가져옴
+        model.addAttribute("notices", notices);
 
         return "notice/notice"; // notice.html로 이동
     }
+
+
 
     @GetMapping("/noticeBoardEnrollForm")
     public String showNoticeBoardEnrollForm() {

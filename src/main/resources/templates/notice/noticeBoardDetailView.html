@@ -340,10 +340,46 @@
             padding-left: 10px;
             background-color: rgb(233, 233, 233);
         }
+        /* 변경된 버튼 스타일 */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            padding: 5px 15px;
+            margin-left: 10px;
+            background-color: #ff7603; /* 변경된 버튼 색상 */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-group button:hover {
+            background-color: #FF8C66; /* 변경된 호버 색상 */
+        }
     </style>
+    <script>
+        $(document).ready(function () {
+            // 탈퇴하기 버튼 클릭 시 confirm 함수를 사용하여 확인 메시지를 표시
+            $(".deletbtn").click(function () {
+                // 확인 메시지를 표시하고 사용자의 선택에 따라 true 또는 false를 반환
+                var result = confirm("정말로 삭제를 하시겠습니까???");
+                // 사용자가 확인을 선택한 경우
+                if (result) {
+                    // 폼을 제출하여 탈퇴 요청을 서버로 전송
+                    $(this).closest("form").submit();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="header" th:replace="common/header :: header"></div>
+<br><br><br>
 <header class="header">
     <ul class="menu">
         <li>
@@ -371,23 +407,26 @@
         <br>
         <hr class="line"><br>
         <div th:text="${notice.content}"></div>
+
+    </div>
+    <div class="button-group">
+        <th:block th:if="${notice.id == user}">
+            <a th:href="@{noticeUpdateForm(no=${notice.no})}">
+                <button type="submit" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">수정</button>
+
+            </a>
+            <form action="/notice/delete" method="post">
+                <input type="hidden" name="noticeNo" th:value="${notice.no}">
+                <button class="deletbtn" type="submit" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">삭제</button>
+            </form>
+        </th:block>
     </div>
 </div>
-<div class="but" >
-    <th:block th:if="${notice.id == user}">
-        <a th:href="@{noticeUpdateForm(no=${notice.no})}">
-            <button type="submit" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">수정</button>
-
-        </a>
-        <form action="/notice/delete" method="post">
-            <input type="hidden" name="noticeNo" th:value="${notice.no}">
-            <button class="deletbtn" type="submit" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">삭제</button>
-        </form>
-    </th:block>
+<!-- 버튼 그룹 -->
+<div class="button-group">
+    <button type="submit" onclick="location.href='/notice/notice'">뒤로 가기</button>
 </div>
-
-
-
+<br>
 <div class="footer" th:replace="common/footer :: footer"></div>
 </body>
 </html>
