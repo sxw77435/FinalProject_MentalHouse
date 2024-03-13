@@ -164,7 +164,6 @@
         <tr>
             <th>번호</th>
             <th style="width: 500px">제목</th>
-            <th>내용</th>
             <th>글쓴이</th>
             <th>글 등록일</th>
         </tr>
@@ -176,7 +175,6 @@
             <td>
                 <a th:href="@{noticeBoardDetailView(no=${notice.no})}" th:text="${notice.title}"></a>
             </td>
-            <td th:text="${'...'}"></td>
             <td>관리자</td>
             <td th:text="${#dates.format(notice.date, 'yyyy-MM-dd HH:mm:ss')}"></td>
         </tr>
