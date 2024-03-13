@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
     <style>
         *{
             padding:0;margin:0
@@ -187,9 +189,6 @@
 <div th:replace="common/header :: header"></div>
 <header class="header">
     <ul class="menu">
-<!--        <li>-->
-<!--            <button onclick="location.href='mental_list'">홈</button>-->
-<!--        </li>-->
         <li>
             <button onclick="location.href='mental_list'">지역별</button>
         </li>
@@ -200,7 +199,6 @@
             <button onclick="location.href='mental_list'">질환별</button>
         </li>
     </ul>
-
 </header>
 <br>
 
@@ -208,11 +206,6 @@
 <section class="list table-common con">
     <div class="men">
         <ul>
-<!--            <li>-->
-<!--                <button onclick="location.href='mental_list'">-->
-<!--                    <span th:class="${cate == null ? 'selected' : ''}" class="mental"> 전체 </span>-->
-<!--                </button>-->
-<!--            </li>-->
             <li>
                 <button onclick="location.href='mental_list?cate=7'" th:class="${cate == 7 ? 'selected' : ''}">
                     <span th:class="${cate == 7 ? 'selected' : ''}" class="mental"> 우울증 </span>

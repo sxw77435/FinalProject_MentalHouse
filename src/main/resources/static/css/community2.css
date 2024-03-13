@@ -16,8 +16,7 @@ a {
 }
 .menu {
     width: 100%;
-    overflow: hidden;
-    margin-top: 250px;
+    margin-top: 230px;
 }
 
 .menu > li {
@@ -97,7 +96,6 @@ tr {
 }
 
 .men ul{
-    width:500px;
     float: left;
 }
 .men button{
@@ -170,3 +168,4 @@ b{
     color: red;
     font-size: 12px
 }
+
