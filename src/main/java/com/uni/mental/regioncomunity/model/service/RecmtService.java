@@ -24,6 +24,8 @@ public class RecmtService {
     }
 
     public int insertRecmt(RecomCmtDto result) throws Exception {
+
+        recmtDao.updateReplyCnt(result.getRecomno(),1);
         int comment = recmtDao.insertRecmt(result);
 
         if(comment <=0){
