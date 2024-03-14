@@ -3,9 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
     <style>
         *{
             padding:0;margin:0
@@ -105,8 +109,9 @@
     <hr>
     <br>
     <div class="create">
-        <form th:action="@{/mencom/regist}" method="post" id="enrollForm" enctype="multipart/form-data">            <label>
-                <input id = "title" type="text" name="title" placeholder="제목을 입력하세요" maxlength="30">
+        <form th:action="@{/mencom/regist}" method="post" id="enrollForm" enctype="multipart/form-data">
+            <label>
+                <input id = "title" type="text" name="title" placeholder="제목을 입력하세요" maxlength="50">
             </label>
             <br>
             <br>
@@ -136,7 +141,7 @@
         </form>
     </div>
 </div>
-
+<div th:replace="common/footer :: footer"></div>
 </body>
 
 </html>

@@ -3,10 +3,14 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
 
     <style>
         *{
@@ -215,7 +219,8 @@
 
         <hr class="line"><br>
         <img width="75%" th:src="@{'/image/' + ${mental.image}}"  class="image">
-        <div class="content" th:text="${mental.content}"></div> <!-- 이미지를 포함한 content를 표시하는 부분 -->
+
+        <div class="content" th:text="${mental.content}"></div>
 
     </div>
 

@@ -16,8 +16,10 @@ public class AgeComDTO {
 
     private String attachNewname;
 
+    private int replycnt;
 
-    public AgeComDTO(Integer ageComNo, int cateNo, String ageComTitle, String ageComDetail, String memberNick, Date ageComDate, Integer ageComViews, String attachNewname) {
+
+    public AgeComDTO(Integer ageComNo, int cateNo, String ageComTitle, String ageComDetail, String memberNick, Date ageComDate, Integer ageComViews, String attachNewname, int replycnt) {
         this.ageComNo = ageComNo;
         this.cateNo = cateNo;
         this.ageComTitle = ageComTitle;
@@ -26,6 +28,7 @@ public class AgeComDTO {
         this.ageComDate = ageComDate;
         this.ageComViews = ageComViews;
         this.attachNewname = attachNewname;
+        this.replycnt = replycnt;
 
     }
 
@@ -92,6 +95,13 @@ public class AgeComDTO {
         this.attachNewname = attachNewname;
     }
 
+    public int getReplycnt() {
+        return replycnt;
+    }
+
+    public void setReplycnt(int replycnt) {
+        this.replycnt = replycnt;
+    }
     @Override
     public String toString() {
         return "AgeComDTO{" +
@@ -102,6 +112,7 @@ public class AgeComDTO {
                 ", memberNick='" + memberNick + '\'' +
                 ", ageComDate=" + ageComDate +
                 ", ageComViews=" + ageComViews +
+                ", replycnt=" + replycnt +
                 '}';
     }
 

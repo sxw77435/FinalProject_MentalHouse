@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script src="/js/kakaoLogout.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=aga2qlwh79&submodules=geocoder"></script>
 <head>
 
     <meta charset="UTF-8">
-    <title>Find Nearby Facilities</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
 </head>
 <style>
 
@@ -74,7 +78,7 @@
 
 <div class="container">
 <div class="title">
-    <h2>내위치 근처 병원찾기</h2>
+    <h2>내위치 근처 의료기관찾기</h2>
 </div>
 
 <div id="hospitalList" style="float: left; width: 30%; margin-top: 20px;">
@@ -90,7 +94,7 @@
     </div>
 </div>
 <div id="nearbyList" style="float: left; width: 30%; display: none;margin-top: 20px;">
-    <h3>내위치 근처 정신건강 의료 가관</h3>
+    <h3>내위치 근처 정신건강 의료 기관</h3>
 
     <div class="hospital" style="height: 580px; overflow-y: auto;" >
         <ul id="nearbyHospitals">

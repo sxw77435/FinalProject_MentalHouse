@@ -2,81 +2,93 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
     <link rel="stylesheet" href="/css/mentalList.css">
+    <link rel="stylesheet" href="/css/community2.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
 </head>
 <body>
 <div th:replace="~{common/header :: header}"></div>
-<header class="header">
-    <ul class="menu">
-        <li>
-            <a onclick="location.href='AgeComList'">홈</a>
-        </li>
-        <li>
-            <a onclick="location.href='AgeComList'">지역별</a>
-        </li>
-        <li>
-            <a onclick="location.href='AgeComList'">연령별</a>
-        </li>
-        <li>
-            <a onclick="location.href='AgeComList'">질환별</a>
-        </li>
-    </ul>
-</header>
-<div id="wrap" style="padding-top: 59px;">
-    <h1 class="con">게시판</h1>
-    <br>
+<ul class="menu_age">
+    <li><p style="background: #5093ca; color: #fff">커뮤니티</p></li>
+    <li>
+        <button style="margin-right: 100px" onclick="location.href='mental_list'">지역별</button>
+
+        <button onclick="location.href='mental_list'">연령별</button>
+
+        <button style="margin-left: 100px" onclick="location.href='mental_list'">질환별</button>
+    </li>
+
+    <li>
+        <button  onclick="location.href='mental_list'">채팅</button>
+    </li>
+</ul>
+<div id="wrap" style="padding-top: 99px; margin-bottom: 50px">
     <section class="list table-common con">
         <div class="men">
             <ul>
                 <li th:class="${cateNo == null ? 'selected-category' : ''}">
                     <a th:href="@{/agecom/AgeComList}">
-                        <span class="mental"> 전체보기 </span>
+                        <span>전체보기</span>
                     </a>
                 </li>
-                <li>
+                <li th:class="${cateNo == 13 ? 'selected-category' : ''}" class="mental">
                     <a th:href="@{/agecom/AgeComList(cateNo=13)}">
-                        <span th:class="${cateNo == 13 ? 'selected-category' : ''}" class="mental"> 10대 </span>
+                        <span> 10대 </span>
                     </a>
                 </li>
-                <li>
+                <li th:class="${cateNo == 14 ? 'selected-category' : ''}" class="mental">
                     <a th:href="@{/agecom/AgeComList(cateNo=14)}">
-                        <span th:class="${cateNo == 14 ? 'selected-category' : ''}" class="mental"> 20대 </span>
+                        <span> 20대 </span>
                     </a>
                 </li>
-                <li>
+                <li th:class="${cateNo == 15 ? 'selected-category' : ''}" class="mental">
                     <a th:href="@{/agecom/AgeComList(cateNo=15)}">
-                        <span th:class="${cateNo == 15 ? 'selected-category' : ''}" class="mental"> 30대 </span>
+                        <span> 30대 </span>
                     </a>
                 </li>
-                <li>
+                <li th:class="${cateNo == 16 ? 'selected-category' : ''}" class="mental">
                     <a th:href="@{/agecom/AgeComList(cateNo=16)}">
-                        <span th:class="${cateNo == 16 ? 'selected-category' : ''}" class="mental"> 40대 </span>
+                        <span> 40대 </span>
                     </a>
                 </li>
-                <li>
+                <li th:class="${cateNo == 17 ? 'selected-category' : ''}" class="mental">
                     <a th:href="@{/agecom/AgeComList(cateNo=17)}">
-                        <span th:class="${cateNo == 17 ? 'selected-category' : ''}" class="mental"> 50대 </span>
+                        <span> 50대 </span>
                     </a>
                 </li>
             </ul>
+        </div>
+        <div class="btn">
+            <button type="submit" id="btn1">
+                <img src="/img/writer.png" style="width: 20px; height: 20px; margin-right: 2px" alt="글쓰기" onclick="location.href='AgeComEnrollForm'"/>
+                글쓰기
+            </button>
         </div>
         <table>
             <thead>
             <tr>
                 <th>번호</th>
-                <th style="width: 500px">제목</th>
+                <th style="width: 450px">제목</th>
                 <th>글쓴이</th>
-                <th>글 등록일</th>
+                <th style="width: 200px">글 등록일</th>
                 <th>조회수</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="agecom : ${ageComList}">
                 <td th:text="${agecom.ageComNo}"></td>
-                <td><a th:href="@{/agecom/AgeComDetailView/{ageComNo}(ageComNo=${agecom.ageComNo})}" th:text="${agecom.ageComTitle}"></a></td>
+                <td>
+                    <a th:href="@{/agecom/AgeComDetailView/{ageComNo}(ageComNo=${agecom.ageComNo})}" th:text="${agecom.ageComTitle}">
+                    </a>
+                    <!-- 빨간색 조회수 -->
+                    <b>[<span class = "cnt" th:text="${agecom.replycnt}"></span>]</b>
+                </td>
                 <td th:text="${agecom.memberNick}"></td>
                 <td th:text="${#dates.format(agecom.ageComDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${agecom.ageComViews}"></td>
@@ -86,6 +98,8 @@
     </section>
     <!-- 페이지네이션 -->
     <div class="pagination">
+        <img src="/image/btn_first.png">
+        <img src="/image/btn_prev.png">
         <ul>
             <li th:if="${currentPage > 0}">
                 <a th:href="@{/agecom/AgeComList(page=${currentPage - 1})}">&laquo; 이전</a>
@@ -97,13 +111,10 @@
                 <a th:href="@{/agecom/AgeComList(page=${currentPage + 1})}">다음 &raquo;</a>
             </li>
         </ul>
+        <img src="/image/btn_next.png">
+        <img src="/image/btn_end.png">
     </div>
-    <div class="btn">
-        <button type="submit" id="btn1">
-            <img src="" style="width: 50px; height: 50px;" alt="글쓰기" onclick="location.href='AgeComEnrollForm'"/>
-        </button>
-    </div>
-    <div th:replace="~{common/footer :: footer}"></div>
 </div>
+<div th:replace="~{common/footer :: footer}"></div>
 </body>
 </html>

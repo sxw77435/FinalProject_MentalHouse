@@ -45,6 +45,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         memberPermitList.add("/mencom/mental_list");
         memberPermitList.add("/mencom/mental_enroll");
         adminPermitList.add("/mental/insert");
+        memberPermitList.add("/agecom/AgeComList"); // Now members can also access AgeComList
+        memberPermitList.add("/agecom/AgeComEnrollForm"); // Now members can also access AgeComList
 
 
 

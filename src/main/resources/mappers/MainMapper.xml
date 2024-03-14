@@ -16,7 +16,7 @@
                  SELECT r.recom_no AS AGECOM_NO, r.cate_no AS CATE_NO, r.recom_title AS AGECOM_TITLE, r.recom_content AS AGECOM_DETAIL, r.member_id AS MEMBER_NICK, r.recom_date AS AGECOM_DATE, r.recom_views AS AGECOM_VIEWS, r.recom_image AS image
                  FROM TBL_RECOM r
              ) AS joinedTables
-                 LEFT JOIN mental.tbl_cate c ON joinedTables.CATE_NO = c.cate_no
+                 LEFT JOIN mental.TBL_CATE c ON joinedTables.CATE_NO = c.cate_no
         ORDER BY AGECOM_DATE DESC
     </select>
 

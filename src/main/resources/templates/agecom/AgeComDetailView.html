@@ -3,87 +3,281 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
-    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/mentalList.css">
+    <link rel="stylesheet" href="/css/community2.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
+    <style>
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .content {
+            min-height: 100%;
+            padding-bottom: 150px;
+            box-sizing: border-box;
+        }
+
+        .footer {
+            position: relative;
+            margin-top: 150px;
+            clear: both;
+        }
+
+        *{
+            padding:0;
+            margin:0
+        }
+        li{
+            list-style:none
+        }
+        a {
+            text-decoration:none;
+            font-size:14px;
+        }
+
+        .menu {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 280px;
+        }
+
+        .menu > li {
+            width: 25%; /*20*5=100%*/
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            background-color: lightgray;
+        }
+
+        .menu a {
+            color: black;
+        }
+        .card{
+            width:80%;
+            display : block;
+            margin: 20px;
+            margin-left: 10%;
+            height: 500px;
+        }
+        .reply{
+            width:80%;
+            display : inline-block;
+            margin: 20px;
+            margin-left: 10%;
+        }
+        .title {
+            width: 80%;
+            font-size: 25px;
+            float: left;
+            margin: 10px;
+            display: block;
+        }
+        .view{
+            float: right;
+        }
+
+
+        .title a {
+            text-align: center;
+            margin:30px;
+            font-size: 20px;
+        }
+
+        .line{
+            width:100%;
+
+        }
+        .btn{
+            height:78px;
+            width: 100px;
+            display: inline-block;
+            float: left;
+            margin: 10px;
+        }
+        textarea{
+            resize : none;
+            margin: 10px;
+            float: left;
+
+        }
+
+        .but{
+            width: 80%;
+            display: flex; /* 수정 및 삭제 버튼을 한 줄에 표시하는 스타일 추가 */
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            margin-left: 120px;
+
+        }
+        .but button{
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            border-bottom: none;
+            background-color: white;
+            font-size: 14px;
+            margin: 0 5px;
+        }
+        .deletbtn{
+            margin-left: 10px;
+        }
+        #commentTable{
+            display: inline;
+        }
+
+
+        .commentOne{
+            width: 800px;
+            height: 100px;
+            margin: 20px;
+            border: 1px solid lightgray;
+            overflow: auto;
+            max-height: 200px;
+
+        }
+        .deleteComment{
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            display: inline;
+            float: right;
+            vertical-align: top;
+            background-color: white;
+        }
+        .comment{
+            float: left;
+        }
+        .title1 {
+            font-weight: bolder;
+        }
+        .content{
+            font-size: 15px;
+            margin: 20px;
+            margin-top: 35px;
+
+        }
+
+        li{
+            font-size: 15px;
+
+        }
+
+        span{
+            font-size: 15px;
+            color: gray;
+        }
+        .title label{
+            font-size: 15px;
+            color: gray;
+        }
+        .date{
+
+            display: inline;
+            font-size: 10px;
+        }
+        .nick{
+            display: inline;
+            margin: 10px;
+
+        }
+        .btn {
+            background: #7f93a3;
+            display: block;
+            width: 120px;
+            padding: 0;
+            margin: 10px 20px 10px 0;
+            font-weight: 600;
+            text-align: center;
+            line-height: 50px;
+            color: #FFF;
+            border-radius: 5px;
+            transition: all 0.2s ;
+            border-bottom: none;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+        }
+    </style>
 </head>
 
 <body>
 <div th:replace="common/header :: header"></div>
-<header class="header">
-    <ul class="menu">
-        <li>
-            <a onclick="location.href='AgeComList'">홈</a>
-        </li>
-        <li>
-            <a onclick="location.href='mentalList'">지역별</a>
-        </li>
-        <li>
-            <a onclick="location.href='AgeComList'">연령별</a>
-        </li>
-        <li>
-            <a onclick="location.href='mentalList'">질환별</a>
-        </li>
-    </ul>
-</header>
-<div class="card">
-    <div class="title">
-        <h3 th:text="${ageComDTO.ageComTitle}"></h3>
-        <dl>
-            <dd th:text="${ageComDTO.memberNick}"></dd>
-            <dd th:text="${#dates.format(ageComDTO.ageComDate, 'yyyy-MM-dd HH:mm:ss')}"></dd>
+<ul class="menu_age">
+    <li><p style="background: #5093ca; color: #fff">커뮤니티</p></li>
+    <li>
+        <button style="margin-right: 100px" onclick="location.href='mental_list'">지역별</button>
 
-            <dd th:text="${ageComDTO.ageComViews}"></dd>
-        </dl>
-        <br>
-        <hr class="line">
-        <a th:text="${ageComDTO.ageComDetail}"></a>
-    </div>
-    <div th:if="${ageComDTO.attachNewname}">
-        <img th:if="${ageComDTO.attachNewname}" th:src="@{'/attach/' + ${ageComDTO.attachNewname}}" class="responsive-image" alt="Attached Image" loading="lazy">
-    </div>
-</div>
-<div class="but" th:if="${ageComDTO.memberNick == #authentication?.name}">
-    <a th:href="@{/agecom/AgeComUpdateForm(no=${ageComDTO.ageComNo})}">수정하기</a>
-    <form th:action="@{/agecom/delete}" method="post" onsubmit="return confirmDelete()">
-    <input type="hidden" name="no" th:value="${ageComDTO.ageComNo}">
-        <button type="submit">게시글 삭제</button>
-    </form>
-</div>
-<!-- 댓글 -->
-<div class="reply">
-    <h3>댓글 작성</h3>
-    <form th:action="@{/agecom/addComment}" method="post">
-        <input type="hidden" name="ageComNo" th:value="${ageComDTO.ageComNo}">
-        <textarea name="ageCmtDetail" placeholder="댓글을 입력해주세요"></textarea>
-        <button type="submit">등록</button>
-    </form>
-</div>
-<div class="reply-list">
-    <h3>댓글 목록</h3>
-    <div th:if="${comments.isEmpty()}">
-        <p>댓글이 없습니다.</p>
-    </div>
-    <div th:each="comment : ${comments}" th:if="${comment != null}">
-        <div class="comment">
-            <p th:text="${comment.ageCmtDetail}">댓글 내용</p>
-            <span th:text="${comment.memberNick}">사용자명</span>
-            <span th:text="${#dates.format(comment.ageCmtDate, 'yyyy-MM-dd HH:mm:ss')}">댓글 작성일</span>
+        <button onclick="location.href='mental_list'">연령별</button>
 
-            <div th:if="${comment.memberNick == #authentication?.name}">
-                <form th:action="@{/agecom/updateComment}" method="post" onsubmit="return confirmUpdate()">
-                    <input type="hidden" name="ageCmtNo" th:value="${comment.ageCmtNo}">
-                    <input type="hidden" name="ageComNo" th:value="${ageComDTO.ageComNo}">
-                    <textarea name="ageCmtDetail" th:text="${comment.ageCmtDetail}"></textarea>
-                    <button type="submit">수정</button>
-                </form>
+        <button style="margin-left: 100px" onclick="location.href='mental_list'">질환별</button>
+    </li>
 
-                <form th:action="@{/agecom/deleteComment}" method="post" onsubmit="return confirmDelete()">
-                    <input type="hidden" name="ageCmtNo" th:value="${comment.ageCmtNo}">
-                    <input type="hidden" name="ageComNo" th:value="${ageComDTO.ageComNo}"> <!-- 해당 댓글이 속한 게시물 번호 추가 -->
-                    <button type="submit">삭제</button>
-                </form>
+    <li>
+        <button  onclick="location.href='mental_list'">채팅</button>
+    </li>
+</ul>
+<div class="main_container">
+    <div class="card">
+        <div class="title">
+            <h3 class="title1" th:text="${ageComDTO.ageComTitle}"></h3>
+            <span class="nick" th:text="${ageComDTO.memberNick}"></span>
+            <span class="date"th:text="${#dates.format(ageComDTO.ageComDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            <span style="margin-left:5px; color: #e9281d;" class="view" th:text="${ageComDTO.ageComViews}"></span>
+            <label class="view">조회수</label>
+            <hr class="line"><br>
+            <div th:if="${ageComDTO.attachNewname}">
+                <img width="75%" th:if="${ageComDTO.attachNewname}" th:src="@{'/attach/' + ${ageComDTO.attachNewname}}" class="responsive-image" alt="Attached Image" loading="lazy">
+            </div>
+            <div class="content" th:text="${ageComDTO.ageComDetail}"></div>
+        </div>
+    </div>
+    <div class="edit-btn" th:if="${ageComDTO.memberNick == #authentication?.name}">
+        <a th:href="@{/agecom/AgeComUpdateForm(no=${ageComDTO.ageComNo})}">수정하기</a>
+        <form th:action="@{/agecom/delete}" method="post" onsubmit="return confirmDelete()">
+        <input type="hidden" name="no" th:value="${ageComDTO.ageComNo}">
+            <button type="submit">게시글 삭제</button>
+        </form>
+    </div>
+    <!-- 댓글 -->
+    <div class="reply">
+        <a>댓글쓰기</a>
+        <form th:action="@{/agecom/addComment}" method="post">
+            <input type="hidden" name="ageComNo" th:value="${ageComDTO.ageComNo}">
+            <textarea name="ageCmtDetail" cols="110" rows="5"  placeholder="댓글을 입력해주세요"></textarea>
+            <button class="btn" type="submit">등록</button>
+        </form>
+    </div>
+    <div class="reply-list">
+        <h3>댓글 목록</h3>
+        <div th:if="${comments.isEmpty()}">
+            <p>댓글이 없습니다.</p>
+        </div>
+        <div th:each="comment : ${comments}" th:if="${comment != null}">
+            <div class="comment">
+                <span th:text="${comment.memberNick}">사용자명</span>
+                <span th:text="${#dates.format(comment.ageCmtDate, 'yyyy-MM-dd HH:mm:ss')}">댓글 작성일</span>
+                <p th:text="${comment.ageCmtDetail}">댓글 내용</p>
+
+                <div th:if="${comment.memberNick == #authentication?.name}">
+    <!--                <form th:action="@{/agecom/updateComment}" method="post" onsubmit="return confirmUpdate()">-->
+    <!--                    <input type="hidden" name="ageCmtNo" th:value="${comment.ageCmtNo}">-->
+    <!--                    <input type="hidden" name="ageComNo" th:value="${ageComDTO.ageComNo}">-->
+    <!--                    <textarea name="ageCmtDetail" th:text="${comment.ageCmtDetail}"></textarea>-->
+    <!--                    <button type="submit">수정</button>-->
+    <!--                </form>-->
+                    <form th:action="@{/agecom/deleteComment}" method="post" onsubmit="return confirmDelete()">
+                        <input type="hidden" name="ageCmtNo" th:value="${comment.ageCmtNo}">
+                        <input type="hidden" name="ageComNo" th:value="${ageComDTO.ageComNo}"> <!-- 해당 댓글이 속한 게시물 번호 추가 -->
+                        <button type="submit">삭제</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

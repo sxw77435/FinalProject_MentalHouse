@@ -50,4 +50,12 @@
     <delete id="deleteRecmt" parameterType="int">
         DELETE FROM tbl_recmt WHERE RECMT_NO = #{recmtno}
     </delete>
+
+    <update id="updateReplyCnt" parameterType="com.uni.mental.regioncomunity.model.dto.RecomCmtDto">
+
+        UPDATE tbl_recom
+        SET REPLY_COUNT = REPLY_COUNT + #{amount}
+        where tbl_recom.RECOM_NO = #{recomno}
+
+    </update>
 </mapper>

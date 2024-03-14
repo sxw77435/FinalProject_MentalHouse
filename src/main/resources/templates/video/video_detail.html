@@ -3,10 +3,14 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
 
     <style>
         *{
@@ -109,10 +113,14 @@
 
 </div>
 <div class="but">
+
     <form id="delete1" action="/video/delete" method="post">
+        <th:block sec:authorize="hasRole('ADMIN')">
         <input type="hidden" name="no" th:value="${video.no}">
         <button class="deletbtn" type="submit">삭제</button>
+        </th:block>
     </form>
+
 </div>
 
 <div th:replace="common/footer :: footer"></div>

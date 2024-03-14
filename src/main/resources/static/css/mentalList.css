@@ -1,30 +1,30 @@
 @charset "UTF-8";
 
-header{
-    padding-top: 46px;
+.menu_age {
+    width: 100%;
+    margin-top: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_age > li {
+    width: 100%;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    background-color: #5093ca;
+
+}
+
+.menu_age button {
+    color: #fff !important;
+    background: none;
 }
 
 .con {
     max-width: 950px;
     margin: auto;
-}
-.menu {
-    width: 100%;
-    margin-top: 180px;
-}
-
-.menu > li {
-    float: left;
-    text-align: center;
-    line-height: 40px;
-    background-color: lightgray;
-    width: 100%;
-    padding: 5px;
-}
-
-.mental{
-    float: right;
-    margin: 5px;
 }
 
 .table-common>table {
@@ -37,10 +37,11 @@ header{
     padding: 10px;
 }
 
+
 .list table {
     border:none;
-    border-top:2px solid black;
-    border-bottom:2px solid black;
+    border-top:3px solid #566f9b;
+    border-bottom:2px solid #566f9b;
 }
 
 .list table th, .list table td {
@@ -48,11 +49,11 @@ header{
 }
 
 .list table td {
-    border-bottom:1px solid black;
+    border-bottom:1px solid #467de1;
 }
 
 .list table thead {
-    border-bottom:2px solid black;
+    border-bottom:1px solid #467de1;
     background-color: whitesmoke;
 }
 
@@ -60,20 +61,154 @@ tr {
     text-align: center;
 }
 
+.men{
+    display: inline-block;
+}
+
 .btn{
-    width: 85.5%;
-    margin: 20px;
+    display: inline-block;
+    float: right;
+    margin-bottom: 10px;
 }
 
 #btn1{
     float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #005ea0;
+    padding: 6px;
+    height: 32px;
     width: 100px;
-    height: 60px;
-    background-color: gray;
-    border: 0px;
-    display: inline-block;
+    border: 1px solid #005ea0;
+    border-radius: 4px;
+}
+
+#btn1:hover{
+    background-color: #005ea0;
+    color: #fff;
 }
 
 .selected-category {
-    background-color: #ff7603; /* 선택된 카테고리의 배경색 */
+    background-color: #005ea0;
+    color: #fff;
+}
+
+.men ul{
+    margin-bottom: 8px;
+}
+
+.men li {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center;
+
+    border: 1px solid #ccc;
+    margin-right: 4px;
+    padding: 6px 20px;
+    width: 78px;
+    text-align: center;
+    height: 34px;
+}
+
+.selected-category a {
+    color: #fff;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px; /* 페이지네이션을 위로 이동시킴 */
+}
+
+.pagination img {
+    width: 60px;
+    height: 22px;
+    margin: 0;
+}
+
+.pagination ul {
+    list-style: none; /* 목록 기호 제거 */
+    padding: 0; /* 목록의 내부 여백 제거 */
+    margin: 0; /* 목록의 외부 여백 제거 */
+}
+
+.pagination li {
+    display: inline-block; /* 요소를 수평으로 배치 */
+    margin: 0 2px; /* 각 요소 사이의 간격 조절 */
+}
+
+.pagination a {
+    text-decoration: none; /* 링크에 밑줄 제거 */
+    color: #000; /* 링크 색상 */
+    padding: 5px 10px; /* 링크 내부 여백 */
+}
+
+.pagination .active a {
+    font-weight: bold; /* 활성화된 페이지 번호 굵게 표시 */
+}
+
+.pagination li img {
+    vertical-align: middle; /* 이미지 수직 정렬 */
+}
+
+.reply a{
+    margin-left: 10px;
+}
+
+.reply-list{
+    height: 200px;
+}
+
+.reply-list h3{
+    width: 78%;
+    margin: 0 auto;
+}
+
+.reply-list p{
+    width: 78%;
+    margin: 10px auto;
+}
+
+.card{
+    width: 49%;
+    margin: 0 auto;
+    padding: 70px 0;
+}
+
+.comment p{
+    padding: 10px 0;
+    margin: 0;
+}
+
+b {
+    margin-left: 10px;
+    color: red;
+}
+
+.enroll-btn{
+    padding: 6px;
+    border-radius: 12px;
+    background-color: #5093ca7d;
+    margin-top: 20px;
+}
+
+.edit-btn{
+    width: 48%;
+    display: flex;
+    margin: 0 auto;
+    justify-content: right;
+}
+.edit-btn a{
+   margin-right: 10px;
+}
+.comment {
+    float: left;
+    margin-left: 155px;
+    margin-top: 20px;
+    width: 750px;
+    padding: 14px;
+    border-radius: 20px;
+    background-color: #ddd;
 }

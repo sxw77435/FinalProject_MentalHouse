@@ -22,9 +22,9 @@ public class MenComDTO {
 
     private int replycnt;
 
-    private String catename2;
 
-    public MenComDTO(Integer no, String id, String title, String content, Integer views, int cate, Date date, String nick, String image, int replycnt, String catename2) {
+
+    public MenComDTO(Integer no, String id, String title, String content, Integer views, int cate, Date date, String nick, String image, int replycnt) {
         this.no = no;
         this.id = id;
         this.title = title;
@@ -35,7 +35,7 @@ public class MenComDTO {
         this.nick = nick;
         this.image = image;
         this.replycnt = replycnt;
-        this.catename2 = catename2;
+
     }
 
     @Override
@@ -51,7 +51,6 @@ public class MenComDTO {
                 ", nick='" + nick + '\'' +
                 ", image='" + image + '\'' +
                 ", replycnt=" + replycnt +
-                ", catename2='" + catename2 + '\'' +
                 '}';
     }
 
@@ -133,13 +132,5 @@ public class MenComDTO {
 
     public void setReplycnt(int replycnt) {
         this.replycnt = replycnt;
-    }
-
-    public String getCatename2() {
-        return catename2;
-    }
-
-    public void setCatename2(String catename2) {
-        this.catename2 = catename2;
     }
 }

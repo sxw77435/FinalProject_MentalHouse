@@ -36,4 +36,11 @@ public class AgeCmtServiceImpl implements AgeCmtService {
     public void modifyComment(AgeCmtDTO comment) {
         ageCmtDAO.updateComment(comment);
     }
+
+    @Override
+    public void updateReplyCount(int ageComNo) {
+        // 해당 게시글의 댓글 수를 업데이트하는 로직을 구현합니다.
+        ageCmtDAO.updateReplyCount(ageComNo);
+    }
+
 }

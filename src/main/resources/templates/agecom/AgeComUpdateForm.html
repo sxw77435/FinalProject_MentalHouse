@@ -3,30 +3,33 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>MentalHouse</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
-    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/mentalList.css">
+    <link rel="stylesheet" href="/css/community2.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
 </head>
 
 <body>
 <div th:replace="common/header :: header"></div>
-<header class="header">
-    <ul class="menu">
-        <li>
-            <a onclick="location.href='mentalList'">홈</a>
-        </li>
-        <li>
-            <a onclick="location.href='mentalList'">지역별</a>
-        </li>
-        <li>
-            <a onclick="location.href='mentalList'">연령별</a>
-        </li>
-        <li>
-            <a onclick="location.href='mentalList'">질환별</a>
-        </li>
-    </ul>
-</header>
+<ul class="menu_age">
+    <li><p style="background: #5093ca; color: #fff">커뮤니티</p></li>
+    <li>
+        <button style="margin-right: 100px" onclick="location.href='mental_list'">지역별</button>
+
+        <button onclick="location.href='mental_list'">연령별</button>
+
+        <button style="margin-left: 100px" onclick="location.href='mental_list'">질환별</button>
+    </li>
+
+    <li>
+        <button  onclick="location.href='mental_list'">채팅</button>
+    </li>
+</ul>
 <div class="card">
     <h2>게시글 수정하기</h2>
     <br>
@@ -71,8 +74,8 @@
             </label>
 
             <br>
-            <button type="button" onclick="location.href='AgeComList'">취소하기</button>
-            <button type="submit">수정하기</button>
+            <button type="button" class="enroll-btn" onclick="location.href='AgeComList'">취소하기</button>
+            <button type="submit" class="enroll-btn">수정하기</button>
         </form>
     </div>
 </div>
