@@ -13,7 +13,8 @@
 
     <style>
         *{
-            padding:0;margin:0
+            padding:0;
+            margin:0
         }
         li{
             list-style:none
@@ -26,7 +27,7 @@
         .menu {
             width: 100%;
             overflow: hidden;
-            margin-top: 200px;
+            margin-top: 280px;
         }
 
         .menu > li {
@@ -59,22 +60,20 @@
             margin: 10px;
             display: block;
         }
-        .title dd{
-            font-size: 15px;
-            display: block;
-            float: left;
-            margin: 5px;
+        .view{
+            float: right;
         }
+
+
         .title a {
             text-align: center;
             margin:30px;
             font-size: 20px;
         }
+
         .line{
             width:100%;
-            border-bottom:0;
-            text-align: left;
-            margin-left : 0;
+
         }
         .btn{
             height:78px;
@@ -87,13 +86,15 @@
             resize : none;
             margin: 10px;
             float: left;
+
         }
 
         .but{
-            width: 20%;
-            float: right;
-            display: flex;
-            margin: 20px;
+            width: 80%;
+            display: flex; /* 수정 및 삭제 버튼을 한 줄에 표시하는 스타일 추가 */
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            margin-left: 120px;
+
         }
         .but button{
             border-left: none;
@@ -102,7 +103,7 @@
             border-bottom: none;
             background-color: white;
             font-size: 14px;
-
+            margin: 0 5px;
         }
         .deletbtn{
             margin-left: 10px;
@@ -110,24 +111,13 @@
         #commentTable{
             display: inline;
         }
-        .nick{
-            display: inline;
-            margin: 10px;
 
-        }
-        .date{
-            font-size: 10px;
-            display: inline;
-        }
-        .content{
-            margin : 20px;
-            margin-top: 30px;
-        }
+
         .commentOne{
             width: 800px;
             height: 100px;
             margin: 20px;
-            border:1px solid lightgray;
+            border: 1px solid lightgray;
             overflow: auto;
             max-height: 200px;
 
@@ -143,6 +133,56 @@
         }
         .comment{
             float: left;
+        }
+        .title1 {
+            font-weight: bolder;
+        }
+        .content{
+            font-size: 15px;
+            margin: 20px;
+            margin-top: 35px;
+
+        }
+
+        li{
+            font-size: 15px;
+
+        }
+
+        span{
+            font-size: 15px;
+            color: gray;
+        }
+        .title label{
+            font-size: 15px;
+            color: gray;
+        }
+        .date{
+
+            display: inline;
+            font-size: 10px;
+        }
+        .nick{
+            display: inline;
+            margin: 10px;
+
+        }
+        .btn {
+            background: #7f93a3;
+            display: block;
+            width: 120px;
+            padding: 0;
+            margin: 10px 20px 10px 0;
+            font-weight: 600;
+            text-align: center;
+            line-height: 50px;
+            color: #FFF;
+            border-radius: 5px;
+            transition: all 0.2s ;
+            border-bottom: none;
+            border-top: none;
+            border-right: none;
+            border-left: none;
         }
 
     </style>
@@ -168,20 +208,19 @@
 </header>
 
 <div class="detail" th:each="recomDto : ${recomDto}" >
-    <div class="detail1" data-nationno="${recomDto.recomno}">
+    <div class="detail1"  data-nationno="${recomDto.recomno}">
         <div class="card">
-            <h2 th:text="${recomDto.recomno}"></h2>
             <div class="title">
-                <h3 th:text="${recomDto.recomtitle}"></h3>
-                <dl>
-                    <dd th:text="${recomDto.membernick}"></dd>
-                    <dd th:text="${#dates.format(recomDto.recomdate, 'yyyy-MM-dd HH:mm:ss')}"></dd>
-                    <dd th:text="${recomDto.recomviews}" style="display:none;"></dd>
-                </dl>
-                <br>
+                <h3 class="title1" th:text="${recomDto.recomtitle}"></h3>
+                <div>
+                    <span class="nick"  th:text="${recomDto.membernick}"></span>
+                    <span class="date"  th:text="${#dates.format(recomDto.recomdate, 'yyyy-MM-dd HH:mm')}"></span>
+                    <span style="margin-left:5px; color: #e9281d;" class="view" th:text="${recomDto.recomviews}"></span>
+                    <label class="view">조회수</label>
+                </div>
                 <hr class="line">
-                <a th:text="${recomDto.recomcontent}"></a>
-                <img th:src="@{/image/{imageFileName}(imageFileName=${recomDto.recomimage})}" alt="첨부파일" class="recomimage" style="max-width: 200px;">
+                <img width="75%" th:src="@{/image/{imageFileName}(imageFileName=${recomDto.recomimage})}" alt="첨부파일" class="image" >
+                <div class="content" th:text="${recomDto.recomcontent}"></div>
             </div>
         </div>
         <div class="but">
