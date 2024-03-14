@@ -1,7 +1,7 @@
 package com.uni.mental.notice.model.service;
 
 import com.uni.mental.notice.model.dao.NoticeDao;
-import com.uni.mental.notice.model.dto.NoticeDTO;
+import com.uni.mental.notice.model.dto.NoticeDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class NoticeService {
     private final NoticeDao noticeDAO;
-    public NoticeDTO selectOne(int no) {
+    public NoticeDto selectOne(int no) {
         return noticeDAO.selectOne(no);
     }
     public NoticeService(NoticeDao noticeDAO) {
@@ -17,15 +17,15 @@ public class NoticeService {
     }
 
 
-    public List<NoticeDTO> getAllNotices() {
+    public List<NoticeDto> getAllNotices() {
         return noticeDAO.getAllNotices();
     }
 
-    public NoticeDTO getNoticeById(int noticeNo) {
+    public NoticeDto getNoticeById(int noticeNo) {
         return noticeDAO.getNoticeById(noticeNo);
     }
 
-    public void addNotice(NoticeDTO notice) {
+    public void addNotice(NoticeDto notice) {
         noticeDAO.addNotice(notice);
     }
 
@@ -34,7 +34,7 @@ public class NoticeService {
     }
 
 
-    public int updateNotice(NoticeDTO noticeupdate) throws Exception {
+    public int updateNotice(NoticeDto noticeupdate) throws Exception {
 
         int result = noticeDAO.updateNotice(noticeupdate);
 
