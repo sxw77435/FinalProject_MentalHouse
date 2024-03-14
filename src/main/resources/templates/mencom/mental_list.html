@@ -28,11 +28,11 @@
         .menu {
             width: 100%;
             overflow: hidden;
-            margin-top: 250px;
+            margin-top: 130px;
         }
 
         .menu > li {
-            width: 33%; /*20*5=100%*/
+            width: 100%;
             float: left;
             text-align: center;
             line-height: 40px;
@@ -46,7 +46,15 @@
         .menu a {
             color: black;
         }
-
+        .menu p{
+            width: 100%;
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            background-color: #5093ca;
+            color: white;
+            font-size: 13px;
+        }
         .mental{
             float: right;
             margin: 5px;
@@ -91,9 +99,7 @@
 
 
         .btn{
-            margin-right: 85px;
-            margin-bottom: 5px;
-
+            margin-right: 80px;
         }
         .btn button, .btn a {
             display: flex;
@@ -108,13 +114,13 @@
         }
 
         .men ul{
-            width:500px;
+            width:600px;
             float: left;
         }
         .men button{
             background-color: #bae0ec;
             border: 1px #ddd solid;
-            margin: 0 3px;
+            margin: 0 1px;
             width: 70px;
             height: 30px;
             margin-bottom: 5px;
@@ -188,17 +194,27 @@
 <body>
 <div th:replace="common/header :: header"></div>
 <header class="header">
-    <ul class="menu">
-        <li>
-            <button onclick="location.href='mental_list'">지역별</button>
-        </li>
-        <li>
-            <button onclick="location.href='mental_list'">연령별</button>
-        </li>
-        <li>
-            <button onclick="location.href='mental_list'">질환별</button>
-        </li>
-    </ul>
+
+
+    <div class="menu">
+
+
+        <ul class="menu">
+            <p>커뮤니티</p>
+            <li>
+                <button style="margin-right: 100px" onclick="location.href='mental_list'">지역별</button>
+
+                <button onclick="location.href='mental_list'">연령별</button>
+
+                <button style="margin-left: 100px" onclick="location.href='mental_list'">질환별</button>
+            </li>
+
+            <li>
+                <button  onclick="location.href='mental_list'">채팅</button>
+            </li>
+        </ul>
+    </div>
+
 </header>
 <br>
 
@@ -206,6 +222,14 @@
 <section class="list table-common con">
     <div class="men">
         <ul>
+
+            <li>
+                <button onclick="location.href='mental_list'">
+                    <a th:href="@{/mencom/mental_list}"></a>
+                    <span th:class="${cate == null ? 'selected' : ''}" class="mental"> 전체 </span>
+                </button>
+            </li>
+
             <li>
                 <button onclick="location.href='mental_list?cate=7'" th:class="${cate == 7 ? 'selected' : ''}">
                     <span th:class="${cate == 7 ? 'selected' : ''}" class="mental"> 우울증 </span>
@@ -259,18 +283,18 @@
 
         <tbody>
 
-<!--                 Thymeleaf로부터 받은 데이터를 이용하여 게시물 목록을 동적으로 생성-->
-                <tr th:each="mental : ${mentalList}" class="total_item" >
-                    <td th:text="${mental.cate}" style="display: none"></td>
-                    <td th:text="${mental.no}"></td>
-                    <td>
-                       <a th:href="@{mental_detail(no=${mental.no})}" th:text="${mental.title}"></a>
-                        <b>[<span class = "cnt" th:text="${mental.replycnt}"></span>]</b>
-                    </td>
-                    <td th:text="${mental.nick}"></td>
-                    <td th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${mental.views}"></td>
-                </tr>
+        <!--                 Thymeleaf로부터 받은 데이터를 이용하여 게시물 목록을 동적으로 생성-->
+        <tr th:each="mental : ${mentalList}" class="total_item" >
+            <td th:text="${mental.cate}" style="display: none"></td>
+            <td th:text="${mental.no}"></td>
+            <td>
+                <a th:href="@{mental_detail(no=${mental.no})}" th:text="${mental.title}"></a>
+                <b>[<span class = "cnt" th:text="${mental.replycnt}"></span>]</b>
+            </td>
+            <td th:text="${mental.nick}"></td>
+            <td th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${mental.views}"></td>
+        </tr>
 
         </tbody>
     </table>
@@ -363,7 +387,7 @@
     });
 </script>
 
-<footer th:replace="common/footer :: footer"></footer>
+<div th:replace="common/footer :: footer"></div>
 </body>
 
 </html>

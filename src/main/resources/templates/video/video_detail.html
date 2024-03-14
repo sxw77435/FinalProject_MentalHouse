@@ -111,10 +111,14 @@
 
 </div>
 <div class="but">
+
     <form id="delete1" action="/video/delete" method="post">
+        <th:block sec:authorize="hasRole('ADMIN')">
         <input type="hidden" name="no" th:value="${video.no}">
         <button class="deletbtn" type="submit">삭제</button>
+        </th:block>
     </form>
+
 </div>
 
 <div th:replace="common/footer :: footer"></div>

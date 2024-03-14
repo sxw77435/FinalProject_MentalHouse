@@ -107,8 +107,9 @@
     <hr>
     <br>
     <div class="create">
-        <form th:action="@{/mencom/regist}" method="post" id="enrollForm" enctype="multipart/form-data">            <label>
-                <input id = "title" type="text" name="title" placeholder="제목을 입력하세요" maxlength="30">
+        <form th:action="@{/mencom/regist}" method="post" id="enrollForm" enctype="multipart/form-data">
+            <label>
+                <input id = "title" type="text" name="title" placeholder="제목을 입력하세요" maxlength="50">
             </label>
             <br>
             <br>
@@ -138,7 +139,7 @@
         </form>
     </div>
 </div>
-
+<div th:replace="common/footer :: footer"></div>
 </body>
 
 </html>

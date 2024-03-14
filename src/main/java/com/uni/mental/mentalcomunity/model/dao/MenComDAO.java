@@ -26,5 +26,5 @@ public interface MenComDAO {
 
     List<MenComDTO> findAllCate(int cate);
 
-    String findImageFileNameById(int no);
+    String findImageFileNameById();
 }

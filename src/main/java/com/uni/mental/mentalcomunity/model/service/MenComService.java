@@ -65,9 +65,9 @@ public class MenComService {
         return menComDAO.findAllCate(cate);
     }
 
-    public String findImageFileNameById(int no) {
+    public String findImageFileNameById() {
 
-        return menComDAO.findImageFileNameById(no);
+        return menComDAO.findImageFileNameById();
     }
 }
 

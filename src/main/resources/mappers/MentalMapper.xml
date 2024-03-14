@@ -15,7 +15,7 @@
         <result column="member_nick" property="nick" />
         <result column="men_image" property="image" />
         <result column="replyCnt" property="replycnt" />
-        <result column="cate_name2" property="catename2"/>
+
     </resultMap>
 
     <resultMap id="loginMemberResultMap" type="com.uni.mental.member.model.dto.MemberDto">
@@ -74,11 +74,9 @@
                A.men_date,
                B.member_nick,
                A.men_image,
-               A.replyCnt,
-               C.cate_name2
+               A.replyCnt
         FROM tbl_mental A
         LEFT JOIN TBL_MEMBER B ON (A.MEMBER_ID = B.MEMBER_ID)
-        LEFT JOIN TBL_CATE C ON (A.cate_no = C.cate_no)
         where A.cate_no = #{cate}
         ORDER BY A.men_no DESC
 
@@ -97,8 +95,7 @@
     <select id="findAllView" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComDTO" >
         SELECT A.men_no, A.member_id, A.men_title, A.men_content, A.men_views, A.cate_no, A.men_date,B.member_nick,
                A.men_image,
-               A.replyCnt,
-               C.cate_name2
+               A.replyCnt
         FROM tbl_mental A
                  LEFT JOIN tbl_member B ON (A.member_id = B.member_id)
         ORDER BY A.men_no DESC
