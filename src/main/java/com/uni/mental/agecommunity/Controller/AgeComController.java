@@ -151,9 +151,6 @@ public class AgeComController {
 
     @PostMapping("/regist")
     public String AgeComRegist(@ModelAttribute @Valid AgeComDTO ageComDTO, BindingResult result, @RequestParam("file") MultipartFile file) throws Exception {
-        if (result.hasErrors()) {
-            return "redirect:/error";
-        }
 
         if (!file.isEmpty()) {
             String originalFilename = file.getOriginalFilename();

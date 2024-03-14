@@ -3,6 +3,7 @@ package com.uni.mental.agecommunity.Controller;
 import com.uni.mental.agecommunity.model.dao.AgeComDAO;
 import com.uni.mental.agecommunity.model.dto.AgeCmtDTO;
 import com.uni.mental.agecommunity.model.service.AgeCmtService;
+import com.uni.mental.agecommunity.model.service.AgeComService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AgeCmtController {
 
     private final AgeCmtService ageCmtService;
+    private final AgeComService ageComService; // AgeComService를 추가합니다.
     private final AgeComDAO ageComDAO;
 
     @Autowired
-    public AgeCmtController(AgeCmtService ageCmtService, AgeComDAO ageComDAO) {
+    public AgeCmtController(AgeCmtService ageCmtService, AgeComService ageComService, AgeComDAO ageComDAO) {
         this.ageCmtService = ageCmtService;
+        this.ageComService = ageComService; // 생성자에 AgeComService를 주입합니다.
         this.ageComDAO = ageComDAO;
     }
 
@@ -46,10 +49,10 @@ public class AgeCmtController {
         return "redirect:/agecom/AgeComDetailView/" + ageComNo; // 삭제 후 댓글이 속한 게시글 상세 페이지로 리다이렉트
     }
 
-    @PostMapping("/updateComment")
-    public String updateComment(AgeCmtDTO comment) {
-        ageCmtService.modifyComment(comment);
-        return "redirect:/agecom/AgeComDetailView/" + comment.getAgeComNo(); // 수정 후 댓글이 속한 게시글 상세 페이지로 리다이렉트
+    @PostMapping("/updateReplyCount")
+    public String updateReplyCount(@RequestParam("ageComNo") int ageComNo) {
+        ageComService.updateReplyCount(ageComNo);
+        return "redirect:/agecom/AgeComDetailView/" + ageComNo;
     }
 
 }

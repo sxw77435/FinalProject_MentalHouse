@@ -99,4 +99,9 @@ public class AgeComServiceImpl implements AgeComService {
     public int getTotalCountByCateNo(int cateNo) {
         return ageComDAO.getTotalCountByCateNo(cateNo);
     }
+
+    @Override
+    public void updateReplyCount(int ageComNo) {
+        ageComDAO.updateReplyCount(ageComNo);
+    }
 }

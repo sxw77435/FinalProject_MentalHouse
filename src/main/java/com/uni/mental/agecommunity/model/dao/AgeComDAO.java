@@ -30,4 +30,5 @@ public interface AgeComDAO {
     // 카테고리별 게시글 총 개수 조회 메서드
     int getTotalCountByCateNo(@Param("cateNo") int cateNo);
 
+    void updateReplyCount(int ageComNo);
 }

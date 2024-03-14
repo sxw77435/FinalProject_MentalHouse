@@ -14,4 +14,6 @@ public interface AgeCmtService {
     void removeComment(int ageCmtNo);
 
     void modifyComment(AgeCmtDTO comment);
+
+    void updateReplyCount(int ageComNo);
 }
