@@ -22,7 +22,7 @@
         .menu {
             width: 100%;
             overflow: hidden;
-            margin-top: 200px;
+            margin-top: 250px;
         }
 
         .menu > li {
@@ -140,7 +140,7 @@
 
         <label>
                 <input type="hidden" name="no" th:value="${mental.no}">
-                <input id = "title" type="text" name="title" th:value="${mental.title}">
+                <input id = "title" type="text" name="title" th:value="${mental.title}" maxlength="50">
 
             </label>
             <br><br>
@@ -158,11 +158,11 @@
             <br>
             <button type="button" onclick="location.href='mental_list'">취소하기</button>
             <button type="submit" >수정하기</button>
-
         </form>
     </div>
 </div>
-<div style="display: block" th:replace="common/footer :: footer"></div>
+<br><br><br><br>
+<div style="display: block; " th:replace="common/footer :: footer"></div>
 </body>
 
 <script>
@@ -186,6 +186,5 @@
             }
         });
     });
-
 </script>
 </html>

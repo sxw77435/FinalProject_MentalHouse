@@ -17,11 +17,11 @@ a {
 .menu {
     width: 100%;
     overflow: hidden;
-    margin-top: 250px;
+    margin-top: 150px;
 }
 
 .menu > li {
-    width: 33%; /*20*5=100%*/
+    width: 100%;
     float: left;
     text-align: center;
     line-height: 40px;
@@ -35,7 +35,15 @@ a {
 .menu a {
     color: black;
 }
-
+.menu p{
+    width: 100%;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    background-color: #5093ca;
+    color: white;
+    font-size: 13px;
+}
 .mental{
     float: right;
     margin: 5px;
@@ -103,7 +111,7 @@ tr {
 .men button{
     background-color: #bae0ec;
     border: 1px #ddd solid;
-    margin: 0 3px;
+    margin: 0 1px;
     width: 70px;
     height: 30px;
     margin-bottom: 5px;

@@ -14,6 +14,7 @@ public class MenComCmtService {
 
     public MenComCmtService(MenComCmtDAO menComCmtDAO) {
         this.menComCmtDAO = menComCmtDAO;
+
     }
 
     public int deleteComment(int no) {
