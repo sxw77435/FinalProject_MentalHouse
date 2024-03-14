@@ -2,7 +2,7 @@ package com.uni.mental.notice.model.dto;
 
 import java.util.Date;
 
-public class NoticeDTO {
+public class NoticeDto {
     private Integer no; // 공지사항 번호
     private String title; // 공지사항 제목
     private String content; // 공지사항 내용
@@ -49,7 +49,7 @@ public class NoticeDTO {
         this.id = id;
     }
 
-    public NoticeDTO(Integer no, String title, String content, Date date, String id) {
+    public NoticeDto(Integer no, String title, String content, Date date, String id) {
         this.no = no;
         this.title = title;
         this.content = content;
@@ -67,4 +67,5 @@ public class NoticeDTO {
                 ", id='" + id + '\'' +
                 '}';
     }
+
 }

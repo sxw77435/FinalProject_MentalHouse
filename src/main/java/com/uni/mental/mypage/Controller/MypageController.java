@@ -40,12 +40,6 @@ public class MypageController {
         // 로그인된 사용자의 아이디 가져오기
         String id = authentication.getName();
 
-//        // 추가적인 비밀번호 인증이 필요한지 여부 확인
-//        if (pwd(id)) {
-//            // 추가적인 비밀번호 인증이 필요한 경우, 비밀번호 인증 페이지로 리디렉션
-//            return "redirect:/mypage/mypagepwd";
-//        }
-
         // 마이페이지 데이터를 가져와서 모델에 추가
         List<MypageDto> mypageList = mypageService.getMypageById(id);
         System.out.println(mypageList);
@@ -77,7 +71,7 @@ public class MypageController {
 
 
 
-    @PostMapping("update") // 공지사항 수정
+    @PostMapping("update") // 마이페이지 수정
     public String MypageUpdate(@ModelAttribute MypageDto mypageupdate, Model model){
 
         mypageService.updateMypage(mypageupdate);

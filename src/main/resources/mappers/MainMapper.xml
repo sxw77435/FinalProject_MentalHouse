@@ -8,21 +8,21 @@
         SELECT joinedTables.*, c.cate_name
         FROM (
                  SELECT a.AGECOM_NO, a.CATE_NO, a.AGECOM_TITLE, a.AGECOM_DETAIL, a.MEMBER_NICK, a.AGECOM_DATE, a.AGECOM_VIEWS, a.attach_newname AS image
-                 FROM tbl_community_age a
+                 FROM TBL_COMMUNITY_AGE a
                  UNION ALL
                  SELECT m.men_no AS AGECOM_NO, m.cate_no, m.men_title AS AGECOM_TITLE, m.men_content AS AGECOM_DETAIL, m.member_id AS MEMBER_NICK, m.men_date AS AGECOM_DATE, m.men_views AS AGECOM_VIEWS, m.men_image AS image
-                 FROM tbl_mental m
+                 FROM TBL_MENTAL m
                  UNION ALL
                  SELECT r.recom_no AS AGECOM_NO, r.cate_no AS CATE_NO, r.recom_title AS AGECOM_TITLE, r.recom_content AS AGECOM_DETAIL, r.member_id AS MEMBER_NICK, r.recom_date AS AGECOM_DATE, r.recom_views AS AGECOM_VIEWS, r.recom_image AS image
-                 FROM tbl_recom r
+                 FROM TBL_RECOM r
              ) AS joinedTables
                  LEFT JOIN mental.tbl_cate c ON joinedTables.CATE_NO = c.cate_no
         ORDER BY AGECOM_DATE DESC
     </select>
 
-    <select id="selectNotices" resultType="com.uni.mental.notice.model.dto.NoticeDTO">
+    <select id="selectNotices" resultType="com.uni.mental.notice.model.dto.NoticeDto">
         SELECT NOTICE_NO AS no, NOTICE_TITLE AS title, NOTICE_CONTENT AS content, NOTICE_DATE AS date, notice_id AS id
-        FROM tbl_notice
+        FROM TBL_NOTICE
         ORDER BY NOTICE_DATE DESC
     </select>
 

@@ -2,12 +2,11 @@ package com.uni.mental.main.Controller;
 
 import com.uni.mental.main.model.dto.MainDTO;
 import com.uni.mental.main.model.service.MainService;
-import com.uni.mental.notice.model.dto.NoticeDTO;
+import com.uni.mental.notice.model.dto.NoticeDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class MainController {
     @GetMapping(value={"/", "/main", "/main/main"})
     public String main(Model model) {
         List<MainDTO> posts = mainService.getAllPostsOrderByDateDesc();
-        List<NoticeDTO> notices = mainService.getNotices();  // 공지사항 데이터 가져오기
+        List<NoticeDto> notices = mainService.getNotices();  // 공지사항 데이터 가져오기
         model.addAttribute("posts", posts);
         model.addAttribute("notices", notices);  // 공지사항 데이터 모델에 추가
         return "main/main";

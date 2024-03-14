@@ -1,6 +1,6 @@
 package com.uni.mental.notice.controller;
 
-import com.uni.mental.notice.model.dto.NoticeDTO;
+import com.uni.mental.notice.model.dto.NoticeDto;
 import com.uni.mental.notice.model.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class NoticeController {
     @GetMapping("/notice")
     public String showNotice(Model model) {
         // 공지사항 데이터를 번호를 기준으로 오름차순으로 정렬하여 가져와서 모델에 추가
-        List<NoticeDTO> notices = noticeService.getAllNotices(); // 번호를 기준으로 오름차순으로 정렬된 공지사항 데이터를 가져옴
+        List<NoticeDto> notices = noticeService.getAllNotices(); // 번호를 기준으로 오름차순으로 정렬된 공지사항 데이터를 가져옴
         model.addAttribute("notices", notices);
 
         return "notice/notice"; // notice.html로 이동
@@ -40,7 +40,7 @@ public class NoticeController {
     }
 
     @PostMapping("/regist")
-    public String handleRegist(NoticeDTO noticeDto) {
+    public String handleRegist(NoticeDto noticeDto) {
         // POST 요청 처리 로직 작성
         noticeService.addNotice(noticeDto);
 
@@ -60,13 +60,13 @@ public class NoticeController {
     @GetMapping("/noticeBoardDetailView")
     public String showNoticeDetail(@RequestParam("no") String no, Model model) {
         System.out.println(no);
-        NoticeDTO noticeDTO = noticeService.getNoticeById(Integer.parseInt(no));
-        System.out.println(noticeDTO);
-        model.addAttribute("notice", noticeDTO);
+        NoticeDto noticeDto = noticeService.getNoticeById(Integer.parseInt(no));
+        System.out.println(noticeDto);
+        model.addAttribute("notice", noticeDto);
         return "notice/noticeBoardDetailView"; // 뷰의 이름 반환
     }
     @PostMapping("noticeupdate") // 공지사항 수정
-    public String NoticeUpdate(@ModelAttribute NoticeDTO noticeupdate) throws Exception {
+    public String NoticeUpdate(@ModelAttribute NoticeDto noticeupdate) throws Exception {
 
         noticeService.updateNotice(noticeupdate);
 
@@ -74,7 +74,7 @@ public class NoticeController {
     }
     @GetMapping("noticeUpdateForm") //공지사항 수정 폼으로 이동
     public ModelAndView NoticeUpdateForm(@RequestParam("no") String no, ModelAndView mv){
-        NoticeDTO notice = noticeService.selectOne(Integer.parseInt(no));
+        NoticeDto notice = noticeService.selectOne(Integer.parseInt(no));
 
         mv.addObject("notice",notice);
         mv.setViewName("notice/noticeUpdateForm");

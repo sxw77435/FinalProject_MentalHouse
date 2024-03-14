@@ -15,7 +15,7 @@
         <result column="MEMBER_NICK" property="nick" />
     </resultMap>
 
-    <resultMap id="noticeResultMap" type="com.uni.mental.notice.model.dto.NoticeDTO">
+    <resultMap id="noticeResultMap" type="com.uni.mental.notice.model.dto.NoticeDto">
 
         <id column="NOTICE_NO" property="no"/>
         <result column="NOTICE_ID" property="id" />
@@ -25,29 +25,29 @@
 
     </resultMap>
 
-    <select id="getAllNotices" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
+    <select id="getAllNotices" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
         SELECT
             *
         FROM
-            tbl_notice
+            TBL_NOTICE
         ORDER BY
             NOTICE_NO DESC
     </select>
 
 
-    <insert id="addNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
-        insert into tbl_notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_DATE)
+    <insert id="addNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+        insert into TBL_NOTICE(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_DATE)
         values(#{title},#{content},now())
     </insert>
 
-    <delete id="deleteNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
+    <delete id="deleteNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
         delete
-        from tbl_notice
+        from TBL_NOTICE
         where NOTICE_NO = #{no}
     </delete>
 
-    <update id="updateNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
-        UPDATE tbl_notice
+    <update id="updateNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDto">
+        UPDATE TBL_NOTICE
         SET
             NOTICE_TITLE = #{title},
             NOTICE_CONTENT = #{content}
@@ -55,11 +55,11 @@
     </update>
 
     <select id="getNoticeById" parameterType="int">
-        SELECT * FROM tbl_notice WHERE NOTICE_NO = #{noticeNo}
+        SELECT * FROM TBL_NOTICE WHERE NOTICE_NO = #{noticeNo}
     </select>
 
-    <select id="selectOne" parameterType="int" resultType="com.uni.mental.notice.model.dto.NoticeDTO">
-        SELECT * FROM tbl_notice WHERE NOTICE_NO = #{noticeNo}
+    <select id="selectOne" parameterType="int" resultType="com.uni.mental.notice.model.dto.NoticeDto">
+        SELECT * FROM TBL_NOTICE WHERE NOTICE_NO = #{noticeNo}
     </select>
 
 
