@@ -152,3 +152,63 @@ tr {
 .pagination li img {
     vertical-align: middle; /* 이미지 수직 정렬 */
 }
+
+.reply a{
+    margin-left: 10px;
+}
+
+.reply-list{
+    height: 200px;
+}
+
+.reply-list h3{
+    width: 78%;
+    margin: 0 auto;
+}
+
+.reply-list p{
+    width: 78%;
+    margin: 10px auto;
+}
+
+.card{
+    width: 49%;
+    margin: 0 auto;
+    padding: 70px 0;
+}
+
+.comment p{
+    padding: 10px 0;
+    margin: 0;
+}
+
+b {
+    margin-left: 10px;
+    color: red;
+}
+
+.enroll-btn{
+    padding: 6px;
+    border-radius: 12px;
+    background-color: #5093ca7d;
+    margin-top: 20px;
+}
+
+.edit-btn{
+    width: 48%;
+    display: flex;
+    margin: 0 auto;
+    justify-content: right;
+}
+.edit-btn a{
+   margin-right: 10px;
+}
+.comment {
+    float: left;
+    margin-left: 155px;
+    margin-top: 20px;
+    width: 750px;
+    padding: 14px;
+    border-radius: 20px;
+    background-color: #ddd;
+}

@@ -2,7 +2,7 @@ package com.uni.mental.main.model.service;
 
 import com.uni.mental.main.model.dao.MainDAO;
 import com.uni.mental.main.model.dto.MainDTO;
-import com.uni.mental.notice.model.dto.NoticeDTO;
+import com.uni.mental.notice.model.dto.NoticeDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class MainService {
     }
 
 
-    public List<NoticeDTO> getNotices() {  // 공지사항 목록을 가져오는 메소드 추가
+    public List<NoticeDto> getNotices() {  // 공지사항 목록을 가져오는 메소드 추가
         return mainDAO.selectNotices();
     }
 }

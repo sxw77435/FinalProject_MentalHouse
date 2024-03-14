@@ -30,20 +30,13 @@
         SELECT
            *
         FROM
-            tbl_qna
+            TBL_QNA
         ORDER BY
             QNA_NO DESC
     </select>
-<!--    <select id="getAllQna"  parameterType="com.uni.mental.qna.model.dto.QnaDto" >-->
-<!--        select-->
-<!--            *-->
-<!--        from tbl_qna A-->
-<!--            left join tbl_member B on(A.MEMBER_ID = B.member_id)-->
-<!--        where QNA_NO = #{no}-->
-<!--    </select>-->
 
     <insert id="addQna" parameterType="com.uni.mental.qna.model.dto.QnaDto">
-        insert into tbl_qna(QNA_TITLE, QNA_CONTENT, MEMBER_ID, QNA_DATE)
+        insert into TBL_QNA(QNA_TITLE, QNA_CONTENT, MEMBER_ID, QNA_DATE)
         values (#{title}, #{content}, #{id}, now())
     </insert>
 
@@ -51,12 +44,12 @@
 
     <delete id="deleteQna" parameterType="com.uni.mental.qna.model.dto.QnaDto">
         delete
-        from tbl_qna
+        from TBL_QNA
         where QNA_NO = #{no}
     </delete>
 
     <update id="updateQna" parameterType="com.uni.mental.qna.model.dto.QnaDto">
-        UPDATE tbl_qna
+        UPDATE TBL_QNA
         SET
             QNA_TITLE = #{title},
             QNA_CONTENT = #{content},
@@ -65,14 +58,11 @@
     </update>
 
     <select id="getQnaById" parameterType="int">
-        SELECT * FROM tbl_qna WHERE QNA_NO = #{qnaNo}
+        SELECT * FROM TBL_QNA WHERE QNA_NO = #{qnaNo}
     </select>
 
     <select id="selectOne" parameterType="int" resultType="com.uni.mental.qna.model.dto.QnaDto">
-        SELECT * FROM tbl_qna WHERE QNA_NO = #{qnaNo}
+        SELECT * FROM TBL_QNA WHERE QNA_NO = #{qnaNo}
     </select>
-
-
-
 
 </mapper>

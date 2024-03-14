@@ -26,4 +26,7 @@ public interface AgeCmtDAO {
 
     @Update("UPDATE TBL_COMM_AGE_COMMENT SET AGECMT_DETAIL = #{ageCmtDetail} WHERE AGECMT_NO = #{ageCmtNo}")
     void updateComment(AgeCmtDTO comment);
+
+    @Update("UPDATE TBL_COMMUNITY_AGE SET REPLY_CNT = (SELECT COUNT(*) FROM TBL_COMM_AGE_COMMENT WHERE AGECOM_NO = #{ageComNo}) WHERE AGECOM_NO = #{ageComNo}")
+    void updateReplyCount(int ageComNo);
 }

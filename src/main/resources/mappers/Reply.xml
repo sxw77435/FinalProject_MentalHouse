@@ -34,20 +34,20 @@
         ,A.MEMBER_ID as id
         ,A.QNA_REPLY_DATE as date
         ,C.MEMBER_NICK as nick
-        from tbl_qna_reply A
-            left join tbl_qna B on(B.qna_no = A.qna_no)
-            left join tbl_member C on(A.member_id = C.member_id)
+        from TBL_QNA_REPLY A
+            left join TBL_QNA B on(B.qna_no = A.qna_no)
+            left join TBL_MEMBER C on(A.member_id = C.member_id)
         where A.QNA_NO = #{no}
         order by A.QNA_REPLY_NO desc
     </select>
 
     <insert id="insertReply" parameterType="com.uni.mental.qna.model.dto.CommentDto">
-        insert into tbl_qna_reply(QNA_NO, QNA_REPLY_CONTENT, MEMBER_ID, QNA_REPLY_DATE)
+        insert into TBL_QNA_REPLY(QNA_NO, QNA_REPLY_CONTENT, MEMBER_ID, QNA_REPLY_DATE)
         values(#{no},#{content},#{id},now())
     </insert>
 
     <delete id="deleteReply" parameterType="int">
-        DELETE FROM tbl_qna_reply
+        DELETE FROM TBL_QNA_REPLY
         WHERE QNA_REPLY_NO = #{pno}
     </delete>
 

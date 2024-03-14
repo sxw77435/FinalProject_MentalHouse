@@ -22,17 +22,17 @@
         SELECT
             *
         FROM
-            tbl_member
+            TBL_MEMBER
         WHERE
             MEMBER_ID = #{userId}
     </select>
 
     <select id="mypageDetail" parameterType="int">
-        SELECT * FROM tbl_member WHERE MEMBER_NO = #{no}
+        SELECT * FROM TBL_MEMBER WHERE MEMBER_NO = #{no}
     </select>
 
     <update id="updateMypage" parameterType="com.uni.mental.mypage.model.dto.MypageDto">
-        UPDATE tbl_member
+        UPDATE TBL_MEMBER
         SET
             MEMBER_ID = #{id},
             MEMBER_EMAIL = #{email},
@@ -43,7 +43,7 @@
     </update>
 
     <update id="deleteMypage" parameterType="com.uni.mental.mypage.model.dto.MypageDto">
-        UPDATE tbl_member
+        UPDATE TBL_MEMBER
         SET
             MEMBER_EXIT = 'Y'
         WHERE MEMBER_NO = #{no}

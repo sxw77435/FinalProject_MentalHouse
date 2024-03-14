@@ -13,6 +13,7 @@
         <result column="AGECOM_DATE" property="ageComDate"/>
         <result column="AGECOM_VIEWS" property="ageComViews"/>
         <result column="ATTACH_NEWNAME" property="attachNewname"/>
+        <result column="REPLY_COUNT" property="replyCount" />
     </resultMap>
 
     <select id="findAllView" parameterType="com.uni.mental.agecommunity.model.dto.AgeComDTO">
@@ -104,6 +105,17 @@
         SELECT COUNT(*) FROM TBL_COMMUNITY_AGE
         WHERE CATE_NO = #{cateNo}
     </select>
+
+    <!-- 댓글 개수 세기-->
+    <update id="updateReplyCount" parameterType="map">
+        UPDATE TBL_COMMUNITY_AGE
+        SET REPLY_CNT = (
+            SELECT COUNT(*)
+            FROM tbl_comm_age_comment
+            WHERE AGECOM_NO = #{ageComNo}
+        )
+        WHERE AGECOM_NO = #{ageComNo}
+    </update>
 
 
 </mapper>

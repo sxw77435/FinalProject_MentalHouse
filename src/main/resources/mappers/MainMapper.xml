@@ -20,7 +20,7 @@
         ORDER BY AGECOM_DATE DESC
     </select>
 
-    <select id="selectNotices" resultType="com.uni.mental.notice.model.dto.NoticeDTO">
+    <select id="selectNotices" resultType="com.uni.mental.notice.model.dto.NoticeDto">
         SELECT NOTICE_NO AS no, NOTICE_TITLE AS title, NOTICE_CONTENT AS content, NOTICE_DATE AS date, notice_id AS id
         FROM TBL_NOTICE
         ORDER BY NOTICE_DATE DESC

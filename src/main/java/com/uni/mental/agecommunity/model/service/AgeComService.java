@@ -29,4 +29,7 @@ public interface AgeComService {
 
     // 카테고리별 게시글 총 개수 조회 메서드
     int getTotalCountByCateNo(int cateNo);
+
+    void updateReplyCount(int ageComNo);
+
 }
