@@ -16,8 +16,10 @@ a {
 }
 .menu {
     width: 100%;
+
     overflow: hidden;
     margin-top: 150px;
+
 }
 
 .menu > li {
@@ -88,7 +90,6 @@ tr {
 
 
 .btn{
-    margin-right: 85px;
     margin-bottom: 5px;
 
 }
@@ -105,7 +106,6 @@ tr {
 }
 
 .men ul{
-    width:500px;
     float: left;
 }
 .men button{

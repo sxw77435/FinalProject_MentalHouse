@@ -18,7 +18,7 @@ a{
     cursor: pointer;
 }
 
-button {cursor:pointer; border:0;}
+button {cursor:pointer; border:0;background: none;}
 
 .clearfix::after{
     display: block; 

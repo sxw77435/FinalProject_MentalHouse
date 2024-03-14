@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
     <style>
         *{
             padding:0;margin:0
@@ -40,13 +42,6 @@
         .menu a {
             color: black;
         }
-
-        .mental{
-            float: right;
-            margin: 5px;
-        }
-
-
 
         .table-common>table {
             width: 100%;
@@ -81,19 +76,7 @@
         tr {
             text-align: center;
         }
-        .btn{
-            width: 85.5%;
-            margin: 20px;
-        }
-        #btn1{
-            float: right;
-            width: 100px;
-            height: 60px;
-            background-color: gray;
-            border: 0px;
-            display: inline-block;
 
-        }
         .page-link {
             text-align: center;
         }
@@ -131,10 +114,32 @@
         .pagination-controls button:hover {
             background-color: lightgray;
         }
+        /* 변경된 버튼 스타일 */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            padding: 5px 15px;
+            margin-left: 10px;
+            background-color: #ff7603; /* 변경된 버튼 색상 */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-group button:hover {
+            background-color: #FF8C66; /* 변경된 호버 색상 */
+        }
     </style>
 </head>
 <body>
 <div th:replace="common/header :: header"></div>
+<br><br><br>
 <header class="header">
     <ul class="menu">
         <li>
@@ -153,7 +158,7 @@
 </header>
 <br>
 
-<h1 class="con">게시판</h1>
+<h1 class="con">공지 사항</h1>
 <br>
 <section class="list table-common con">
     <table>
@@ -161,7 +166,6 @@
         <tr>
             <th>번호</th>
             <th style="width: 500px">제목</th>
-            <th>내용</th>
             <th>글쓴이</th>
             <th>글 등록일</th>
         </tr>
@@ -173,7 +177,6 @@
             <td>
                 <a th:href="@{noticeBoardDetailView(no=${notice.no})}" th:text="${notice.title}"></a>
             </td>
-            <td th:text="${'...'}"></td>
             <td>관리자</td>
             <td th:text="${#dates.format(notice.date, 'yyyy-MM-dd HH:mm:ss')}"></td>
         </tr>
@@ -191,12 +194,11 @@
         <a href="#" class="next-page"><img src="/image/btn_next.png"></a>
         <a href="#" class="last-page"><img src="/image/btn_end.png"></a>
     </div>
-    <div class="btn" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-        <button style="width: 80px; height: 25px; margin-left: 100%;" onclick="location.href='noticeBoardEnrollForm'"><a>글쓰기</a></button>
-    </div>
 
 </section>
-
+<div class="button-group" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <button onclick="location.href='noticeBoardEnrollForm'"><a>글쓰기</a></button>
+</div>
 <script>
     $(document).ready(function() {
         // 총 페이지 수 계산
@@ -269,7 +271,7 @@
     });
 
 </script>
-
+<br>
 <div th:replace="common/footer :: footer"></div>
 </body>
 </html>

@@ -3,6 +3,8 @@
 <head>
     <link rel="stylesheet" href="/css/basic.css">
     <link rel="stylesheet" href="/css/custom_reset.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="/js/kakaoLogout.js"></script>
     <meta charset="UTF-8">
     <title>약관동의</title>
     <style>
@@ -308,6 +310,7 @@
         </div>
     </div>
 </form>
+<div th:replace="common/footer :: footer"></div>
 
 <!-- 타임리프를 사용하여 서버로부터 전달받은 tempEmail 값을 사용합니다. -->
 <script th:inline="javascript">

@@ -24,25 +24,17 @@
         <result column="NOTICE_DATE" property="date" />
 
     </resultMap>
-<!--    <select id="getList" parameterType="com.uni.mental.mentalcomunity.model.dto.MenComCmtDTO">-->
-<!--        select-->
-<!--            A.NOTICE_NO as no-->
-<!--        ,A.NOTICE_ID as id-->
-<!--        ,A.NOTICE_TITLE as title-->
-<!--        ,A.NOTICE_CONTENT as content-->
-<!--        ,A.NOTICE_DATE as date-->
-<!--        ,B.member_nick as nick-->
-<!--        from tbl_notice A-->
-<!--            left join tbl_member B on(A.NOTICE_ID = B.member_id)-->
-<!--        where A.NOTICE_NO = #{menNo}-->
-<!--        order by A.NOTICE_NO desc-->
-<!--    </select>-->
-    <select id="getAllNotices"  parameterType="com.uni.mental.notice.model.dto.NoticeDTO" >
+
+    <select id="getAllNotices" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
         SELECT
-           *
+            *
         FROM
             tbl_notice
+        ORDER BY
+            NOTICE_NO DESC
     </select>
+
+
     <insert id="addNotice" parameterType="com.uni.mental.notice.model.dto.NoticeDTO">
         insert into tbl_notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_DATE)
         values(#{title},#{content},now())

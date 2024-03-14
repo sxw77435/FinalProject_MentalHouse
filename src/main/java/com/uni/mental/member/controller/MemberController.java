@@ -76,6 +76,8 @@ public class MemberController {
                                @RequestParam("post") String post,
                                @RequestParam("address1") String address1,
                                @RequestParam("address2") String address2,
+                               @RequestParam("email1") String email1,
+                               @RequestParam("email2") String email2,
                                MemberDto memberDto,
                                Model model) {
         // 주소 처리
@@ -91,6 +93,10 @@ public class MemberController {
 
         String encodedPassword = passwordEncoder.encode(memberDto.getPwd());
         memberDto.setPwd(encodedPassword);
+
+        //email처리
+        String email = email1 + email2;
+        memberDto.setEmail(email);
 
         // 데이터 베이스에 저장
         memberDao.enrollMember(memberDto);
