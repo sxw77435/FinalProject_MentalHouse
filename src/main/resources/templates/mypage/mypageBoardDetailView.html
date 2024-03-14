@@ -129,9 +129,36 @@
             float: right;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            // 탈퇴하기 버튼 클릭 시 confirm 함수를 사용하여 확인 메시지를 표시
+            $(".deletbtn").click(function () {
+                // 확인 메시지를 표시하고 사용자의 선택에 따라 true 또는 false를 반환
+                var result = confirm("탈퇴를 하시면 복구가 불가능합니다 정말로 탈퇴를 하시겠습니까??");
+                // 사용자가 확인을 선택한 경우
+                if (result) {
+                    // 폼을 제출하여 탈퇴 요청을 서버로 전송
+                    $(this).closest("form").submit();
+                }
+            });
+        });
+        $(document).ready(function () {
+            // 탈퇴하기 버튼 클릭 시 confirm 함수를 사용하여 확인 메시지를 표시
+            $(".updatebtn").click(function () {
+                // 확인 메시지를 표시하고 사용자의 선택에 따라 true 또는 false를 반환
+                var result = confirm("수정이 완료 되었습니다!");
+                // 사용자가 확인을 선택한 경우
+                if (result) {
+                    // 폼을 제출하여 탈퇴 요청을 서버로 전송
+                    $(this).closest("form").submit();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <div th:replace="common/header :: header"></div>
+<br><br>
 <header class="header">
     <ul class="menu">
         <li>
@@ -180,7 +207,7 @@
             <label for="nick">닉네임:</label>
             <input type="text" id="nick" name="nick" th:value="${mypage.nick}">
         </div>
-        <button type="submit">수정완료</button>
+        <button class= "updatebtn" type="submit">수정완료</button>
     </form>
     <br>
     <form action="/mypage/delete" method="post">

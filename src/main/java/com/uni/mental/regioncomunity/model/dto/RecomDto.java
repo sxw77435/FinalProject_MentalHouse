@@ -14,6 +14,9 @@ public class RecomDto {
     private int recomviews;
     private String recomcontent;
     private String recomimage;
+    private  int replycount;
+
+
 
     public int getRecomno() {
         return recomno;
@@ -87,6 +90,14 @@ public class RecomDto {
         this.recomimage = recomimage;
     }
 
+    public int getReplycount() {
+        return replycount;
+    }
+
+    public void setReplycount(int replycount) {
+        this.replycount = replycount;
+    }
+
     @Override
     public String toString() {
         return "RecomDto{" +
@@ -99,6 +110,7 @@ public class RecomDto {
                 ", recomviews=" + recomviews +
                 ", recomcontent='" + recomcontent + '\'' +
                 ", recomimage='" + recomimage + '\'' +
+                ", replycount=" + replycount +
                 '}';
     }
 }

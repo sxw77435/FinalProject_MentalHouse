@@ -80,11 +80,33 @@
             padding-left: 10px;
             background-color: rgb(233, 233, 233);
         }
+        /* 변경된 버튼 스타일 */
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            padding: 5px 15px;
+            margin-left: 10px;
+            background-color: #ff7603; /* 변경된 버튼 색상 */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-group button:hover {
+            background-color: #FF8C66; /* 변경된 호버 색상 */
+        }
     </style>
 </head>
 
 <body>
 <div th:replace="common/header :: header"></div>
+<br><br><br>
 <header class="header">
     <ul class="menu">
         <li>
@@ -119,8 +141,11 @@
             <br><br>
             <br><br>
             <br>
-            <button type="button" onclick="location.href='notice'">취소하기</button>
-            <button type="submit" >작성하기</button>
+            <div class="button-group">
+                <button type="button" onclick="location.href='notice'">취소하기</button>
+                <button type="submit" >작성하기</button>
+            </div>
+
 
         </form>
     </div>

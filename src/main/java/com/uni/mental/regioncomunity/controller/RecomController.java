@@ -104,6 +104,8 @@ public class RecomController {
 
         recomList.forEach(recom -> System.out.println("recom=" + recom));
 
+        mv.addObject("cateno", cateno);
+
         mv.addObject("recomList", recomList);
         mv.setViewName("recom/recomlist");
 
