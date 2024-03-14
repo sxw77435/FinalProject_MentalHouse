@@ -193,24 +193,24 @@
 <div th:replace="common/header :: header"></div>
 <header class="header">
 
-       <div class="menu">
+    <div class="menu">
 
 
-             <ul class="menu">
-                 <p>커뮤니티</p>
-                <li>
-                    <button style="margin-right: 100px" onclick="location.href='mental_list'">지역별</button>
+        <ul class="menu">
+            <p>커뮤니티</p>
+            <li>
+                <button style="margin-right: 100px" onclick="location.href='mental_list'">지역별</button>
 
-                    <button onclick="location.href='mental_list'">연령별</button>
+                <button onclick="location.href='mental_list'">연령별</button>
 
-                    <button style="margin-left: 100px" onclick="location.href='mental_list'">질환별</button>
-                </li>
+                <button style="margin-left: 100px" onclick="location.href='mental_list'">질환별</button>
+            </li>
 
-                <li>
-                    <button  onclick="location.href='mental_list'">채팅</button>
-                </li>
-             </ul>
-       </div>
+            <li>
+                <button  onclick="location.href='mental_list'">채팅</button>
+            </li>
+        </ul>
+    </div>
 </header>
 <br>
 
@@ -277,18 +277,18 @@
 
         <tbody>
 
-<!--                 Thymeleaf로부터 받은 데이터를 이용하여 게시물 목록을 동적으로 생성-->
-                <tr th:each="mental : ${mentalList}" class="total_item" >
-                    <td th:text="${mental.cate}" style="display: none"></td>
-                    <td th:text="${mental.no}"></td>
-                    <td>
-                       <a th:href="@{mental_detail(no=${mental.no})}" th:text="${mental.title}"></a>
-                        <b>[<span class = "cnt" th:text="${mental.replycnt}"></span>]</b>
-                    </td>
-                    <td th:text="${mental.nick}"></td>
-                    <td th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td th:text="${mental.views}"></td>
-                </tr>
+        <!--                 Thymeleaf로부터 받은 데이터를 이용하여 게시물 목록을 동적으로 생성-->
+        <tr th:each="mental : ${mentalList}" class="total_item" >
+            <td th:text="${mental.cate}" style="display: none"></td>
+            <td th:text="${mental.no}"></td>
+            <td>
+                <a th:href="@{mental_detail(no=${mental.no})}" th:text="${mental.title}"></a>
+                <b>[<span class = "cnt" th:text="${mental.replycnt}"></span>]</b>
+            </td>
+            <td th:text="${mental.nick}"></td>
+            <td th:text="${#dates.format(mental.date, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${mental.views}"></td>
+        </tr>
 
         </tbody>
     </table>
