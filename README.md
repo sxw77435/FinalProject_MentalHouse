@@ -18,6 +18,9 @@
 
 <h2>🖼 Preview </h2>
 
+### 프로젝트 전체 보기
+https://github.com/sxw77435/FinalProject_MentalHouse/issues/1
+
 ### 회원가입/로그인
 https://github.com/sxw77435/MiniProject_LJSS/assets/149069669/51ea995c-c737-4050-8208-6bb4b090c88b
 
