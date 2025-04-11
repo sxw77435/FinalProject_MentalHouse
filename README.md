@@ -18,8 +18,8 @@
 
 <h2>🖼 Preview </h2>
 
-[### 프로젝트 전체 보기
-https://github.com/sxw77435/MiniProject_LJSS/releases/download/녹화_통합본_1.3배_압축.mp4
+### 프로젝트 전체 보기
+https://github.com/sxw77435/MiniProject_LJSS/releases/download/fill_video/_._1.3._.mp4
 
 ### 회원가입/로그인
 https://github.com/sxw77435/MiniProject_LJSS/assets/149069669/51ea995c-c737-4050-8208-6bb4b090c88b
