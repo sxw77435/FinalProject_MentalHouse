@@ -19,7 +19,7 @@
 <h2>🖼 Preview </h2>
 
 ### 프로젝트 전체 보기
-https://github.com/sxw77435/FinalProject_MentalHouse/issues/1
+https://github.com/sxw77435/FinalProject_MentalHouse/blob/xinweiso/%EB%85%B9%ED%99%94_%ED%86%B5%ED%95%A9%EB%B3%B8_1.3%EB%B0%B0_%EC%95%95%EC%B6%95.mp4
 
 ### 회원가입/로그인
 https://github.com/sxw77435/MiniProject_LJSS/assets/149069669/51ea995c-c737-4050-8208-6bb4b090c88b
